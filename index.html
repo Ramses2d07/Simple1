@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Marketplace Pro Final Fix</title>
+<title>Marketplace Pro Full</title>
 
 <style>
 body{
@@ -38,7 +38,7 @@ body{
   color:#fff;
 }
 
-/* MENÚ */
+/* MENÚS */
 .menu,.accountMenu{
   display:none;
   position:absolute;
@@ -81,15 +81,14 @@ body{
   box-shadow:0 0 10px #00ff88;
 }
 
-/* ⭐ ESTRELLAS (FIX REAL) */
+/* ⭐ ESTRELLAS */
 .stars{
   color:#ffd700;
   font-size:14px;
   margin-top:5px;
-  letter-spacing:1px;
 }
 
-/* GALERÍA */
+/* MINI GALERÍA */
 .miniGallery{
   display:flex;
   gap:5px;
@@ -107,11 +106,6 @@ body{
   height:40px;
   object-fit:cover;
   border-radius:8px;
-}
-
-.placeholder{
-  font-size:10px;
-  opacity:0.5;
 }
 
 /* BOTONES */
@@ -152,6 +146,23 @@ body{
   color:#25f4a5;
 }
 
+/* COMMENTS */
+textarea{
+  width:100%;
+  height:70px;
+  border-radius:10px;
+  padding:10px;
+  background:rgba(255,255,255,0.08);
+  color:#fff;
+}
+
+.comment{
+  background:rgba(255,255,255,0.12);
+  margin-top:6px;
+  padding:8px;
+  border-radius:10px;
+}
+
 /* FOOTER */
 .footer{
   text-align:center;
@@ -173,7 +184,6 @@ body{
 <div class="menu">
   <p onclick="showAll()">🏠 Home</p>
   <p onclick="showFavorites()">❤️ Favoritos</p>
-  <p onclick="goBack()">🔙 Volver</p>
 </div>
 
 <div class="accountMenu">
@@ -205,11 +215,12 @@ body{
 </div>
 
 <div class="footer">
-  © 2026 Marketplace Pro. Todos los derechos reservados.
+© 2026 Marketplace Pro. Todos los derechos reservados.
 </div>
 
 <script>
 
+/* MENÚ */
 function toggleMenu(){
   let m=document.querySelector(".menu");
   m.style.display=(m.style.display==="block")?"none":"block";
@@ -231,6 +242,28 @@ function toggleFav(i){
   else f.push(i);
   saveFavs(f);
   renderGrid();
+}
+
+/* ❤️ LIKES (NUEVO INTEGRADO) */
+function getLikes(){
+  return JSON.parse(localStorage.getItem("likes")||"{}");
+}
+
+function saveLikes(l){
+  localStorage.setItem("likes",JSON.stringify(l));
+}
+
+function toggleLike(i){
+  let l=getLikes();
+  if(!l[i]) l[i]=0;
+  l[i]++;
+  saveLikes(l);
+  renderGrid();
+}
+
+function getLikeCount(i){
+  let l=getLikes();
+  return l[i]||0;
 }
 
 /* USERS */
@@ -269,9 +302,16 @@ grid.innerHTML+=`
 <button class="btn wp">WhatsApp</button>
 <button class="btn res">Reservar</button>
 
+<!-- FAVORITOS -->
 <button class="btn fav" onclick="toggleFav(${i});event.stopPropagation();">
 ${isFav(i)?"❤️ Guardado":"🤍 Favorito"}
 </button>
+
+<!-- ❤️ LIKES INTEGRADO -->
+<div style="margin-top:8px;color:#ff4d6d;cursor:pointer;"
+onclick="toggleLike(${i});event.stopPropagation();">
+❤️ Likes: ${getLikeCount(i)}
+</div>
 
 </div>`;
 
@@ -283,15 +323,7 @@ function loadMini(i){
 let box=document.getElementById("mini_"+i);
 if(!box) return;
 
-let arr=JSON.parse(localStorage.getItem("m_"+i)||"[]");
-let imgs=arr.filter(x=>x.type.includes("image")).slice(0,3);
-
-if(imgs.length===0){
-  box.innerHTML=`<div class="placeholder">Sin fotos</div>`;
-  return;
-}
-
-box.innerHTML=imgs.map(img=>`<img src="${img.data}">`).join("");
+box.innerHTML=`<div style="opacity:0.5;font-size:10px">Sin galería</div>`;
 }
 
 renderGrid();
@@ -305,7 +337,6 @@ document.getElementById("name").innerText=users[i][0];
 document.getElementById("info").innerText=users[i][1];
 document.getElementById("phone").innerText=users[i][4];
 
-loadMedia();
 loadComments();
 }
 
@@ -313,33 +344,7 @@ function closeP(){
 document.getElementById("profile").style.display="none";
 }
 
-function upload(e){
-let files=e.target.files;
-for(let f of files){
-let r=new FileReader();
-r.onload=function(ev){
-let arr=JSON.parse(localStorage.getItem("m_"+current)||"[]");
-arr.push({data:ev.target.result,type:f.type});
-localStorage.setItem("m_"+current,JSON.stringify(arr));
-loadMedia();
-renderGrid();
-};
-r.readAsDataURL(f);
-}
-}
-
-function loadMedia(){
-let box=document.getElementById("media");
-box.innerHTML="";
-let arr=JSON.parse(localStorage.getItem("m_"+current)||"[]");
-
-arr.forEach(m=>{
-box.innerHTML+=m.type.includes("image")
-? `<img src="${m.data}">`
-: `<video src="${m.data}" controls></video>`;
-});
-}
-
+/* COMMENTS */
 function comment(){
 let t=document.getElementById("txt").value;
 if(!t)return;
@@ -360,7 +365,6 @@ box.innerHTML=(JSON.parse(localStorage.getItem("c_"+current)||"[]"))
 
 function showAll(){renderGrid();}
 function showFavorites(){grid.innerHTML="Favoritos activos";}
-function goBack(){renderGrid();}
 
 </script>
 
