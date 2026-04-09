@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Red Social Premium</title>
+<title>App Premium Social</title>
 
 <style>
 body{
@@ -11,10 +11,12 @@ body{
   font-family:Arial;
   color:#fff;
   background:
-    radial-gradient(circle at top, rgba(120,120,120,0.25), transparent 60%),
-    linear-gradient(135deg,#1a1a1a,#0d0d0d);
+    radial-gradient(circle at top, rgba(140,140,140,0.22), transparent 60%),
+    radial-gradient(circle at bottom, #0a0a0a, #000),
+    linear-gradient(135deg,#1b1b1b,#0d0d0d);
 }
 
+/* HEADER */
 .header{
   display:flex;
   align-items:center;
@@ -22,50 +24,140 @@ body{
   padding:12px;
   position:sticky;
   top:0;
-  background:rgba(25,25,25,0.6);
-  backdrop-filter:blur(20px);
+  background:rgba(20,20,20,0.6);
+  backdrop-filter:blur(25px);
   border-bottom:1px solid rgba(255,255,255,0.1);
+  z-index:2000;
 }
 
-.icon{font-size:22px;cursor:pointer;width:40px;text-align:center;}
+.icon{
+  font-size:22px;
+  width:40px;
+  text-align:center;
+  cursor:pointer;
+}
 
-.search{flex:1;margin:0 10px;}
+/* SEARCH */
+.search{
+  flex:1;
+  margin:0 10px;
+}
+
 .search input{
   width:100%;
   padding:10px;
-  border-radius:12px;
+  border-radius:14px;
   border:none;
   background:rgba(255,255,255,0.08);
-  color:white;
+  color:#fff;
+}
+
+/* MENUS */
+.menu,.accountMenu{
+  display:none;
+  position:absolute;
+  top:60px;
+  width:200px;
+  padding:12px;
+  border-radius:14px;
+  background:rgba(30,30,30,0.95);
+  border:1px solid rgba(255,255,255,0.1);
+  z-index:3000;
+}
+
+.menu{right:10px;}
+.accountMenu{left:10px;}
+
+.menu p,.accountMenu p{
+  margin:10px 0;
+  cursor:pointer;
+}
+
+/* LOGO */
+.logoContainer{
+  text-align:center;
+  padding:18px;
+}
+
+.logoContainer img{
+  width:100%;
+  max-width:900px;
+  filter:drop-shadow(0 25px 35px rgba(0,0,0,0.8));
 }
 
 /* GRID */
-.grid{
+.perfiles{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:15px;
+  gap:16px;
   padding:15px;
 }
 
 /* CARD */
-.card{
+.perfil{
   background:rgba(255,255,255,0.06);
   border:1px solid rgba(255,255,255,0.12);
   border-radius:20px;
   padding:12px;
   text-align:center;
-  backdrop-filter:blur(15px);
+  backdrop-filter:blur(18px);
+  box-shadow:0 20px 40px rgba(0,0,0,0.7);
   cursor:pointer;
 }
 
-.card img{
-  width:80px;
-  height:80px;
+.perfil img{
+  width:85px;
+  height:85px;
   border-radius:50%;
+  object-fit:cover;
+  border:2px solid rgba(255,255,255,0.15);
 }
 
-.price{color:#00ff9a;font-weight:bold;}
-.stars{color:gold;}
+/* ⭐ TEXTURA BOTONES NUEVA */
+.btn{
+  display:block;
+  margin:6px auto;
+  padding:10px;
+  width:88%;
+  border-radius:12px;
+  text-decoration:none;
+  color:#fff;
+  font-weight:bold;
+  letter-spacing:0.3px;
+  transition:0.25s;
+  position:relative;
+  overflow:hidden;
+}
+
+/* WHATSAPP TEXTURA */
+.whatsapp{
+  background:linear-gradient(135deg,#25D366,#1fae52);
+  box-shadow:
+    inset 0 0 10px rgba(255,255,255,0.15),
+    0 10px 25px rgba(37,211,102,0.35);
+}
+
+.whatsapp:hover{
+  transform:translateY(-3px);
+  box-shadow:
+    inset 0 0 18px rgba(255,255,255,0.25),
+    0 18px 35px rgba(37,211,102,0.5);
+}
+
+/* RESERVAR TEXTURA */
+.reservar{
+  background:linear-gradient(135deg,#7a2cff,#5a1bd6);
+  box-shadow:
+    inset 0 0 10px rgba(255,255,255,0.12),
+    0 10px 25px rgba(122,44,255,0.35);
+}
+
+.reservar:hover{
+  transform:translateY(-3px);
+  box-shadow:
+    inset 0 0 18px rgba(255,255,255,0.25),
+    0 18px 35px rgba(122,44,255,0.5);
+}
 
 /* MODAL */
 .modal{
@@ -73,91 +165,125 @@ body{
   position:fixed;
   top:0;left:0;
   width:100%;height:100%;
-  background:rgba(0,0,0,0.95);
+  background:rgba(0,0,0,0.97);
+  z-index:5000;
+  overflow:auto;
   padding:20px;
 }
 
 .modalBox{
   background:rgba(255,255,255,0.06);
+  border-radius:20px;
   padding:15px;
-  border-radius:15px;
+  border:1px solid rgba(255,255,255,0.12);
+  backdrop-filter:blur(18px);
 }
 
-.close{float:right;font-size:25px;cursor:pointer;}
+.close{
+  float:right;
+  font-size:26px;
+  cursor:pointer;
+}
 
+/* GALLERY */
+.gallery{
+  display:flex;
+  gap:10px;
+  overflow-x:auto;
+  margin-top:10px;
+}
+
+.gallery img{
+  width:120px;
+  height:120px;
+  border-radius:12px;
+  object-fit:cover;
+}
+
+/* COMMENTS */
+textarea{
+  width:100%;
+  height:70px;
+  margin-top:10px;
+  border-radius:10px;
+  border:none;
+  padding:10px;
+  background:rgba(255,255,255,0.08);
+  color:#fff;
+}
+
+/* COMMENT */
+.comment{
+  background:rgba(255,255,255,0.12);
+  margin-top:6px;
+  padding:8px;
+  border-radius:10px;
+}
+
+/* FOOTER */
 .footer{
   text-align:center;
   padding:20px;
   font-size:12px;
   color:#aaa;
+  border-top:1px solid rgba(255,255,255,0.08);
 }
 </style>
 </head>
 
 <body>
 
+<!-- HEADER -->
 <div class="header">
   <div class="icon">👤</div>
   <div class="search"><input placeholder="Buscar usuarios..."></div>
   <div class="icon">☰</div>
 </div>
 
-<div class="grid" id="grid"></div>
-
-<!-- MODAL -->
-<div class="modal" id="modal">
-  <div class="modalBox">
-    <span class="close" onclick="closeM()">✖</span>
-    <h2 id="name"></h2>
-    <p id="info"></p>
-    <div class="stars">⭐⭐⭐⭐⭐</div>
-  </div>
+<!-- LOGO -->
+<div class="logoContainer">
+  <img src="file_0000000095c071fd937e0a46af9303bb.svg">
 </div>
 
+<!-- GRID -->
+<div class="perfiles" id="grid"></div>
+
+<!-- FOOTER -->
 <div class="footer">
-© 2026 Red Social Premium
+© 2026 App Premium Social. Todos los derechos reservados.
 </div>
 
 <script>
 
-const users = [
-{name:"Juan Pérez",city:"Caracas",sex:"♂",price:"$20",img:"k1.jpg"},
-{name:"María López",city:"Maracay",sex:"♀",price:"$25",img:"k2.jpg"},
-{name:"Carlos Martínez",city:"Valencia",sex:"♂",price:"$30",img:"k3.jpg"},
-{name:"Ana Torres",city:"Barquisimeto",sex:"♀",price:"$28",img:"k4.jpg"},
-{name:"Luis Gómez",city:"Caracas",sex:"♂",price:"$22",img:"k5.jpg"},
-{name:"Sofía Díaz",city:"Valencia",sex:"♀",price:"$27",img:"k6.jpg"},
-{name:"Pedro Ramírez",city:"Maracaibo",sex:"♂",price:"$24",img:"k7.jpg"},
-{name:"Lucía Fernández",city:"Maracay",sex:"♀",price:"$30",img:"k8.jpg"}
+const users=[
+["Juan Pérez","Caracas","♂","$20","k1.jpg"],
+["María López","Maracay","♀","$25","k2.jpg"],
+["Carlos Martínez","Valencia","♂","$30","k3.jpg"],
+["Ana Torres","Barquisimeto","♀","$28","k4.jpg"],
+["Luis Gómez","Caracas","♂","$22","k5.jpg"],
+["Sofía Díaz","Valencia","♀","$27","k6.jpg"],
+["Pedro Ramírez","Maracaibo","♂","$24","k7.jpg"],
+["Lucía Fernández","Maracay","♀","$30","k8.jpg"]
 ];
 
-const grid=document.getElementById("grid");
+let grid=document.getElementById("grid");
 
 users.forEach((u,i)=>{
-  const div=document.createElement("div");
-  div.className="card";
-  div.onclick=()=>open(i);
+grid.innerHTML+=`
+<div class="perfil" onclick="openM(${i})">
+<img src="${u[4]}">
+<h3>${u[0]}</h3>
+<div>⭐⭐⭐⭐☆</div>
+<div>${u[3]}</div>
+<div>${u[1]} | ${u[2]}</div>
 
-  div.innerHTML=`
-    <img src="${u.img}">
-    <h3>${u.name}</h3>
-    <div class="stars">⭐⭐⭐⭐☆</div>
-    <div class="price">${u.price}</div>
-    <div>${u.city} | ${u.sex}</div>
-  `;
-
-  grid.appendChild(div);
+<a class="btn whatsapp">WhatsApp</a>
+<a class="btn reservar">Reservar</a>
+</div>`;
 });
 
-function open(i){
-  const u=users[i];
-  document.getElementById("name").innerText=u.name;
-  document.getElementById("info").innerText=u.city+" | "+u.sex;
-  document.getElementById("modal").style.display="block";
-}
-
-function closeM(){
-  document.getElementById("modal").style.display="none";
+function openM(i){
+alert(users[i][0]);
 }
 
 </script>
