@@ -3,17 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Catálogo App Completa</title>
+<title>Red Social Premium</title>
 
 <style>
 body{
   margin:0;
   font-family:Arial;
-  background: radial-gradient(circle at top, #2a2a2a, #0d0d0d);
   color:#fff;
+  background:
+    radial-gradient(circle at top, rgba(120,120,120,0.25), transparent 60%),
+    linear-gradient(135deg,#1a1a1a,#0d0d0d);
 }
 
-/* HEADER */
 .header{
   display:flex;
   align-items:center;
@@ -21,108 +22,50 @@ body{
   padding:12px;
   position:sticky;
   top:0;
-  z-index:1000;
-  background: rgba(20,20,20,0.6);
-  backdrop-filter: blur(18px);
-  border-bottom:1px solid rgba(255,255,255,0.08);
+  background:rgba(25,25,25,0.6);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(255,255,255,0.1);
 }
 
-.icon{
-  font-size:22px;
-  width:40px;
-  text-align:center;
-  cursor:pointer;
-}
+.icon{font-size:22px;cursor:pointer;width:40px;text-align:center;}
 
-/* SEARCH */
-.search{
-  flex:1;
-  margin:0 10px;
-}
-
+.search{flex:1;margin:0 10px;}
 .search input{
   width:100%;
   padding:10px;
-  border-radius:14px;
+  border-radius:12px;
   border:none;
-  background: rgba(255,255,255,0.10);
-  color:#fff;
-  outline:none;
-}
-
-/* MENÚS */
-.menu, .accountMenu{
-  display:none;
-  position:absolute;
-  top:55px;
-  background: rgba(30,30,30,0.95);
-  padding:12px;
-  border-radius:14px;
-  width:180px;
-  border:1px solid rgba(255,255,255,0.1);
-  z-index:2000;
-}
-
-.menu{ right:10px; }
-.accountMenu{ left:10px; }
-
-.menu p, .accountMenu p{
-  margin:10px 0;
-  cursor:pointer;
-}
-
-/* LOGO */
-.logoContainer{
-  text-align:center;
-  padding:25px 10px;
-}
-
-.logoContainer img{
-  width:100%;
-  max-width:1100px;
-  filter: drop-shadow(0 20px 30px rgba(0,0,0,0.7));
+  background:rgba(255,255,255,0.08);
+  color:white;
 }
 
 /* GRID */
-.perfiles{
+.grid{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:18px;
+  gap:15px;
   padding:15px;
 }
 
 /* CARD */
-.perfil{
-  background: rgba(255,255,255,0.06);
-  border:1px solid rgba(255,255,255,0.10);
+.card{
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.12);
   border-radius:20px;
-  padding:14px;
+  padding:12px;
   text-align:center;
+  backdrop-filter:blur(15px);
   cursor:pointer;
-  backdrop-filter: blur(12px);
-  box-shadow:0 15px 35px rgba(0,0,0,0.6);
 }
 
-.perfil img{
-  width:85px;
-  height:85px;
+.card img{
+  width:80px;
+  height:80px;
   border-radius:50%;
-  object-fit:cover;
 }
 
-/* BOTONES */
-.btn{
-  display:block;
-  margin:6px auto;
-  padding:9px;
-  border-radius:10px;
-  text-decoration:none;
-  color:#fff;
-  width:88%;
-}
-
-.whatsapp{background:#25D366;}
-.reservar{background:#7a2cff;}
+.price{color:#00ff9a;font-weight:bold;}
+.stars{color:gold;}
 
 /* MODAL */
 .modal{
@@ -130,53 +73,23 @@ body{
   position:fixed;
   top:0;left:0;
   width:100%;height:100%;
-  background: rgba(0,0,0,0.95);
-  overflow:auto;
-  z-index:2000;
+  background:rgba(0,0,0,0.95);
   padding:20px;
 }
 
-.modal-content{
-  background: rgba(255,255,255,0.06);
-  padding:18px;
-  border-radius:18px;
-  border:1px solid rgba(255,255,255,0.10);
+.modalBox{
+  background:rgba(255,255,255,0.06);
+  padding:15px;
+  border-radius:15px;
 }
 
-.close{
-  float:right;
-  font-size:26px;
-  cursor:pointer;
-}
+.close{float:right;font-size:25px;cursor:pointer;}
 
-textarea{
-  width:100%;
-  height:70px;
-  margin-top:10px;
-  border-radius:10px;
-  border:none;
-  padding:10px;
-  background: rgba(255,255,255,0.08);
-  color:#fff;
-}
-
-.comment{
-  background:rgba(255,255,255,0.12);
-  margin-top:6px;
-  padding:8px;
-  border-radius:10px;
-  font-size:13px;
-}
-
-/* FOOTER */
 .footer{
   text-align:center;
   padding:20px;
-  margin-top:20px;
   font-size:12px;
-  color:#bbb;
-  border-top:1px solid rgba(255,255,255,0.08);
-  background: rgba(20,20,20,0.4);
+  color:#aaa;
 }
 </style>
 </head>
@@ -184,182 +97,67 @@ textarea{
 <body>
 
 <div class="header">
-  <div class="icon" onclick="toggleAccount()">👤</div>
-  <div class="search">
-    <input placeholder="Buscar...">
-  </div>
-  <div class="icon" onclick="toggleMenu()">☰</div>
+  <div class="icon">👤</div>
+  <div class="search"><input placeholder="Buscar usuarios..."></div>
+  <div class="icon">☰</div>
 </div>
 
-<div class="accountMenu" id="accountMenu">
-  <p>Mi perfil</p>
-  <p>Mis reservas</p>
-  <p>Favoritos</p>
-  <p>Configuración</p>
-</div>
+<div class="grid" id="grid"></div>
 
-<div class="menu" id="menu">
-  <p>🏠 Home</p>
-  <p>📂 Catálogo</p>
-  <p>💳 Suscribirse</p>
-  <p>📍 Ubicación</p>
-</div>
-
-<div class="logoContainer">
-  <img src="file_0000000095c071fd937e0a46af9303bb.svg">
-</div>
-
-<div class="perfiles">
-
-  <div class="perfil" onclick="openProfile('Juan Pérez','Caracas','♂','$20','k1.jpg')">
-    <img src="k1.jpg">
-    <h3>Juan Pérez</h3>
-    <div>⭐⭐⭐⭐☆</div>
-    <div>$20</div>
-    <a class="btn whatsapp">WhatsApp</a>
-    <a class="btn reservar">Reservar</a>
-  </div>
-
-  <div class="perfil" onclick="openProfile('María López','Maracay','♀','$25','k2.jpg')">
-    <img src="k2.jpg">
-    <h3>María López</h3>
-    <div>⭐⭐⭐⭐⭐</div>
-    <div>$25</div>
-    <a class="btn whatsapp">WhatsApp</a>
-    <a class="btn reservar">Reservar</a>
-  </div>
-
-  <div class="perfil" onclick="openProfile('Carlos Martínez','Valencia','♂','$30','k3.jpg')">
-    <img src="k3.jpg">
-    <h3>Carlos Martínez</h3>
-    <div>⭐⭐⭐⭐☆</div>
-    <div>$30</div>
-    <a class="btn whatsapp">WhatsApp</a>
-    <a class="btn reservar">Reservar</a>
-  </div>
-
-  <div class="perfil" onclick="openProfile('Ana Torres','Barquisimeto','♀','$28','k4.jpg')">
-    <img src="k4.jpg">
-    <h3>Ana Torres</h3>
-    <div>⭐⭐⭐☆☆</div>
-    <div>$28</div>
-    <a class="btn whatsapp">WhatsApp</a>
-    <a class="btn reservar">Reservar</a>
-  </div>
-
-  <div class="perfil" onclick="openProfile('Luis Gómez','Caracas','♂','$22','k5.jpg')">
-    <img src="k5.jpg">
-    <h3>Luis Gómez</h3>
-    <div>⭐⭐⭐⭐☆</div>
-    <div>$22</div>
-    <a class="btn whatsapp">WhatsApp</a>
-    <a class="btn reservar">Reservar</a>
-  </div>
-
-  <div class="perfil" onclick="openProfile('Sofía Díaz','Valencia','♀','$27','k6.jpg')">
-    <img src="k6.jpg">
-    <h3>Sofía Díaz</h3>
-    <div>⭐⭐⭐⭐⭐</div>
-    <div>$27</div>
-    <a class="btn whatsapp">WhatsApp</a>
-    <a class="btn reservar">Reservar</a>
-  </div>
-
-  <div class="perfil" onclick="openProfile('Pedro Ramírez','Maracaibo','♂','$24','k7.jpg')">
-    <img src="k7.jpg">
-    <h3>Pedro Ramírez</h3>
-    <div>⭐⭐⭐⭐☆</div>
-    <div>$24</div>
-    <a class="btn whatsapp">WhatsApp</a>
-    <a class="btn reservar">Reservar</a>
-  </div>
-
-  <div class="perfil" onclick="openProfile('Lucía Fernández','Maracay','♀','$30','k8.jpg')">
-    <img src="k8.jpg">
-    <h3>Lucía Fernández</h3>
-    <div>⭐⭐⭐⭐⭐</div>
-    <div>$30</div>
-    <a class="btn whatsapp">WhatsApp</a>
-    <a class="btn reservar">Reservar</a>
-  </div>
-
-</div>
-
+<!-- MODAL -->
 <div class="modal" id="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeProfile()">✖</span>
-
+  <div class="modalBox">
+    <span class="close" onclick="closeM()">✖</span>
     <h2 id="name"></h2>
-    <img id="img" style="width:120px;border-radius:50%">
     <p id="info"></p>
-
-    <h3>⭐ Rating</h3>
-    <div id="rating"></div>
-
-    <h3>🎥 Video</h3>
-    <iframe width="100%" height="200" src="https://www.youtube.com/embed/dQw4w9WgXcQ"></iframe>
-
-    <h3>💬 Comentarios</h3>
-    <textarea id="commentText"></textarea>
-    <button onclick="addComment()">Enviar</button>
-    <div id="comments"></div>
+    <div class="stars">⭐⭐⭐⭐⭐</div>
   </div>
 </div>
 
 <div class="footer">
-  © 2026 Catálogo App. Todos los derechos reservados.
+© 2026 Red Social Premium
 </div>
 
 <script>
 
-let currentUser="";
+const users = [
+{name:"Juan Pérez",city:"Caracas",sex:"♂",price:"$20",img:"k1.jpg"},
+{name:"María López",city:"Maracay",sex:"♀",price:"$25",img:"k2.jpg"},
+{name:"Carlos Martínez",city:"Valencia",sex:"♂",price:"$30",img:"k3.jpg"},
+{name:"Ana Torres",city:"Barquisimeto",sex:"♀",price:"$28",img:"k4.jpg"},
+{name:"Luis Gómez",city:"Caracas",sex:"♂",price:"$22",img:"k5.jpg"},
+{name:"Sofía Díaz",city:"Valencia",sex:"♀",price:"$27",img:"k6.jpg"},
+{name:"Pedro Ramírez",city:"Maracaibo",sex:"♂",price:"$24",img:"k7.jpg"},
+{name:"Lucía Fernández",city:"Maracay",sex:"♀",price:"$30",img:"k8.jpg"}
+];
 
-function toggleMenu(){
-  let m=document.getElementById("menu");
-  m.style.display=(m.style.display==="block")?"none":"block";
-}
+const grid=document.getElementById("grid");
 
-function toggleAccount(){
-  let a=document.getElementById("accountMenu");
-  a.style.display=(a.style.display==="block")?"none":"block";
-}
+users.forEach((u,i)=>{
+  const div=document.createElement("div");
+  div.className="card";
+  div.onclick=()=>open(i);
 
-function openProfile(name,city,sex,price,img){
+  div.innerHTML=`
+    <img src="${u.img}">
+    <h3>${u.name}</h3>
+    <div class="stars">⭐⭐⭐⭐☆</div>
+    <div class="price">${u.price}</div>
+    <div>${u.city} | ${u.sex}</div>
+  `;
+
+  grid.appendChild(div);
+});
+
+function open(i){
+  const u=users[i];
+  document.getElementById("name").innerText=u.name;
+  document.getElementById("info").innerText=u.city+" | "+u.sex;
   document.getElementById("modal").style.display="block";
-  document.getElementById("name").innerText=name;
-  document.getElementById("img").src=img;
-  document.getElementById("info").innerText=city+" | "+sex+" | "+price;
-  currentUser=name;
-  loadComments();
-  showRating();
 }
 
-function closeProfile(){
+function closeM(){
   document.getElementById("modal").style.display="none";
-}
-
-function addComment(){
-  let text=document.getElementById("commentText").value;
-  if(!text) return;
-
-  let data=JSON.parse(localStorage.getItem(currentUser)||"[]");
-  data.push(text);
-  localStorage.setItem(currentUser,JSON.stringify(data));
-
-  document.getElementById("commentText").value="";
-  loadComments();
-}
-
-function loadComments(){
-  let data=JSON.parse(localStorage.getItem(currentUser)||"[]");
-  let html="";
-  data.forEach(c=>html+="<div class='comment'>"+c+"</div>");
-  document.getElementById("comments").innerHTML=html;
-}
-
-function showRating(){
-  let r=Math.floor(Math.random()*5)+1;
-  document.getElementById("rating").innerHTML="⭐".repeat(r);
 }
 
 </script>
