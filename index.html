@@ -16,7 +16,7 @@ body {
 /* HERO */
 .hero {
   text-align: center;
-  padding: 90px 20px 30px;
+  padding: 80px 20px 20px;
 }
 
 .logo {
@@ -39,9 +39,6 @@ body {
   padding: 15px;
   text-align: center;
   transition: 0.3s;
-  cursor: pointer;
-  text-decoration: none;
-  color: white;
 }
 
 .perfil:hover {
@@ -71,10 +68,36 @@ body {
 .price {
   color: #00ff88;
   font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* BOTONES */
+.btn {
+  display: block;
+  margin: 6px auto;
+  padding: 10px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  width: 85%;
+  text-align: center;
   font-size: 14px;
 }
 
-/* RESPONSIVE (móvil mantiene 2 columnas igual) */
+.whatsapp {
+  background: linear-gradient(145deg, #25D366, #128C7E);
+}
+
+.reservar {
+  background: linear-gradient(145deg, #ff2ea6, #7a2cff);
+}
+
+.btn:hover {
+  transform: scale(1.05);
+}
+
+/* RESPONSIVE */
 @media (max-width: 500px) {
   .perfiles {
     grid-template-columns: 1fr 1fr;
@@ -91,61 +114,85 @@ body {
 
 <div class="perfiles">
 
-  <a class="perfil" href="kine1.html">
+  <div class="perfil">
     <img src="kine1.jpg">
     <h3>Juan Pérez</h3>
     <div class="stars">⭐⭐⭐⭐☆</div>
     <div class="price">$20</div>
-  </a>
 
-  <a class="perfil" href="kine2.html">
+    <a class="btn whatsapp" href="https://wa.me/123456789">WhatsApp</a>
+    <a class="btn reservar" href="https://wa.me/123456789?text=Hola%20quiero%20reservar%20con%20Juan%20Pérez">Reservar</a>
+  </div>
+
+  <div class="perfil">
     <img src="kine2.jpg">
     <h3>María López</h3>
     <div class="stars">⭐⭐⭐⭐⭐</div>
     <div class="price">$25</div>
-  </a>
 
-  <a class="perfil" href="kine3.html">
+    <a class="btn whatsapp" href="https://wa.me/987654321">WhatsApp</a>
+    <a class="btn reservar" href="https://wa.me/987654321?text=Hola%20quiero%20reservar%20con%20María%20López">Reservar</a>
+  </div>
+
+  <div class="perfil">
     <img src="kine3.jpg">
     <h3>Carlos Martínez</h3>
     <div class="stars">⭐⭐⭐⭐☆</div>
     <div class="price">$30</div>
-  </a>
 
-  <a class="perfil" href="kine4.html">
+    <a class="btn whatsapp" href="https://wa.me/111222333">WhatsApp</a>
+    <a class="btn reservar" href="https://wa.me/111222333?text=Hola%20quiero%20reservar%20con%20Carlos%20Martínez">Reservar</a>
+  </div>
+
+  <div class="perfil">
     <img src="kine4.jpg">
     <h3>Ana Torres</h3>
     <div class="stars">⭐⭐⭐☆☆</div>
     <div class="price">$28</div>
-  </a>
 
-  <a class="perfil" href="kine5.html">
+    <a class="btn whatsapp" href="#">WhatsApp</a>
+    <a class="btn reservar" href="#">Reservar</a>
+  </div>
+
+  <div class="perfil">
     <img src="kine5.jpg">
     <h3>Luis Gómez</h3>
     <div class="stars">⭐⭐⭐⭐☆</div>
     <div class="price">$22</div>
-  </a>
 
-  <a class="perfil" href="kine6.html">
+    <a class="btn whatsapp" href="#">WhatsApp</a>
+    <a class="btn reservar" href="#">Reservar</a>
+  </div>
+
+  <div class="perfil">
     <img src="kine6.jpg">
     <h3>Sofía Díaz</h3>
     <div class="stars">⭐⭐⭐⭐⭐</div>
     <div class="price">$27</div>
-  </a>
 
-  <a class="perfil" href="kine7.html">
+    <a class="btn whatsapp" href="#">WhatsApp</a>
+    <a class="btn reservar" href="#">Reservar</a>
+  </div>
+
+  <div class="perfil">
     <img src="kine7.jpg">
     <h3>Pedro Ramírez</h3>
     <div class="stars">⭐⭐⭐⭐☆</div>
     <div class="price">$24</div>
-  </a>
 
-  <a class="perfil" href="kine8.html">
+    <a class="btn whatsapp" href="#">WhatsApp</a>
+    <a class="btn reservar" href="#">Reservar</a>
+  </div>
+
+  <div class="perfil">
     <img src="kine8.jpg">
     <h3>Lucía Fernández</h3>
     <div class="stars">⭐⭐⭐⭐⭐</div>
     <div class="price">$30</div>
-  </a>
+
+    <a class="btn whatsapp" href="#">WhatsApp</a>
+    <a class="btn reservar" href="#">Reservar</a>
+  </div>
 
 </div>
 
