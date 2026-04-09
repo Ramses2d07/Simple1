@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Marketplace Ultra Pro Fixed</title>
+<title>Marketplace Pro Integrado</title>
 
 <style>
 body{
@@ -18,8 +18,8 @@ body{
 /* HEADER */
 .header{
   display:flex;
-  align-items:center;
   justify-content:space-between;
+  align-items:center;
   padding:12px;
   position:sticky;
   top:0;
@@ -29,7 +29,7 @@ body{
   border-bottom:1px solid rgba(255,255,255,0.08);
 }
 
-.icon{font-size:22px;width:40px;text-align:center;cursor:pointer;}
+.icon{font-size:22px;cursor:pointer;width:40px;text-align:center;}
 
 .search{flex:1;margin:0 10px;}
 .search input{
@@ -57,19 +57,11 @@ body{
 .menu{right:10px;}
 .accountMenu{left:10px;}
 
-.menu p,.accountMenu p{margin:10px 0;cursor:pointer;}
+.menu p,.accountMenu p{cursor:pointer;margin:10px 0;}
 
 /* LOGO */
-.logo{
-  text-align:center;
-  padding:18px;
-}
-
-.logo img{
-  width:90%;
-  max-width:800px;
-  filter:drop-shadow(0 20px 30px rgba(0,0,0,0.8));
-}
+.logo{text-align:center;padding:15px;}
+.logo img{width:90%;max-width:800px;}
 
 /* GRID */
 .grid{
@@ -83,23 +75,10 @@ body{
 .card{
   background:rgba(255,255,255,0.04);
   border:1px solid rgba(255,255,255,0.08);
-  border-radius:22px;
+  border-radius:20px;
   padding:12px;
   text-align:center;
   cursor:pointer;
-  transition:0.3s;
-  position:relative;
-}
-
-.card:hover{
-  transform:translateY(-6px) scale(1.02);
-  border:1px solid rgba(255,255,255,0.15);
-}
-
-.card img{
-  width:80px;
-  height:80px;
-  border-radius:50%;
 }
 
 /* ONLINE */
@@ -134,19 +113,15 @@ body{
   padding:10px;
   width:90%;
   border-radius:12px;
-  font-weight:bold;
-  color:#fff;
   border:none;
+  color:#fff;
+  font-weight:bold;
   cursor:pointer;
 }
 
-.whatsapp{
-  background:linear-gradient(135deg,#1dbf73,#128c7e);
-}
-
-.reservar{
-  background:linear-gradient(135deg,#7a2cff,#4a1bb3);
-}
+.whatsapp{background:linear-gradient(135deg,#1dbf73,#128c7e);}
+.reservar{background:linear-gradient(135deg,#7a2cff,#4a1bb3);}
+.fav{background:rgba(255,255,255,0.08);}
 
 /* PROFILE */
 .profile{
@@ -166,33 +141,24 @@ body{
   background:rgba(255,255,255,0.04);
   border-radius:20px;
   padding:15px;
-  border:1px solid rgba(255,255,255,0.08);
 }
 
+/* PHONE */
 .phone{
   font-size:26px;
-  font-weight:bold;
   color:#25f4a5;
-  margin:10px 0;
+  font-weight:bold;
 }
 
-.media{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-}
-
-.media img,.media video{
-  width:120px;
-  border-radius:12px;
-}
+/* MEDIA */
+.media{display:flex;flex-wrap:wrap;gap:10px;}
+.media img,.media video{width:120px;border-radius:12px;}
 
 /* COMMENTS */
 textarea{
   width:100%;
   height:70px;
   border-radius:10px;
-  border:none;
   padding:10px;
   background:rgba(255,255,255,0.08);
   color:#fff;
@@ -211,7 +177,6 @@ textarea{
   padding:20px;
   font-size:12px;
   color:#aaa;
-  border-top:1px solid rgba(255,255,255,0.08);
 }
 </style>
 </head>
@@ -230,10 +195,9 @@ textarea{
   <p>🏠 Home</p>
   <p>🛍️ Catálogo</p>
   <p>⭐ Suscribirse</p>
-  <p>📍 Ubicación</p>
+  <p onclick="showFavorites()">❤️ Favoritos</p>
 </div>
 
-<!-- PERFIL MENU -->
 <div class="accountMenu">
   <p>Mi cuenta</p>
   <p>Favoritos</p>
@@ -267,7 +231,7 @@ textarea{
 
     <h3>💬 Reseñas</h3>
     <textarea id="txt"></textarea>
-    <button class="btn reservaar" onclick="comment()">Enviar</button>
+    <button class="btn reservar" onclick="comment()">Enviar</button>
     <div id="comments"></div>
 
     <button class="btn whatsapp" onclick="closeP()">Cerrar</button>
@@ -275,13 +239,11 @@ textarea{
   </div>
 </div>
 
-<!-- FOOTER -->
-<div class="footer">
-© 2026 Marketplace Ultra Pro. Todos los derechos reservados.
-</div>
+<div class="footer">© 2026 Marketplace Pro</div>
 
 <script>
 
+/* MENÚS */
 function toggleMenu(){
   let m=document.querySelector(".menu");
   m.style.display=(m.style.display==="block")?"none":"block";
@@ -292,33 +254,60 @@ function toggleAccount(){
   m.style.display=(m.style.display==="block")?"none":"block";
 }
 
+/* FAVORITOS */
+function getFavs(){return JSON.parse(localStorage.getItem("favs")||"[]");}
+function saveFavs(favs){localStorage.setItem("favs",JSON.stringify(favs));}
+
+function toggleFav(i){
+  let favs=getFavs();
+  if(favs.includes(i)) favs=favs.filter(x=>x!==i);
+  else favs.push(i);
+  saveFavs(favs);
+  renderGrid();
+}
+
+function isFav(i){return getFavs().includes(i);}
+
+/* USERS */
 const users=[
-["Juan Pérez","Caracas","♂","k1.jpg","+58 412 111 1111","Servicio premium",5],
-["María López","Maracay","♀","k2.jpg","+58 412 222 2222","Atención profesional",4],
-["Carlos Martínez","Valencia","♂","k3.jpg","+58 412 333 3333","Experiencia confiable",5],
-["Ana Torres","Barquisimeto","♀","k4.jpg","+58 412 444 4444","Calidad garantizada",4],
-["Luis Gómez","Caracas","♂","k5.jpg","+58 412 555 5555","Servicio rápido",3],
-["Sofía Díaz","Valencia","♀","k6.jpg","+58 412 666 6666","Alta calidad",5],
-["Pedro Ramírez","Maracaibo","♂","k7.jpg","+58 412 777 7777","Profesional",4],
-["Lucía Fernández","Maracay","♀","k8.jpg","+58 412 888 8888","Premium",5]
+["Juan Pérez","Caracas","♂","k1.jpg","+58 412 111 1111","Premium",5],
+["María López","Maracay","♀","k2.jpg","+58 412 222 2222","Pro",4],
+["Carlos Martínez","Valencia","♂","k3.jpg","+58 412 333 3333","VIP",5],
+["Ana Torres","Barquisimeto","♀","k4.jpg","+58 412 444 4444","Elite",4],
+["Luis Gómez","Caracas","♂","k5.jpg","+58 412 555 5555","Fast",3],
+["Sofía Díaz","Valencia","♀","k6.jpg","+58 412 666 6666","Top",5],
+["Pedro Ramírez","Maracaibo","♂","k7.jpg","+58 412 777 7777","Pro",4],
+["Lucía Fernández","Maracay","♀","k8.jpg","+58 412 888 8888","Max",5]
 ];
 
 let current=0;
 let grid=document.getElementById("grid");
 
+function renderGrid(){
+grid.innerHTML="";
 users.forEach((u,i)=>{
 grid.innerHTML+=`
 <div class="card" onclick="openP(${i})">
-<img src="${u[3]}">
+
 <h3>${u[0]} <span class="online"></span></h3>
+
 <div>${u[1]} | ${u[2]}</div>
 <div class="stars">${"⭐".repeat(u[6])}</div>
 
 <button class="btn whatsapp">WhatsApp</button>
 <button class="btn reservar">Reservar</button>
+
+<button class="btn fav" onclick="toggleFav(${i});event.stopPropagation();">
+${isFav(i)?"❤️ Guardado":"🤍 Favorito"}
+</button>
+
 </div>`;
 });
+}
 
+renderGrid();
+
+/* PROFILE */
 function openP(i){
 current=i;
 document.getElementById("profile").style.display="block";
@@ -332,19 +321,17 @@ loadMedia();
 loadComments();
 }
 
-function closeP(){
-document.getElementById("profile").style.display="none";
-}
+function closeP(){document.getElementById("profile").style.display="none";}
 
+/* MEDIA */
 function upload(e){
 let files=e.target.files;
 for(let f of files){
 let r=new FileReader();
 r.onload=function(ev){
-let key="m_"+current;
-let arr=JSON.parse(localStorage.getItem(key)||"[]");
+let arr=JSON.parse(localStorage.getItem("m_"+current)||"[]");
 arr.push({data:ev.target.result,type:f.type});
-localStorage.setItem(key,JSON.stringify(arr));
+localStorage.setItem("m_"+current,JSON.stringify(arr));
 loadMedia();
 };
 r.readAsDataURL(f);
@@ -355,24 +342,21 @@ function loadMedia(){
 let box=document.getElementById("media");
 box.innerHTML="";
 let arr=JSON.parse(localStorage.getItem("m_"+current)||"[]");
-
 arr.forEach(m=>{
-if(m.type.includes("image")){
-box.innerHTML+=`<img src="${m.data}">`;
-}else{
-box.innerHTML+=`<video src="${m.data}" controls></video>`;
-}
+box.innerHTML+=m.type.includes("image")
+? `<img src="${m.data}">`
+: `<video src="${m.data}" controls></video>`;
 });
 }
 
+/* COMMENTS */
 function comment(){
 let t=document.getElementById("txt").value;
 if(!t)return;
 
-let key="c_"+current;
-let arr=JSON.parse(localStorage.getItem(key)||"[]");
+let arr=JSON.parse(localStorage.getItem("c_"+current)||"[]");
 arr.push(t);
-localStorage.setItem(key,JSON.stringify(arr));
+localStorage.setItem("c_"+current,JSON.stringify(arr));
 
 document.getElementById("txt").value="";
 loadComments();
@@ -380,8 +364,23 @@ loadComments();
 
 function loadComments(){
 let box=document.getElementById("comments");
-let arr=JSON.parse(localStorage.getItem("c_"+current)||"[]");
-box.innerHTML=arr.map(c=>`<div class="comment">${c}</div>`).join("");
+box.innerHTML=(JSON.parse(localStorage.getItem("c_"+current)||"[]"))
+.map(c=>`<div class="comment">${c}</div>`).join("");
+}
+
+/* FAVORITOS VIEW */
+function showFavorites(){
+let favs=getFavs();
+grid.innerHTML="";
+favs.forEach(i=>{
+let u=users[i];
+grid.innerHTML+=`
+<div class="card" onclick="openP(${i})">
+<h3>${u[0]} ❤️ <span class="online"></span></h3>
+<div>${u[1]}</div>
+<div class="stars">${"⭐".repeat(u[6])}</div>
+</div>`;
+});
 }
 
 </script>
