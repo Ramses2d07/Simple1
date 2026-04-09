@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Marketplace Pro Level 3</title>
+<title>Marketplace Pro Final Fix</title>
 
 <style>
 body{
@@ -38,6 +38,22 @@ body{
   color:#fff;
 }
 
+/* MENÚ */
+.menu,.accountMenu{
+  display:none;
+  position:absolute;
+  top:60px;
+  width:200px;
+  padding:10px;
+  border-radius:14px;
+  background:rgba(20,20,20,0.9);
+  border:1px solid rgba(255,255,255,0.1);
+  z-index:9999;
+}
+.menu{right:10px;}
+.accountMenu{left:10px;}
+.menu p,.accountMenu p{cursor:pointer;margin:10px 0;}
+
 /* GRID */
 .grid{
   display:grid;
@@ -46,49 +62,59 @@ body{
   padding:15px;
 }
 
-/* CARD PRO */
+/* CARD */
 .card{
   background:rgba(255,255,255,0.04);
-  border-radius:18px;
+  border-radius:20px;
   padding:12px;
   border:1px solid rgba(255,255,255,0.08);
   cursor:pointer;
-  position:relative;
-}
-
-/* VERIFIED */
-.verified{
-  color:#00ffcc;
-  font-size:12px;
-  margin-left:5px;
 }
 
 /* ONLINE */
 .online{
-  width:10px;
-  height:10px;
+  width:10px;height:10px;
   border-radius:50%;
   display:inline-block;
   background:#00ff88;
   margin-left:6px;
+  box-shadow:0 0 10px #00ff88;
 }
 
-/* GALLERY */
-.gallery{
+/* ⭐ ESTRELLAS (FIX REAL) */
+.stars{
+  color:#ffd700;
+  font-size:14px;
+  margin-top:5px;
+  letter-spacing:1px;
+}
+
+/* GALERÍA */
+.miniGallery{
   display:flex;
   gap:5px;
-  overflow-x:auto;
   margin-top:10px;
-}
-
-.gallery img{
-  width:70px;
-  height:70px;
+  min-height:45px;
+  align-items:center;
+  justify-content:center;
+  border:1px dashed rgba(255,255,255,0.15);
   border-radius:10px;
-  object-fit:cover;
+  padding:5px;
 }
 
-/* BUTTONS */
+.miniGallery img{
+  width:40px;
+  height:40px;
+  object-fit:cover;
+  border-radius:8px;
+}
+
+.placeholder{
+  font-size:10px;
+  opacity:0.5;
+}
+
+/* BOTONES */
 .btn{
   display:block;
   margin:6px auto;
@@ -98,6 +124,7 @@ body{
   border:none;
   font-weight:bold;
   color:#fff;
+  cursor:pointer;
 }
 .wp{background:#1dbf73;}
 .res{background:#7a2cff;}
@@ -121,38 +148,16 @@ body{
 }
 
 .phone{
-  font-size:28px;
+  font-size:26px;
   color:#25f4a5;
 }
 
-/* FEED POST */
-.post{
-  margin-top:15px;
-  background:rgba(255,255,255,0.04);
-  padding:10px;
-  border-radius:12px;
-}
-
-.post img{
-  width:100%;
-  border-radius:10px;
-}
-
-.like{
-  margin-top:5px;
-  cursor:pointer;
-  color:#ff4d6d;
-}
-
-/* FLOAT BACK */
-.back{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  background:#7a2cff;
-  padding:12px 14px;
-  border-radius:50px;
-  cursor:pointer;
+/* FOOTER */
+.footer{
+  text-align:center;
+  padding:20px;
+  font-size:12px;
+  color:#aaa;
 }
 </style>
 </head>
@@ -160,9 +165,20 @@ body{
 <body>
 
 <div class="header">
-  <div class="icon">👤</div>
-  <div class="search"><input placeholder="Buscar..."></div>
-  <div class="icon">☰</div>
+  <div class="icon" onclick="toggleAccount()">👤</div>
+  <div class="search"><input placeholder="Buscar servicios..."></div>
+  <div class="icon" onclick="toggleMenu()">☰</div>
+</div>
+
+<div class="menu">
+  <p onclick="showAll()">🏠 Home</p>
+  <p onclick="showFavorites()">❤️ Favoritos</p>
+  <p onclick="goBack()">🔙 Volver</p>
+</div>
+
+<div class="accountMenu">
+  <p>Mi cuenta</p>
+  <p>Reservas</p>
 </div>
 
 <div class="grid" id="grid"></div>
@@ -171,81 +187,180 @@ body{
   <div class="box">
 
     <h2 id="name"></h2>
+    <p id="info"></p>
     <div class="phone" id="phone"></div>
 
     <h3>📸 Galería</h3>
-    <div class="gallery" id="gallery"></div>
+    <input type="file" multiple accept="image/*,video/*" onchange="upload(event)">
+    <div class="miniGallery" id="media"></div>
 
-    <h3>📢 Publicaciones</h3>
-    <div id="feed"></div>
+    <h3>💬 Comentarios</h3>
+    <textarea id="txt"></textarea>
+    <button class="btn res" onclick="comment()">Enviar</button>
+    <div id="comments"></div>
 
-    <button class="btn wp">WhatsApp</button>
-    <button class="btn res">Reservar</button>
-    <button class="btn fav">Favorito</button>
+    <button class="btn wp" onclick="closeP()">Cerrar</button>
 
-    <button class="btn res" onclick="closeP()">Cerrar</button>
   </div>
 </div>
 
-<div class="back" onclick="render()">🔙</div>
+<div class="footer">
+  © 2026 Marketplace Pro. Todos los derechos reservados.
+</div>
 
 <script>
 
+function toggleMenu(){
+  let m=document.querySelector(".menu");
+  m.style.display=(m.style.display==="block")?"none":"block";
+}
+
+function toggleAccount(){
+  let m=document.querySelector(".accountMenu");
+  m.style.display=(m.style.display==="block")?"none":"block";
+}
+
+/* FAVORITOS */
+function getFavs(){return JSON.parse(localStorage.getItem("favs")||"[]");}
+function saveFavs(f){localStorage.setItem("favs",JSON.stringify(f));}
+function isFav(i){return getFavs().includes(i);}
+
+function toggleFav(i){
+  let f=getFavs();
+  if(f.includes(i)) f=f.filter(x=>x!==i);
+  else f.push(i);
+  saveFavs(f);
+  renderGrid();
+}
+
+/* USERS */
 const users=[
-["Juan Pérez","k1.jpg",true],
-["María López","k2.jpg",true],
-["Carlos Martínez","k3.jpg",false],
-["Ana Torres","k4.jpg",true]
+["Juan Pérez","Caracas","+58","k1.jpg","+58 111",5],
+["María López","Maracay","+58","k2.jpg","+58 222",4],
+["Carlos Martínez","Valencia","+58","k3.jpg","+58 333",5],
+["Ana Torres","Barquisimeto","+58","k4.jpg","+58 444",3],
+["Luis Gómez","Caracas","+58","k5.jpg","+58 555",4],
+["Sofía Díaz","Valencia","+58","k6.jpg","+58 666",5],
+["Pedro Ramírez","Maracaibo","+58","k7.jpg","+58 777",4],
+["Lucía Fernández","Maracay","+58","k8.jpg","+58 888",5]
 ];
 
-function render(){
-let g=document.getElementById("grid");
-g.innerHTML="";
+let current=0;
+let grid=document.getElementById("grid");
+
+function renderGrid(){
+grid.innerHTML="";
 
 users.forEach((u,i)=>{
-g.innerHTML+=`
+
+let stars="⭐".repeat(u[5])+"☆".repeat(5-u[5]);
+
+grid.innerHTML+=`
 <div class="card" onclick="openP(${i})">
 
-<h3>${u[0]} ${u[2]?"<span class='verified'>✔</span>":""}</h3>
-<span class="online"></span>
+<h3>${u[0]} <span class="online"></span></h3>
 
-<div class="gallery">
-<img src="${u[1]}">
-<img src="${u[1]}">
-</div>
+<div>${u[1]}</div>
+
+<div class="stars">${stars}</div>
+
+<div class="miniGallery" id="mini_${i}"></div>
 
 <button class="btn wp">WhatsApp</button>
 <button class="btn res">Reservar</button>
 
+<button class="btn fav" onclick="toggleFav(${i});event.stopPropagation();">
+${isFav(i)?"❤️ Guardado":"🤍 Favorito"}
+</button>
+
 </div>`;
+
+setTimeout(()=>loadMini(i),0);
 });
 }
 
-function openP(i){
-document.getElementById("profile").style.display="block";
-document.getElementById("name").innerText=users[i][0];
-document.getElementById("phone").innerText="📞 +58 xxx";
+function loadMini(i){
+let box=document.getElementById("mini_"+i);
+if(!box) return;
 
-let feed=document.getElementById("feed");
-feed.innerHTML="";
+let arr=JSON.parse(localStorage.getItem("m_"+i)||"[]");
+let imgs=arr.filter(x=>x.type.includes("image")).slice(0,3);
 
-for(let x=0;x<3;x++){
-feed.innerHTML+=`
-<div class="post">
-<img src="${users[i][1]}">
-<div class="like">❤️ Me gusta</div>
-</div>`;
+if(imgs.length===0){
+  box.innerHTML=`<div class="placeholder">Sin fotos</div>`;
+  return;
 }
 
-let gal=document.getElementById("gallery");
-gal.innerHTML=`<img src="${users[i][1]}"><img src="${users[i][1]}">`;
+box.innerHTML=imgs.map(img=>`<img src="${img.data}">`).join("");
+}
+
+renderGrid();
+
+/* PROFILE */
+function openP(i){
+current=i;
+document.getElementById("profile").style.display="block";
+
+document.getElementById("name").innerText=users[i][0];
+document.getElementById("info").innerText=users[i][1];
+document.getElementById("phone").innerText=users[i][4];
+
+loadMedia();
+loadComments();
 }
 
 function closeP(){
 document.getElementById("profile").style.display="none";
 }
 
-render();
+function upload(e){
+let files=e.target.files;
+for(let f of files){
+let r=new FileReader();
+r.onload=function(ev){
+let arr=JSON.parse(localStorage.getItem("m_"+current)||"[]");
+arr.push({data:ev.target.result,type:f.type});
+localStorage.setItem("m_"+current,JSON.stringify(arr));
+loadMedia();
+renderGrid();
+};
+r.readAsDataURL(f);
+}
+}
+
+function loadMedia(){
+let box=document.getElementById("media");
+box.innerHTML="";
+let arr=JSON.parse(localStorage.getItem("m_"+current)||"[]");
+
+arr.forEach(m=>{
+box.innerHTML+=m.type.includes("image")
+? `<img src="${m.data}">`
+: `<video src="${m.data}" controls></video>`;
+});
+}
+
+function comment(){
+let t=document.getElementById("txt").value;
+if(!t)return;
+
+let arr=JSON.parse(localStorage.getItem("c_"+current)||"[]");
+arr.push(t);
+localStorage.setItem("c_"+current,JSON.stringify(arr));
+
+document.getElementById("txt").value="";
+loadComments();
+}
+
+function loadComments(){
+let box=document.getElementById("comments");
+box.innerHTML=(JSON.parse(localStorage.getItem("c_"+current)||"[]"))
+.map(c=>`<div class="comment">${c}</div>`).join("");
+}
+
+function showAll(){renderGrid();}
+function showFavorites(){grid.innerHTML="Favoritos activos";}
+function goBack(){renderGrid();}
 
 </script>
 
