@@ -20,8 +20,10 @@ body {
   text-align: center;
 }
 
-.nav img {
+.nav .logo {
   max-width: 220px;
+  width: 90%;
+  height: auto;
 }
 
 /* HERO */
@@ -31,7 +33,7 @@ body {
 }
 
 /* LOGO PRINCIPAL */
-.logo {
+.hero .logo {
   max-width: 500px;
   width: 90%;
   height: auto;
@@ -152,16 +154,32 @@ input {
   background: #111;
   margin-top: 20px;
 }
+
+/* SVG LOGO */
+.logo text {
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+}
 </style>
 </head>
 <body>
 
 <div class="nav">
-  <img src="logo.png" alt="SimpleSexxxVzla">
+  <svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 150">
+    <rect width="500" height="150" fill="#8a2be2" rx="20" />
+    <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#fff" font-size="48">
+      SimpleSexxxVzla
+    </text>
+  </svg>
 </div>
 
 <div class="hero">
-  <img src="logo.png" class="logo" alt="SimpleSexxxVzla">
+  <svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 150">
+    <rect width="500" height="150" fill="#8a2be2" rx="20" />
+    <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#fff" font-size="48">
+      SimpleSexxxVzla
+    </text>
+  </svg>
 
   <input type="text" id="buscador" placeholder="Buscar por nombre o especialidad...">
 </div>
