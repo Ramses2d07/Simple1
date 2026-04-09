@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>simplesexxxvzla</title>
+<title>simplesexxxvzla | Reserva tu Kinesiólogo</title>
 
 <style>
 body { 
@@ -19,7 +19,7 @@ body {
   padding: 140px 20px 40px 20px;
 }
 
-/* LOGO MÁS GRANDE (x2+) */
+/* LOGO MÁS GRANDE */
 .logo {
   max-width: 650px;
   width: 100%;
@@ -43,7 +43,7 @@ input {
 /* GRID: DOS COLUMNAS */
 .perfiles { 
   display: grid; 
-  grid-template-columns: repeat(2, 1fr); /* Dos columnas fijas */
+  grid-template-columns: repeat(2, 1fr); /* Dos columnas */
   gap: 20px; 
   padding: 20px;
 }
@@ -54,6 +54,11 @@ input {
   border-radius: 12px; 
   padding: 15px; 
   text-align: center; 
+  transition: 0.3s;
+}
+
+.perfil:hover {
+  transform: scale(1.05);
 }
 
 .perfil img { 
@@ -65,30 +70,44 @@ input {
 
 .perfil h2 { 
   color: #8a2be2;
+  margin: 10px 0 5px 0;
+}
+
+.perfil p {
+  margin: 5px 0;
 }
 
 .precio {
   color: #00ff88;
   font-weight: bold;
+  margin-bottom: 10px;
 }
 
-/* BOTONES */
+/* BOTONES BASE */
 .btn {
   display: block;
-  margin: 10px 0;
-  padding: 12px;
+  margin: 5px auto;
+  padding: 10px;
   border-radius: 10px;
   text-decoration: none;
   color: white;
   font-weight: bold;
+  width: 80%;
+  text-align: center;
+  transition: 0.3s;
 }
 
+.btn:hover {
+  transform: scale(1.05);
+}
+
+/* BOTONES ESPECÍFICOS */
 .whatsapp {
-  background: #25D366;
+  background: linear-gradient(145deg, #25D366, #128C7E);
 }
 
 .reservar {
-  background: #8a2be2;
+  background: linear-gradient(145deg, #ff2ea6, #7a2cff);
 }
 
 /* FOOTER */
@@ -96,35 +115,106 @@ input {
   text-align: center;
   padding: 20px;
   background: #111;
+  margin-top: 20px;
+}
+
+/* RESPONSIVO */
+@media (max-width: 768px) {
+  .perfiles {
+    grid-template-columns: 1fr; /* Una columna en móvil */
+  }
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOGO -->
+<!-- HERO -->
 <div class="hero">
-  <img src="file_0000000095c071fd937e0a46af9303bb.svg" class="logo">
-
-  <input type="text" id="buscador" placeholder="Buscar...">
+  <img src="file_0000000095c071fd937e0a46af9303bb.svg" class="logo" alt="SimpleSexxxVzla">
+  <input type="text" id="buscador" placeholder="Buscar por nombre o especialidad...">
 </div>
 
-<!-- 8 PERFILES -->
+<!-- PERFILES -->
 <div class="perfiles" id="lista">
 
-  <div class="perfil"><img src="kine1.jpg"><h2>Juan Pérez</h2><p>Rehabilitación</p><p class="precio">$20</p></div>
-  <div class="perfil"><img src="kine2.jpg"><h2>María López</h2><p>Deportiva</p><p class="precio">$25</p></div>
-  <div class="perfil"><img src="kine3.jpg"><h2>Carlos Martínez</h2><p>Neurológica</p><p class="precio">$30</p></div>
-  <div class="perfil"><img src="kine4.jpg"><h2>Ana Rodríguez</h2><p>Masajes</p><p class="precio">$35</p></div>
-  <div class="perfil"><img src="kine5.jpg"><h2>Luis Fernández</h2><p>Deportiva</p><p class="precio">$28</p></div>
-  <div class="perfil"><img src="kine6.jpg"><h2>Sofía Torres</h2><p>Relajante</p><p class="precio">$22</p></div>
-  <div class="perfil"><img src="kine7.jpg"><h2>Pedro Gómez</h2><p>Postoperatoria</p><p class="precio">$40</p></div>
-  <div class="perfil"><img src="kine8.jpg"><h2>Laura Díaz</h2><p>Descontracturante</p><p class="precio">$27</p></div>
+  <div class="perfil">
+    <img src="kine1.jpg" alt="Juan Pérez">
+    <h2>Juan Pérez</h2>
+    <p>Rehabilitación física</p>
+    <p class="precio">$20</p>
+    <a class="btn whatsapp" href="https://wa.me/123456789?text=Hola quiero agendar una sesión">WhatsApp</a>
+    <a class="btn reservar" href="#">Reservar</a>
+  </div>
+
+  <div class="perfil">
+    <img src="kine2.jpg" alt="María López">
+    <h2>María López</h2>
+    <p>Terapia deportiva</p>
+    <p class="precio">$25</p>
+    <a class="btn whatsapp" href="https://wa.me/987654321?text=Hola quiero agendar una sesión">WhatsApp</a>
+    <a class="btn reservar" href="#">Reservar</a>
+  </div>
+
+  <div class="perfil">
+    <img src="kine3.jpg" alt="Carlos Martínez">
+    <h2>Carlos Martínez</h2>
+    <p>Fisioterapia neurológica</p>
+    <p class="precio">$30</p>
+    <a class="btn whatsapp" href="https://wa.me/111222333?text=Hola quiero agendar una sesión">WhatsApp</a>
+    <a class="btn reservar" href="#">Reservar</a>
+  </div>
+
+  <div class="perfil">
+    <img src="kine4.jpg" alt="Ana Rodríguez">
+    <h2>Ana Rodríguez</h2>
+    <p>Masajes relajantes</p>
+    <p class="precio">$35</p>
+    <a class="btn whatsapp" href="#">WhatsApp</a>
+    <a class="btn reservar" href="#">Reservar</a>
+  </div>
+
+  <div class="perfil">
+    <img src="kine5.jpg" alt="Luis Fernández">
+    <h2>Luis Fernández</h2>
+    <p>Terapia deportiva</p>
+    <p class="precio">$28</p>
+    <a class="btn whatsapp" href="#">WhatsApp</a>
+    <a class="btn reservar" href="#">Reservar</a>
+  </div>
+
+  <div class="perfil">
+    <img src="kine6.jpg" alt="Sofía Torres">
+    <h2>Sofía Torres</h2>
+    <p>Masajes relajantes</p>
+    <p class="precio">$22</p>
+    <a class="btn whatsapp" href="#">WhatsApp</a>
+    <a class="btn reservar" href="#">Reservar</a>
+  </div>
+
+  <div class="perfil">
+    <img src="kine7.jpg" alt="Pedro Gómez">
+    <h2>Pedro Gómez</h2>
+    <p>Rehabilitación postoperatoria</p>
+    <p class="precio">$40</p>
+    <a class="btn whatsapp" href="#">WhatsApp</a>
+    <a class="btn reservar" href="#">Reservar</a>
+  </div>
+
+  <div class="perfil">
+    <img src="kine8.jpg" alt="Laura Díaz">
+    <h2>Laura Díaz</h2>
+    <p>Descontracturante</p>
+    <p class="precio">$27</p>
+    <a class="btn whatsapp" href="#">WhatsApp</a>
+    <a class="btn reservar" href="#">Reservar</a>
+  </div>
 
 </div>
 
+<!-- FOOTER -->
 <div class="footer">
-  © 2026 simplesexxxvzla
+  © 2026 simplesexxxvzla - Todos los derechos reservados
 </div>
 
 <script>
