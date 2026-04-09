@@ -19,18 +19,18 @@ body {
   padding: 140px 20px 40px 20px;
 }
 
-/* LOGO MÁS GRANDE */
+/* LOGO GRANDE */
 .logo {
   max-width: 650px;
   width: 100%;
   height: auto;
   display: block;
-  margin: 0 auto;
+  margin: 0 auto 30px auto;
 }
 
 /* BUSCADOR */
 input {
-  margin-top: 30px;
+  margin-top: 10px;
   padding: 12px;
   width: 90%;
   max-width: 400px;
@@ -40,10 +40,10 @@ input {
   color: #fff;
 }
 
-/* GRID: DOS COLUMNAS */
+/* GRID FIJO 2 COLUMNAS */
 .perfiles { 
   display: grid; 
-  grid-template-columns: repeat(2, 1fr); /* DOS COLUMNAS */
+  grid-template-columns: 1fr 1fr; /* siempre 2 columnas */
   gap: 20px; 
   padding: 20px;
 }
@@ -117,13 +117,6 @@ input {
   background: #111;
   margin-top: 20px;
 }
-
-/* RESPONSIVO */
-@media (max-width: 768px) {
-  .perfiles {
-    grid-template-columns: 1fr; /* UNA COLUMNA EN MÓVIL */
-  }
-}
 </style>
 </head>
 <body>
@@ -142,7 +135,7 @@ input {
     <h2>Juan Pérez</h2>
     <p>Rehabilitación física</p>
     <p class="precio">$20</p>
-    <a class="btn whatsapp" href="https://wa.me/123456789?text=Hola quiero agendar una sesión">WhatsApp</a>
+    <a class="btn whatsapp" href="#">WhatsApp</a>
     <a class="btn reservar" href="#">Reservar</a>
   </div>
 
@@ -151,7 +144,7 @@ input {
     <h2>María López</h2>
     <p>Terapia deportiva</p>
     <p class="precio">$25</p>
-    <a class="btn whatsapp" href="https://wa.me/987654321?text=Hola quiero agendar una sesión">WhatsApp</a>
+    <a class="btn whatsapp" href="#">WhatsApp</a>
     <a class="btn reservar" href="#">Reservar</a>
   </div>
 
@@ -160,7 +153,7 @@ input {
     <h2>Carlos Martínez</h2>
     <p>Fisioterapia neurológica</p>
     <p class="precio">$30</p>
-    <a class="btn whatsapp" href="https://wa.me/111222333?text=Hola quiero agendar una sesión">WhatsApp</a>
+    <a class="btn whatsapp" href="#">WhatsApp</a>
     <a class="btn reservar" href="#">Reservar</a>
   </div>
 
@@ -169,7 +162,7 @@ input {
     <h2>Ana Torres</h2>
     <p>Terapia ocupacional</p>
     <p class="precio">$28</p>
-    <a class="btn whatsapp" href="https://wa.me/444555666?text=Hola quiero agendar una sesión">WhatsApp</a>
+    <a class="btn whatsapp" href="#">WhatsApp</a>
     <a class="btn reservar" href="#">Reservar</a>
   </div>
 
@@ -178,7 +171,7 @@ input {
     <h2>Luis Gómez</h2>
     <p>Rehabilitación deportiva</p>
     <p class="precio">$22</p>
-    <a class="btn whatsapp" href="https://wa.me/777888999?text=Hola quiero agendar una sesión">WhatsApp</a>
+    <a class="btn whatsapp" href="#">WhatsApp</a>
     <a class="btn reservar" href="#">Reservar</a>
   </div>
 
@@ -187,7 +180,7 @@ input {
     <h2>Sofía Díaz</h2>
     <p>Fisioterapia respiratoria</p>
     <p class="precio">$27</p>
-    <a class="btn whatsapp" href="https://wa.me/222333444?text=Hola quiero agendar una sesión">WhatsApp</a>
+    <a class="btn whatsapp" href="#">WhatsApp</a>
     <a class="btn reservar" href="#">Reservar</a>
   </div>
 
@@ -196,7 +189,7 @@ input {
     <h2>Pedro Ramírez</h2>
     <p>Terapia manual</p>
     <p class="precio">$24</p>
-    <a class="btn whatsapp" href="https://wa.me/555666777?text=Hola quiero agendar una sesión">WhatsApp</a>
+    <a class="btn whatsapp" href="#">WhatsApp</a>
     <a class="btn reservar" href="#">Reservar</a>
   </div>
 
@@ -205,7 +198,7 @@ input {
     <h2>Lucía Fernández</h2>
     <p>Rehabilitación neurológica</p>
     <p class="precio">$30</p>
-    <a class="btn whatsapp" href="https://wa.me/888999000?text=Hola quiero agendar una sesión">WhatsApp</a>
+    <a class="btn whatsapp" href="#">WhatsApp</a>
     <a class="btn reservar" href="#">Reservar</a>
   </div>
 
@@ -221,7 +214,6 @@ const buscador = document.getElementById("buscador");
 buscador.addEventListener("keyup", function() {
   let filtro = buscador.value.toLowerCase();
   let perfiles = document.querySelectorAll(".perfil");
-
   perfiles.forEach(p => {
     let texto = p.innerText.toLowerCase();
     p.style.display = texto.includes(filtro) ? "block" : "none";
