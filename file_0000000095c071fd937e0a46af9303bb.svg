@@ -1,3 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>simplesexxxvzla | Reserva tu Kinesiólogo</title>
+
+<style>
+body { 
+  font-family: Arial, sans-serif; 
+  margin: 0; 
+  background-color: #000;
+  color: #fff;
+}
+
+/* NAVBAR */
+.nav {
+  background: #111;
+  padding: 15px;
+  text-align: center;
+}
+
+/* HERO */
+.hero {
+  text-align: center;
+  padding: 80px 20px 30px 20px;
+}
+
+/* LOGO */
+.logo {
+  max-width: 220px;
+  width: 90%;
+  height: auto;
+  margin: 0 auto;
+  display: block;
+}
+
+/* BUSCADOR */
+input {
+  margin-top: 30px;
+  padding: 12px;
+  width: 90%;
+  max-width: 400px;
+  border-radius: 8px;
+  border: none;
+  background: #222;
+  color: #fff;
+}
+
+/* GRID */
+.perfiles { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+  gap: 20px; 
+  padding: 20px;
+}
+
+/* CARD */
+.perfil { 
+  background: #111;
+  border-radius: 12px; 
+  padding: 15px; 
+  text-align: center; 
+  transition: 0.3s;
+}
+
+.perfil:hover {
+  transform: scale(1.05);
+}
+
+.perfil img { 
+  width: 100px; 
+  height: 100px; 
+  border-radius: 50%; 
+  object-fit: cover;
+}
+
+.perfil h2 { 
+  color: #8a2be2;
+  margin: 10px 0;
+}
+
+.precio {
+  color: #00ff88;
+  font-weight: bold;
+}
+
+/* BOTONES BASE */
+.btn {
+  display: block;
+  margin: 10px 0;
+  padding: 12px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  position: relative;
+  overflow: hidden;
+  transition: 0.3s;
+}
+
+/* EFECTO BRILLO */
+.btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(255,255,255,0.4),
+    rgba(255,255,255,0)
+  );
+  transform: skewX(-25deg);
+}
+
+.btn:hover::before {
+  left: 130%;
+  transition: 0.5s;
+}
+
+/* BOTÓN WHATSAPP */
+.whatsapp {
+  background: linear-gradient(145deg, #25D366, #128C7E);
+  box-shadow: 
+    inset 0 3px 6px rgba(255,255,255,0.3),
+    inset 0 -4px 8px rgba(0,0,0,0.4),
+    0 4px 10px rgba(0,0,0,0.6);
+}
+
+/* BOTÓN RESERVAR */
+.reservar {
+  background: linear-gradient(145deg, #ff2ea6, #7a2cff);
+  box-shadow: 
+    inset 0 3px 6px rgba(255,255,255,0.4),
+    inset 0 -4px 10px rgba(0,0,0,0.5),
+    0 4px 12px rgba(122,44,255,0.6);
+}
+
+/* HOVER */
+.btn:hover {
+  transform: scale(1.05);
+}
+
+/* FOOTER */
+.footer {
+  text-align: center;
+  padding: 20px;
+  background: #111;
+  margin-top: 20px;
+}
+
+/* SVG LOGO */
+.nav svg, .hero svg {
+  max-width: 220px;
+  width: 90%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<div class="nav">
+  <!-- SVG incrustado -->
+  <svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 150">
+    <rect width="500" height="150" fill="#8a2be2" rx="20" />
+    <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#fff" font-size="48">
+      SimpleSexxxVzla
+    </text>
+  </svg>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <!-- SVG incrustado -->
+  <svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 150">
+    <rect width="500" height="150" fill="#8a2be2" rx="20" />
+    <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#fff" font-size="48">
+      SimpleSexxxVzla
+    </text>
+  </svg>
+
+  <input type="text" id="buscador" placeholder="Buscar por nombre o especialidad...">
+</div>
+
+<!-- PERFILES -->
+<div class="perfiles" id="lista">
+
+  <div class="perfil">
+    <img src="kine1.jpg" alt="Juan Pérez">
+    <h2>Juan Pérez</h2>
+    <p>Rehabilitación física</p>
+    <p class="precio">$20</p>
+    <a class="btn whatsapp" href="https://wa.me/123456789?text=Hola quiero agendar una sesión">WhatsApp</a>
+    <a class="btn reservar" href="#">Reservar</a>
+  </div>
+
+  <div class="perfil">
+    <img src="kine2.jpg" alt="María López">
+    <h2>María López</h2>
+    <p>Terapia deportiva</p>
+    <p class="precio">$25</p>
+    <a class="btn whatsapp" href="https://wa.me/987654321?text=Hola quiero agendar una sesión">WhatsApp</a>
+    <a class="btn reservar" href="#">Reservar</a>
+  </div>
+
+  <div class="perfil">
+    <img src="kine3.jpg" alt="Carlos Martínez">
+    <h2>Carlos Martínez</h2>
+    <p>Fisioterapia neurológica</p>
+    <p class="precio">$30</p>
+    <a class="btn whatsapp" href="https://wa.me/111222333?text=Hola quiero agendar una sesión">WhatsApp</a>
+    <a class="btn reservar" href="#">Reservar</a>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  © 2026 simplesexxxvzla - Todos los derechos reservados
+</div>
+
+<script>
+const buscador = document.getElementById("buscador");
+buscador.addEventListener("keyup", function() {
+  let filtro = buscador.value.toLowerCase();
+  let perfiles = document.querySelectorAll(".perfil");
+
+  perfiles.forEach(p => {
+    let texto = p.innerText.toLowerCase();
+    p.style.display = texto.includes(filtro) ? "block" : "none";
+  });
+});
+</script>
+
+</body>
+</html>
+
 <?xml version="1.0" standalone="yes"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="1536" height="1024">
 <path style="fill:#fefefe; stroke:none;" d="M0 0L0 1024L1536 1024L1536 0L0 0z"/>
