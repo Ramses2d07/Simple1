@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Catálogo Completo</title>
+<title>Catálogo App Completa</title>
 
 <style>
 body{
@@ -23,7 +23,8 @@ body{
   top:0;
   z-index:1000;
   background: rgba(20,20,20,0.6);
-  backdrop-filter: blur(15px);
+  backdrop-filter: blur(18px);
+  border-bottom:1px solid rgba(255,255,255,0.08);
 }
 
 .icon{
@@ -41,53 +42,100 @@ body{
 .search input{
   width:100%;
   padding:10px;
-  border-radius:12px;
+  border-radius:14px;
   border:none;
-  background: rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.10);
   color:#fff;
   outline:none;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.4);
+}
+
+/* LOGO */
+.logoContainer{
+  text-align:center;
+  padding:25px 10px;
+}
+
+.logoContainer img{
+  width:100%;
+  max-width:1100px;
+  filter: drop-shadow(0 20px 30px rgba(0,0,0,0.7));
 }
 
 /* GRID */
 .perfiles{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:15px;
+  gap:18px;
   padding:15px;
 }
 
-/* CARD */
+/* CARD GLASS */
 .perfil{
-  background: rgba(255,255,255,0.05);
-  border-radius:18px;
-  padding:12px;
+  background: rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.10);
+  border-radius:20px;
+  padding:14px;
   text-align:center;
-  border:1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+  box-shadow:0 15px 35px rgba(0,0,0,0.6);
+  transition:0.25s;
+}
+
+.perfil:hover{
+  transform:translateY(-5px);
+  box-shadow:0 20px 45px rgba(0,0,0,0.75);
 }
 
 .perfil img{
-  width:80px;
-  height:80px;
+  width:85px;
+  height:85px;
   border-radius:50%;
+  object-fit:cover;
+  border:2px solid rgba(255,255,255,0.15);
 }
 
-.stars{color:gold;}
-.price{color:#00ff88;font-weight:bold;}
-.meta{font-size:12px;color:#bbb;}
+/* TEXTOS */
+h3{margin:6px 0;}
 
-/* BOTONES (NO TOCAR) */
+.stars{
+  color:gold;
+  text-shadow:0 0 8px rgba(255,215,0,0.5);
+}
+
+.price{
+  color:#00ff99;
+  font-weight:bold;
+  text-shadow:0 0 10px rgba(0,255,153,0.3);
+}
+
+.meta{
+  font-size:12px;
+  color:#bbb;
+}
+
+/* BOTONES */
 .btn{
   display:block;
-  margin:5px auto;
-  padding:8px;
-  border-radius:8px;
-  color:#fff;
+  margin:6px auto;
+  padding:9px;
+  border-radius:10px;
   text-decoration:none;
-  width:85%;
+  color:#fff;
+  width:88%;
+  font-size:14px;
+  font-weight:bold;
 }
 
-.whatsapp{background:#25D366;}
-.reservar{background:#7a2cff;}
+.whatsapp{
+  background: linear-gradient(135deg,#25D366,#1ebd5a);
+  box-shadow:0 5px 15px rgba(37,211,102,0.4);
+}
+
+.reservar{
+  background: linear-gradient(135deg,#7a2cff,#5a1bd6);
+  box-shadow:0 5px 15px rgba(122,44,255,0.4);
+}
 
 /* MODAL */
 .modal{
@@ -102,28 +150,35 @@ body{
 }
 
 .modal-content{
-  background: rgba(255,255,255,0.05);
-  padding:15px;
-  border-radius:15px;
+  background: rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.10);
+  padding:18px;
+  border-radius:18px;
+  backdrop-filter: blur(10px);
 }
 
 .close{
   float:right;
-  font-size:25px;
+  font-size:26px;
   cursor:pointer;
 }
 
 textarea{
   width:100%;
-  height:60px;
+  height:70px;
   margin-top:10px;
+  border-radius:10px;
+  border:none;
+  padding:10px;
+  background: rgba(255,255,255,0.08);
+  color:#fff;
 }
 
 .comment{
-  background:rgba(255,255,255,0.1);
-  margin-top:5px;
-  padding:5px;
-  border-radius:8px;
+  background:rgba(255,255,255,0.12);
+  margin-top:6px;
+  padding:8px;
+  border-radius:10px;
   font-size:13px;
 }
 </style>
@@ -131,19 +186,23 @@ textarea{
 
 <body>
 
-<!-- HEADER -->
 <div class="header">
   <div class="icon">👤</div>
+
   <div class="search">
     <input id="search" placeholder="Buscar...">
   </div>
+
   <div class="icon">☰</div>
 </div>
 
-<!-- PERFILES COMPLETOS (8 EXPLÍCITOS SIN RESUMIR) -->
+<div class="logoContainer">
+  <img src="file_0000000095c071fd937e0a46af9303bb.svg">
+</div>
+
 <div class="perfiles">
 
-  <div class="perfil" onclick="openProfile('Juan Pérez','Caracas','♂ Masculino','$20','k1.jpg')">
+  <div class="perfil" onclick="openProfile('Juan Pérez','Caracas','♂','$20','k1.jpg')">
     <img src="k1.jpg">
     <h3>Juan Pérez</h3>
     <div class="stars">⭐⭐⭐⭐☆</div>
@@ -153,7 +212,7 @@ textarea{
     <a class="btn reservar">Reservar</a>
   </div>
 
-  <div class="perfil" onclick="openProfile('María López','Maracay','♀ Femenino','$25','k2.jpg')">
+  <div class="perfil" onclick="openProfile('María López','Maracay','♀','$25','k2.jpg')">
     <img src="k2.jpg">
     <h3>María López</h3>
     <div class="stars">⭐⭐⭐⭐⭐</div>
@@ -163,7 +222,7 @@ textarea{
     <a class="btn reservar">Reservar</a>
   </div>
 
-  <div class="perfil" onclick="openProfile('Carlos Martínez','Valencia','♂ Masculino','$30','k3.jpg')">
+  <div class="perfil" onclick="openProfile('Carlos Martínez','Valencia','♂','$30','k3.jpg')">
     <img src="k3.jpg">
     <h3>Carlos Martínez</h3>
     <div class="stars">⭐⭐⭐⭐☆</div>
@@ -173,7 +232,7 @@ textarea{
     <a class="btn reservar">Reservar</a>
   </div>
 
-  <div class="perfil" onclick="openProfile('Ana Torres','Barquisimeto','♀ Femenino','$28','k4.jpg')">
+  <div class="perfil" onclick="openProfile('Ana Torres','Barquisimeto','♀','$28','k4.jpg')">
     <img src="k4.jpg">
     <h3>Ana Torres</h3>
     <div class="stars">⭐⭐⭐☆☆</div>
@@ -183,7 +242,7 @@ textarea{
     <a class="btn reservar">Reservar</a>
   </div>
 
-  <div class="perfil" onclick="openProfile('Luis Gómez','Caracas','♂ Masculino','$22','k5.jpg')">
+  <div class="perfil" onclick="openProfile('Luis Gómez','Caracas','♂','$22','k5.jpg')">
     <img src="k5.jpg">
     <h3>Luis Gómez</h3>
     <div class="stars">⭐⭐⭐⭐☆</div>
@@ -193,7 +252,7 @@ textarea{
     <a class="btn reservar">Reservar</a>
   </div>
 
-  <div class="perfil" onclick="openProfile('Sofía Díaz','Valencia','♀ Femenino','$27','k6.jpg')">
+  <div class="perfil" onclick="openProfile('Sofía Díaz','Valencia','♀','$27','k6.jpg')">
     <img src="k6.jpg">
     <h3>Sofía Díaz</h3>
     <div class="stars">⭐⭐⭐⭐⭐</div>
@@ -203,7 +262,7 @@ textarea{
     <a class="btn reservar">Reservar</a>
   </div>
 
-  <div class="perfil" onclick="openProfile('Pedro Ramírez','Maracaibo','♂ Masculino','$24','k7.jpg')">
+  <div class="perfil" onclick="openProfile('Pedro Ramírez','Maracaibo','♂','$24','k7.jpg')">
     <img src="k7.jpg">
     <h3>Pedro Ramírez</h3>
     <div class="stars">⭐⭐⭐⭐☆</div>
@@ -213,7 +272,7 @@ textarea{
     <a class="btn reservar">Reservar</a>
   </div>
 
-  <div class="perfil" onclick="openProfile('Lucía Fernández','Maracay','♀ Femenino','$30','k8.jpg')">
+  <div class="perfil" onclick="openProfile('Lucía Fernández','Maracay','♀','$30','k8.jpg')">
     <img src="k8.jpg">
     <h3>Lucía Fernández</h3>
     <div class="stars">⭐⭐⭐⭐⭐</div>
@@ -225,16 +284,12 @@ textarea{
 
 </div>
 
-<!-- MODAL COMPLETO -->
 <div class="modal" id="modal">
-
   <div class="modal-content">
-
     <span class="close" onclick="closeProfile()">✖</span>
 
     <h2 id="name"></h2>
     <img id="img" style="width:120px;border-radius:50%">
-
     <p id="info"></p>
 
     <h3>⭐ Rating</h3>
@@ -244,14 +299,11 @@ textarea{
     <iframe width="100%" height="200" src="https://www.youtube.com/embed/dQw4w9WgXcQ"></iframe>
 
     <h3>💬 Comentarios</h3>
-
     <textarea id="commentText"></textarea>
     <button onclick="addComment()">Enviar</button>
-
     <div id="comments"></div>
 
   </div>
-
 </div>
 
 <script>
@@ -272,7 +324,6 @@ function closeProfile(){
   document.getElementById("modal").style.display="none";
 }
 
-/* COMMENTS */
 function addComment(){
   let text=document.getElementById("commentText").value;
   if(!text) return;
@@ -292,7 +343,6 @@ function loadComments(){
   document.getElementById("comments").innerHTML=html;
 }
 
-/* RATING SIMULADO */
 function showRating(){
   let r=Math.floor(Math.random()*5)+1;
   document.getElementById("rating").innerHTML="⭐".repeat(r);
