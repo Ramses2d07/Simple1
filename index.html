@@ -34,6 +34,7 @@ body{
   cursor:pointer;
 }
 
+/* SEARCH */
 .search{
   flex:1;
   margin:0 10px;
@@ -47,7 +48,27 @@ body{
   background: rgba(255,255,255,0.10);
   color:#fff;
   outline:none;
-  box-shadow: inset 0 0 10px rgba(0,0,0,0.4);
+}
+
+/* MENÚS */
+.menu, .accountMenu{
+  display:none;
+  position:absolute;
+  top:55px;
+  background: rgba(30,30,30,0.95);
+  padding:12px;
+  border-radius:14px;
+  width:180px;
+  border:1px solid rgba(255,255,255,0.1);
+  z-index:2000;
+}
+
+.menu{ right:10px; }
+.accountMenu{ left:10px; }
+
+.menu p, .accountMenu p{
+  margin:10px 0;
+  cursor:pointer;
 }
 
 /* LOGO */
@@ -70,21 +91,16 @@ body{
   padding:15px;
 }
 
-/* CARD GLASS */
+/* CARD */
 .perfil{
   background: rgba(255,255,255,0.06);
   border:1px solid rgba(255,255,255,0.10);
   border-radius:20px;
   padding:14px;
   text-align:center;
+  cursor:pointer;
   backdrop-filter: blur(12px);
   box-shadow:0 15px 35px rgba(0,0,0,0.6);
-  transition:0.25s;
-}
-
-.perfil:hover{
-  transform:translateY(-5px);
-  box-shadow:0 20px 45px rgba(0,0,0,0.75);
 }
 
 .perfil img{
@@ -92,26 +108,6 @@ body{
   height:85px;
   border-radius:50%;
   object-fit:cover;
-  border:2px solid rgba(255,255,255,0.15);
-}
-
-/* TEXTOS */
-h3{margin:6px 0;}
-
-.stars{
-  color:gold;
-  text-shadow:0 0 8px rgba(255,215,0,0.5);
-}
-
-.price{
-  color:#00ff99;
-  font-weight:bold;
-  text-shadow:0 0 10px rgba(0,255,153,0.3);
-}
-
-.meta{
-  font-size:12px;
-  color:#bbb;
 }
 
 /* BOTONES */
@@ -123,19 +119,10 @@ h3{margin:6px 0;}
   text-decoration:none;
   color:#fff;
   width:88%;
-  font-size:14px;
-  font-weight:bold;
 }
 
-.whatsapp{
-  background: linear-gradient(135deg,#25D366,#1ebd5a);
-  box-shadow:0 5px 15px rgba(37,211,102,0.4);
-}
-
-.reservar{
-  background: linear-gradient(135deg,#7a2cff,#5a1bd6);
-  box-shadow:0 5px 15px rgba(122,44,255,0.4);
-}
+.whatsapp{background:#25D366;}
+.reservar{background:#7a2cff;}
 
 /* MODAL */
 .modal{
@@ -151,10 +138,9 @@ h3{margin:6px 0;}
 
 .modal-content{
   background: rgba(255,255,255,0.06);
-  border:1px solid rgba(255,255,255,0.10);
   padding:18px;
   border-radius:18px;
-  backdrop-filter: blur(10px);
+  border:1px solid rgba(255,255,255,0.10);
 }
 
 .close{
@@ -186,28 +172,48 @@ textarea{
 
 <body>
 
+<!-- HEADER -->
 <div class="header">
-  <div class="icon">👤</div>
+
+  <div class="icon" onclick="toggleAccount()">👤</div>
 
   <div class="search">
-    <input id="search" placeholder="Buscar...">
+    <input placeholder="Buscar...">
   </div>
 
-  <div class="icon">☰</div>
+  <div class="icon" onclick="toggleMenu()">☰</div>
+
 </div>
 
+<!-- MENÚ IZQUIERDO (MY ACCOUNT) -->
+<div class="accountMenu" id="accountMenu">
+  <p>Mi perfil</p>
+  <p>Mis reservas</p>
+  <p>Favoritos</p>
+  <p>Configuración</p>
+</div>
+
+<!-- MENÚ DERECHO -->
+<div class="menu" id="menu">
+  <p>🏠 Home</p>
+  <p>📂 Catálogo</p>
+  <p>💳 Suscribirse</p>
+  <p>📍 Ubicación</p>
+</div>
+
+<!-- LOGO -->
 <div class="logoContainer">
   <img src="file_0000000095c071fd937e0a46af9303bb.svg">
 </div>
 
+<!-- PERFILES -->
 <div class="perfiles">
 
   <div class="perfil" onclick="openProfile('Juan Pérez','Caracas','♂','$20','k1.jpg')">
     <img src="k1.jpg">
     <h3>Juan Pérez</h3>
-    <div class="stars">⭐⭐⭐⭐☆</div>
-    <div class="price">$20</div>
-    <div class="meta">Caracas | Masculino</div>
+    <div>⭐⭐⭐⭐☆</div>
+    <div>$20</div>
     <a class="btn whatsapp">WhatsApp</a>
     <a class="btn reservar">Reservar</a>
   </div>
@@ -215,9 +221,8 @@ textarea{
   <div class="perfil" onclick="openProfile('María López','Maracay','♀','$25','k2.jpg')">
     <img src="k2.jpg">
     <h3>María López</h3>
-    <div class="stars">⭐⭐⭐⭐⭐</div>
-    <div class="price">$25</div>
-    <div class="meta">Maracay | Femenino</div>
+    <div>⭐⭐⭐⭐⭐</div>
+    <div>$25</div>
     <a class="btn whatsapp">WhatsApp</a>
     <a class="btn reservar">Reservar</a>
   </div>
@@ -225,9 +230,8 @@ textarea{
   <div class="perfil" onclick="openProfile('Carlos Martínez','Valencia','♂','$30','k3.jpg')">
     <img src="k3.jpg">
     <h3>Carlos Martínez</h3>
-    <div class="stars">⭐⭐⭐⭐☆</div>
-    <div class="price">$30</div>
-    <div class="meta">Valencia | Masculino</div>
+    <div>⭐⭐⭐⭐☆</div>
+    <div>$30</div>
     <a class="btn whatsapp">WhatsApp</a>
     <a class="btn reservar">Reservar</a>
   </div>
@@ -235,9 +239,8 @@ textarea{
   <div class="perfil" onclick="openProfile('Ana Torres','Barquisimeto','♀','$28','k4.jpg')">
     <img src="k4.jpg">
     <h3>Ana Torres</h3>
-    <div class="stars">⭐⭐⭐☆☆</div>
-    <div class="price">$28</div>
-    <div class="meta">Barquisimeto | Femenino</div>
+    <div>⭐⭐⭐☆☆</div>
+    <div>$28</div>
     <a class="btn whatsapp">WhatsApp</a>
     <a class="btn reservar">Reservar</a>
   </div>
@@ -245,9 +248,8 @@ textarea{
   <div class="perfil" onclick="openProfile('Luis Gómez','Caracas','♂','$22','k5.jpg')">
     <img src="k5.jpg">
     <h3>Luis Gómez</h3>
-    <div class="stars">⭐⭐⭐⭐☆</div>
-    <div class="price">$22</div>
-    <div class="meta">Caracas | Masculino</div>
+    <div>⭐⭐⭐⭐☆</div>
+    <div>$22</div>
     <a class="btn whatsapp">WhatsApp</a>
     <a class="btn reservar">Reservar</a>
   </div>
@@ -255,9 +257,8 @@ textarea{
   <div class="perfil" onclick="openProfile('Sofía Díaz','Valencia','♀','$27','k6.jpg')">
     <img src="k6.jpg">
     <h3>Sofía Díaz</h3>
-    <div class="stars">⭐⭐⭐⭐⭐</div>
-    <div class="price">$27</div>
-    <div class="meta">Valencia | Femenino</div>
+    <div>⭐⭐⭐⭐⭐</div>
+    <div>$27</div>
     <a class="btn whatsapp">WhatsApp</a>
     <a class="btn reservar">Reservar</a>
   </div>
@@ -265,9 +266,8 @@ textarea{
   <div class="perfil" onclick="openProfile('Pedro Ramírez','Maracaibo','♂','$24','k7.jpg')">
     <img src="k7.jpg">
     <h3>Pedro Ramírez</h3>
-    <div class="stars">⭐⭐⭐⭐☆</div>
-    <div class="price">$24</div>
-    <div class="meta">Maracaibo | Masculino</div>
+    <div>⭐⭐⭐⭐☆</div>
+    <div>$24</div>
     <a class="btn whatsapp">WhatsApp</a>
     <a class="btn reservar">Reservar</a>
   </div>
@@ -275,17 +275,19 @@ textarea{
   <div class="perfil" onclick="openProfile('Lucía Fernández','Maracay','♀','$30','k8.jpg')">
     <img src="k8.jpg">
     <h3>Lucía Fernández</h3>
-    <div class="stars">⭐⭐⭐⭐⭐</div>
-    <div class="price">$30</div>
-    <div class="meta">Maracay | Femenino</div>
+    <div>⭐⭐⭐⭐⭐</div>
+    <div>$30</div>
     <a class="btn whatsapp">WhatsApp</a>
     <a class="btn reservar">Reservar</a>
   </div>
 
 </div>
 
+<!-- MODAL PERFIL -->
 <div class="modal" id="modal">
+
   <div class="modal-content">
+
     <span class="close" onclick="closeProfile()">✖</span>
 
     <h2 id="name"></h2>
@@ -304,11 +306,22 @@ textarea{
     <div id="comments"></div>
 
   </div>
+
 </div>
 
 <script>
 
 let currentUser="";
+
+function toggleMenu(){
+  let m=document.getElementById("menu");
+  m.style.display = (m.style.display==="block")?"none":"block";
+}
+
+function toggleAccount(){
+  let a=document.getElementById("accountMenu");
+  a.style.display = (a.style.display==="block")?"none":"block";
+}
 
 function openProfile(name,city,sex,price,img){
   document.getElementById("modal").style.display="block";
