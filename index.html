@@ -3,221 +3,109 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>App Premium Social</title>
+<title>Instagram Pro Social</title>
 
 <style>
 body{
   margin:0;
   font-family:Arial;
+  background:#0b0b0b;
   color:#fff;
-  background:
-    radial-gradient(circle at top, rgba(140,140,140,0.22), transparent 60%),
-    radial-gradient(circle at bottom, #0a0a0a, #000),
-    linear-gradient(135deg,#1b1b1b,#0d0d0d);
 }
 
 /* HEADER */
 .header{
   display:flex;
-  align-items:center;
   justify-content:space-between;
+  align-items:center;
   padding:12px;
+  background:rgba(20,20,20,0.7);
+  backdrop-filter:blur(20px);
   position:sticky;
   top:0;
-  background:rgba(20,20,20,0.6);
-  backdrop-filter:blur(25px);
-  border-bottom:1px solid rgba(255,255,255,0.1);
-  z-index:2000;
+  z-index:1000;
 }
 
-.icon{
-  font-size:22px;
-  width:40px;
-  text-align:center;
-  cursor:pointer;
-}
+.icon{width:40px;text-align:center;cursor:pointer;font-size:20px;}
 
-/* SEARCH */
-.search{
-  flex:1;
-  margin:0 10px;
-}
-
+.search{flex:1;margin:0 10px;}
 .search input{
   width:100%;
   padding:10px;
-  border-radius:14px;
+  border-radius:10px;
   border:none;
   background:rgba(255,255,255,0.08);
   color:#fff;
 }
 
-/* MENUS */
-.menu,.accountMenu{
-  display:none;
-  position:absolute;
-  top:60px;
-  width:200px;
-  padding:12px;
-  border-radius:14px;
-  background:rgba(30,30,30,0.95);
-  border:1px solid rgba(255,255,255,0.1);
-  z-index:3000;
-}
-
-.menu{right:10px;}
-.accountMenu{left:10px;}
-
-.menu p,.accountMenu p{
-  margin:10px 0;
-  cursor:pointer;
-}
-
-/* LOGO */
-.logoContainer{
-  text-align:center;
-  padding:18px;
-}
-
-.logoContainer img{
-  width:100%;
-  max-width:900px;
-  filter:drop-shadow(0 25px 35px rgba(0,0,0,0.8));
-}
-
-/* GRID */
-.perfiles{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:16px;
-  padding:15px;
-}
-
-/* CARD */
-.perfil{
-  background:rgba(255,255,255,0.06);
-  border:1px solid rgba(255,255,255,0.12);
-  border-radius:20px;
-  padding:12px;
-  text-align:center;
-  backdrop-filter:blur(18px);
-  box-shadow:0 20px 40px rgba(0,0,0,0.7);
-  cursor:pointer;
-}
-
-.perfil img{
-  width:85px;
-  height:85px;
-  border-radius:50%;
-  object-fit:cover;
-  border:2px solid rgba(255,255,255,0.15);
-}
-
-/* ⭐ TEXTURA BOTONES NUEVA */
-.btn{
-  display:block;
-  margin:6px auto;
+/* FEED */
+.feed{
   padding:10px;
-  width:88%;
-  border-radius:12px;
-  text-decoration:none;
-  color:#fff;
-  font-weight:bold;
-  letter-spacing:0.3px;
-  transition:0.25s;
-  position:relative;
+}
+
+/* POST */
+.post{
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:15px;
+  margin-bottom:15px;
   overflow:hidden;
 }
 
-/* WHATSAPP TEXTURA */
-.whatsapp{
-  background:linear-gradient(135deg,#25D366,#1fae52);
-  box-shadow:
-    inset 0 0 10px rgba(255,255,255,0.15),
-    0 10px 25px rgba(37,211,102,0.35);
+.postHeader{
+  display:flex;
+  align-items:center;
+  padding:10px;
+  gap:10px;
 }
 
-.whatsapp:hover{
-  transform:translateY(-3px);
-  box-shadow:
-    inset 0 0 18px rgba(255,255,255,0.25),
-    0 18px 35px rgba(37,211,102,0.5);
+.postHeader img{
+  width:40px;
+  height:40px;
+  border-radius:50%;
 }
 
-/* RESERVAR TEXTURA */
-.reservar{
-  background:linear-gradient(135deg,#7a2cff,#5a1bd6);
-  box-shadow:
-    inset 0 0 10px rgba(255,255,255,0.12),
-    0 10px 25px rgba(122,44,255,0.35);
+.postMedia img,.postMedia video{
+  width:100%;
 }
 
-.reservar:hover{
-  transform:translateY(-3px);
-  box-shadow:
-    inset 0 0 18px rgba(255,255,255,0.25),
-    0 18px 35px rgba(122,44,255,0.5);
+/* ACTIONS */
+.actions{
+  display:flex;
+  justify-content:space-between;
+  padding:10px;
 }
 
-/* MODAL */
-.modal{
-  display:none;
-  position:fixed;
-  top:0;left:0;
-  width:100%;height:100%;
-  background:rgba(0,0,0,0.97);
-  z-index:5000;
-  overflow:auto;
-  padding:20px;
-}
-
-.modalBox{
-  background:rgba(255,255,255,0.06);
-  border-radius:20px;
-  padding:15px;
-  border:1px solid rgba(255,255,255,0.12);
-  backdrop-filter:blur(18px);
-}
-
-.close{
-  float:right;
-  font-size:26px;
+.actions button{
+  background:none;
+  border:none;
+  color:#fff;
+  font-size:18px;
   cursor:pointer;
 }
 
-/* GALLERY */
-.gallery{
-  display:flex;
-  gap:10px;
-  overflow-x:auto;
-  margin-top:10px;
-}
-
-.gallery img{
-  width:120px;
-  height:120px;
-  border-radius:12px;
-  object-fit:cover;
-}
-
 /* COMMENTS */
+.comments{
+  padding:10px;
+  border-top:1px solid rgba(255,255,255,0.1);
+}
+
+.comment{
+  background:rgba(255,255,255,0.08);
+  margin-top:5px;
+  padding:6px;
+  border-radius:8px;
+}
+
 textarea{
   width:100%;
-  height:70px;
-  margin-top:10px;
-  border-radius:10px;
+  height:50px;
   border:none;
-  padding:10px;
+  border-radius:8px;
+  padding:8px;
+  margin-top:5px;
   background:rgba(255,255,255,0.08);
   color:#fff;
-}
-
-/* COMMENT */
-.comment{
-  background:rgba(255,255,255,0.12);
-  margin-top:6px;
-  padding:8px;
-  border-radius:10px;
 }
 
 /* FOOTER */
@@ -226,65 +114,92 @@ textarea{
   padding:20px;
   font-size:12px;
   color:#aaa;
-  border-top:1px solid rgba(255,255,255,0.08);
 }
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
 <div class="header">
   <div class="icon">👤</div>
-  <div class="search"><input placeholder="Buscar usuarios..."></div>
+  <div class="search"><input placeholder="Buscar..."></div>
   <div class="icon">☰</div>
 </div>
 
-<!-- LOGO -->
-<div class="logoContainer">
-  <img src="file_0000000095c071fd937e0a46af9303bb.svg">
-</div>
+<div class="feed" id="feed"></div>
 
-<!-- GRID -->
-<div class="perfiles" id="grid"></div>
-
-<!-- FOOTER -->
 <div class="footer">
-© 2026 App Premium Social. Todos los derechos reservados.
+© 2026 Instagram Pro Social System
 </div>
 
 <script>
 
 const users=[
-["Juan Pérez","Caracas","♂","$20","k1.jpg"],
-["María López","Maracay","♀","$25","k2.jpg"],
-["Carlos Martínez","Valencia","♂","$30","k3.jpg"],
-["Ana Torres","Barquisimeto","♀","$28","k4.jpg"],
-["Luis Gómez","Caracas","♂","$22","k5.jpg"],
-["Sofía Díaz","Valencia","♀","$27","k6.jpg"],
-["Pedro Ramírez","Maracaibo","♂","$24","k7.jpg"],
-["Lucía Fernández","Maracay","♀","$30","k8.jpg"]
+["Juan Pérez","k1.jpg"],
+["María López","k2.jpg"],
+["Carlos Martínez","k3.jpg"],
+["Ana Torres","k4.jpg"],
+["Luis Gómez","k5.jpg"],
+["Sofía Díaz","k6.jpg"],
+["Pedro Ramírez","k7.jpg"],
+["Lucía Fernández","k8.jpg"]
 ];
 
-let grid=document.getElementById("grid");
+/* POSTS SIMULADOS */
+let posts=[
+{user:0,type:"img",src:"k1.jpg"},
+{user:1,type:"img",src:"k2.jpg"},
+{user:2,type:"img",src:"k3.jpg"},
+{user:3,type:"img",src:"k4.jpg"}
+];
 
-users.forEach((u,i)=>{
-grid.innerHTML+=`
-<div class="perfil" onclick="openM(${i})">
-<img src="${u[4]}">
-<h3>${u[0]}</h3>
-<div>⭐⭐⭐⭐☆</div>
-<div>${u[3]}</div>
-<div>${u[1]} | ${u[2]}</div>
+let feed=document.getElementById("feed");
 
-<a class="btn whatsapp">WhatsApp</a>
-<a class="btn reservar">Reservar</a>
+function render(){
+feed.innerHTML="";
+
+posts.forEach((p,i)=>{
+
+feed.innerHTML+=`
+<div class="post">
+
+<div class="postHeader">
+<img src="${users[p.user][1]}">
+<b>${users[p.user][0]}</b>
+</div>
+
+<div class="postMedia">
+${p.type=="img"
+? `<img src="${p.src}">`
+: `<video src="${p.src}" controls></video>`}
+</div>
+
+<div class="actions">
+<button onclick="like(${i})">❤️ Like (<span id="l${i}">0</span>)</button>
+<button onclick="toggleComment(${i})">💬</button>
+</div>
+
+<div class="comments" id="c${i}" style="display:none">
+<textarea placeholder="Comentar..."></textarea>
+<div id="cl${i}"></div>
+</div>
+
 </div>`;
 });
 
-function openM(i){
-alert(users[i][0]);
 }
+
+function like(i){
+let el=document.getElementById("l"+i);
+el.innerText=parseInt(el.innerText)+1;
+}
+
+function toggleComment(i){
+let c=document.getElementById("c"+i);
+c.style.display=c.style.display=="none"?"block":"none";
+}
+
+render();
 
 </script>
 
