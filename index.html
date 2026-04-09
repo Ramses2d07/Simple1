@@ -3,109 +3,149 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SimpleSexxxVzla | Kinesiólogos</title>
+<title>Catálogo | SimpleSexxxVzla</title>
 
 <style>
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #000;
-  color: #fff;
+body{
+  margin:0;
+  font-family:Arial;
+  background:#000;
+  color:#fff;
 }
 
-/* HERO */
-.hero {
-  text-align: center;
-  padding: 60px 20px 20px;
+/* HEADER */
+.header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:#111;
+  padding:10px;
+  position:sticky;
+  top:0;
+  z-index:1000;
 }
 
-/* LOGO AGRANDADO 2 ESCALAS */
-.logo {
-  width: 100%;
-  max-width: 1200px;
-  height: auto;
-  display: block;
-  margin: 0 auto;
+/* ICONOS */
+.icon{
+  font-size:22px;
+  cursor:pointer;
+  width:40px;
+  text-align:center;
 }
 
-/* GRID 2 COLUMNAS */
-.perfiles {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px;
-  padding: 20px;
+/* SEARCH */
+.search{
+  flex:1;
+  margin:0 10px;
+}
+
+.search input{
+  width:100%;
+  padding:8px;
+  border-radius:8px;
+  border:none;
+  background:#222;
+  color:#fff;
+  outline:none;
+}
+
+/* MENÚS */
+.menu, .accountMenu{
+  display:none;
+  position:absolute;
+  top:50px;
+  background:#111;
+  padding:10px;
+  border-radius:10px;
+  z-index:2000;
+  width:160px;
+}
+
+.menu{
+  right:10px;
+}
+
+.accountMenu{
+  left:10px;
+}
+
+.menu p, .accountMenu p{
+  margin:10px 0;
+  cursor:pointer;
+}
+
+/* GRID */
+.perfiles{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+  padding:15px;
 }
 
 /* CARD */
-.perfil {
-  background: #111;
-  border-radius: 12px;
-  padding: 15px;
-  text-align: center;
-  transition: 0.3s;
+.perfil{
+  background:#111;
+  border-radius:12px;
+  padding:15px;
+  text-align:center;
+  transition:0.3s;
 }
 
-.perfil:hover {
-  transform: scale(1.04);
-  background: #1a1a1a;
+.perfil:hover{
+  transform:scale(1.03);
 }
 
-.perfil img {
-  width: 90px;
-  height: 90px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 5px;
+.perfil img{
+  width:90px;
+  height:90px;
+  border-radius:50%;
+  object-fit:cover;
 }
 
-.perfil h3 {
-  margin: 5px 0;
-  color: #8a2be2;
+h3{
+  margin:5px 0;
 }
 
-.stars {
-  color: gold;
-  font-size: 14px;
-  margin-bottom: 5px;
+.stars{
+  color:gold;
+  font-size:14px;
 }
 
-.price {
-  color: #00ff88;
-  font-weight: bold;
-  margin-bottom: 10px;
+.price{
+  color:#00ff88;
+  font-weight:bold;
+}
+
+.meta{
+  font-size:12px;
+  color:#bbb;
+  margin:5px 0;
 }
 
 /* BOTONES */
-.btn {
-  display: block;
-  margin: 6px auto;
-  padding: 10px;
-  border-radius: 10px;
-  text-decoration: none;
-  color: white;
-  font-weight: bold;
-  width: 85%;
-  text-align: center;
-  font-size: 14px;
-  transition: 0.3s;
+.btn{
+  display:block;
+  margin:5px auto;
+  padding:8px;
+  border-radius:8px;
+  text-decoration:none;
+  color:#fff;
+  width:85%;
+  font-size:14px;
 }
 
-.btn:hover {
-  transform: scale(1.05);
+.whatsapp{
+  background:#25D366;
 }
 
-.whatsapp {
-  background: linear-gradient(145deg, #25D366, #128C7E);
-}
-
-.reservar {
-  background: linear-gradient(145deg, #ff2ea6, #7a2cff);
+.reservar{
+  background:#7a2cff;
 }
 
 /* RESPONSIVE */
-@media (max-width: 500px) {
-  .perfiles {
-    grid-template-columns: 1fr 1fr;
+@media(max-width:500px){
+  .perfiles{
+    grid-template-columns:1fr 1fr;
   }
 }
 </style>
@@ -113,85 +153,148 @@ body {
 
 <body>
 
-<div class="hero">
-  <img src="file_0000000095c071fd937e0a46af9303bb.svg" class="logo">
+<!-- HEADER -->
+<div class="header">
+
+  <!-- MY ACCOUNT -->
+  <div class="icon" onclick="toggleAccount()">👤</div>
+
+  <!-- SEARCH -->
+  <div class="search">
+    <input type="text" id="search" placeholder="Buscar nombre, ubicación o sexo...">
+  </div>
+
+  <!-- MENU -->
+  <div class="icon" onclick="toggleMenu()">☰</div>
+
 </div>
 
-<div class="perfiles">
+<!-- ACCOUNT MENU -->
+<div class="accountMenu" id="accountMenu">
+  <p>Mi perfil</p>
+  <p>Mis reservas</p>
+  <p>Favoritos</p>
+  <p>Configuración</p>
+</div>
 
-  <div class="perfil">
+<!-- MAIN MENU -->
+<div class="menu" id="menu">
+  <p>🏠 Home</p>
+  <p>📂 Catálogo</p>
+  <p>💳 Suscribirse</p>
+  <p>📍 Ubicación</p>
+</div>
+
+<!-- CATÁLOGO -->
+<div class="perfiles" id="lista">
+
+  <div class="perfil" data-text="juan perez caracas masculino rehabilitacion">
     <img src="kine1.jpg">
     <h3>Juan Pérez</h3>
     <div class="stars">⭐⭐⭐⭐☆</div>
     <div class="price">$20</div>
+    <div class="meta">📍 Caracas | ♂ Masculino</div>
     <a class="btn whatsapp" href="https://wa.me/123456789">WhatsApp</a>
-    <a class="btn reservar" href="https://wa.me/123456789?text=Hola%20quiero%20reservar%20con%20Juan%20Pérez">Reservar</a>
+    <a class="btn reservar" href="https://wa.me/123456789?text=Quiero%20reservar%20con%20Juan%20Pérez">Reservar</a>
   </div>
 
-  <div class="perfil">
+  <div class="perfil" data-text="maria lopez maracay femenino deportiva">
     <img src="kine2.jpg">
     <h3>María López</h3>
     <div class="stars">⭐⭐⭐⭐⭐</div>
     <div class="price">$25</div>
+    <div class="meta">📍 Maracay | ♀ Femenino</div>
     <a class="btn whatsapp" href="https://wa.me/987654321">WhatsApp</a>
-    <a class="btn reservar" href="https://wa.me/987654321?text=Hola%20quiero%20reservar%20con%20María%20López">Reservar</a>
+    <a class="btn reservar" href="https://wa.me/987654321?text=Quiero%20reservar%20con%20María%20López">Reservar</a>
   </div>
 
-  <div class="perfil">
+  <div class="perfil" data-text="carlos martinez valencia masculino neurologica">
     <img src="kine3.jpg">
     <h3>Carlos Martínez</h3>
     <div class="stars">⭐⭐⭐⭐☆</div>
     <div class="price">$30</div>
+    <div class="meta">📍 Valencia | ♂ Masculino</div>
     <a class="btn whatsapp" href="https://wa.me/111222333">WhatsApp</a>
-    <a class="btn reservar" href="https://wa.me/111222333?text=Hola%20quiero%20reservar%20con%20Carlos%20Martínez">Reservar</a>
+    <a class="btn reservar" href="https://wa.me/111222333?text=Quiero%20reservar%20con%20Carlos%20Martínez">Reservar</a>
   </div>
 
-  <div class="perfil">
+  <div class="perfil" data-text="ana torres barquisimeto femenino rehabilitacion">
     <img src="kine4.jpg">
     <h3>Ana Torres</h3>
     <div class="stars">⭐⭐⭐☆☆</div>
     <div class="price">$28</div>
+    <div class="meta">📍 Barquisimeto | ♀ Femenino</div>
     <a class="btn whatsapp" href="#">WhatsApp</a>
     <a class="btn reservar" href="#">Reservar</a>
   </div>
 
-  <div class="perfil">
+  <div class="perfil" data-text="luis gomez caracas masculino deportivo">
     <img src="kine5.jpg">
     <h3>Luis Gómez</h3>
     <div class="stars">⭐⭐⭐⭐☆</div>
     <div class="price">$22</div>
+    <div class="meta">📍 Caracas | ♂ Masculino</div>
     <a class="btn whatsapp" href="#">WhatsApp</a>
     <a class="btn reservar" href="#">Reservar</a>
   </div>
 
-  <div class="perfil">
+  <div class="perfil" data-text="sofia diaz valencia femenino terapia">
     <img src="kine6.jpg">
     <h3>Sofía Díaz</h3>
     <div class="stars">⭐⭐⭐⭐⭐</div>
     <div class="price">$27</div>
+    <div class="meta">📍 Valencia | ♀ Femenino</div>
     <a class="btn whatsapp" href="#">WhatsApp</a>
     <a class="btn reservar" href="#">Reservar</a>
   </div>
 
-  <div class="perfil">
+  <div class="perfil" data-text="pedro ramirez maracaibo masculino fisico">
     <img src="kine7.jpg">
     <h3>Pedro Ramírez</h3>
     <div class="stars">⭐⭐⭐⭐☆</div>
     <div class="price">$24</div>
+    <div class="meta">📍 Maracaibo | ♂ Masculino</div>
     <a class="btn whatsapp" href="#">WhatsApp</a>
     <a class="btn reservar" href="#">Reservar</a>
   </div>
 
-  <div class="perfil">
+  <div class="perfil" data-text="lucia fernandez maracay femenino rehabilitacion">
     <img src="kine8.jpg">
     <h3>Lucía Fernández</h3>
     <div class="stars">⭐⭐⭐⭐⭐</div>
     <div class="price">$30</div>
+    <div class="meta">📍 Maracay | ♀ Femenino</div>
     <a class="btn whatsapp" href="#">WhatsApp</a>
     <a class="btn reservar" href="#">Reservar</a>
   </div>
 
 </div>
+
+<script>
+
+/* MENÚ */
+function toggleMenu(){
+  let m = document.getElementById("menu");
+  m.style.display = m.style.display === "block" ? "none" : "block";
+}
+
+function toggleAccount(){
+  let a = document.getElementById("accountMenu");
+  a.style.display = a.style.display === "block" ? "none" : "block";
+}
+
+/* BÚSQUEDA */
+document.getElementById("search").addEventListener("input", function(){
+  let val = this.value.toLowerCase();
+  let items = document.querySelectorAll(".perfil");
+
+  items.forEach(p=>{
+    let text = p.getAttribute("data-text");
+    p.style.display = text.includes(val) ? "block" : "none";
+  });
+});
+
+</script>
 
 </body>
 </html>
