@@ -43,7 +43,7 @@ input {
 /* GRID: DOS COLUMNAS */
 .perfiles { 
   display: grid; 
-  grid-template-columns: repeat(2, 1fr); /* Dos columnas */
+  grid-template-columns: repeat(2, 1fr); /* DOS COLUMNAS */
   gap: 20px; 
   padding: 20px;
 }
@@ -83,7 +83,7 @@ input {
   margin-bottom: 10px;
 }
 
-/* BOTONES BASE */
+/* BOTONES */
 .btn {
   display: block;
   margin: 5px auto;
@@ -121,12 +121,11 @@ input {
 /* RESPONSIVO */
 @media (max-width: 768px) {
   .perfiles {
-    grid-template-columns: 1fr; /* Una columna en móvil */
+    grid-template-columns: 1fr; /* UNA COLUMNA EN MÓVIL */
   }
 }
 </style>
 </head>
-
 <body>
 
 <!-- HERO -->
@@ -166,47 +165,47 @@ input {
   </div>
 
   <div class="perfil">
-    <img src="kine4.jpg" alt="Ana Rodríguez">
-    <h2>Ana Rodríguez</h2>
-    <p>Masajes relajantes</p>
-    <p class="precio">$35</p>
-    <a class="btn whatsapp" href="#">WhatsApp</a>
-    <a class="btn reservar" href="#">Reservar</a>
-  </div>
-
-  <div class="perfil">
-    <img src="kine5.jpg" alt="Luis Fernández">
-    <h2>Luis Fernández</h2>
-    <p>Terapia deportiva</p>
+    <img src="kine4.jpg" alt="Ana Torres">
+    <h2>Ana Torres</h2>
+    <p>Terapia ocupacional</p>
     <p class="precio">$28</p>
-    <a class="btn whatsapp" href="#">WhatsApp</a>
+    <a class="btn whatsapp" href="https://wa.me/444555666?text=Hola quiero agendar una sesión">WhatsApp</a>
     <a class="btn reservar" href="#">Reservar</a>
   </div>
 
   <div class="perfil">
-    <img src="kine6.jpg" alt="Sofía Torres">
-    <h2>Sofía Torres</h2>
-    <p>Masajes relajantes</p>
+    <img src="kine5.jpg" alt="Luis Gómez">
+    <h2>Luis Gómez</h2>
+    <p>Rehabilitación deportiva</p>
     <p class="precio">$22</p>
-    <a class="btn whatsapp" href="#">WhatsApp</a>
+    <a class="btn whatsapp" href="https://wa.me/777888999?text=Hola quiero agendar una sesión">WhatsApp</a>
     <a class="btn reservar" href="#">Reservar</a>
   </div>
 
   <div class="perfil">
-    <img src="kine7.jpg" alt="Pedro Gómez">
-    <h2>Pedro Gómez</h2>
-    <p>Rehabilitación postoperatoria</p>
-    <p class="precio">$40</p>
-    <a class="btn whatsapp" href="#">WhatsApp</a>
-    <a class="btn reservar" href="#">Reservar</a>
-  </div>
-
-  <div class="perfil">
-    <img src="kine8.jpg" alt="Laura Díaz">
-    <h2>Laura Díaz</h2>
-    <p>Descontracturante</p>
+    <img src="kine6.jpg" alt="Sofía Díaz">
+    <h2>Sofía Díaz</h2>
+    <p>Fisioterapia respiratoria</p>
     <p class="precio">$27</p>
-    <a class="btn whatsapp" href="#">WhatsApp</a>
+    <a class="btn whatsapp" href="https://wa.me/222333444?text=Hola quiero agendar una sesión">WhatsApp</a>
+    <a class="btn reservar" href="#">Reservar</a>
+  </div>
+
+  <div class="perfil">
+    <img src="kine7.jpg" alt="Pedro Ramírez">
+    <h2>Pedro Ramírez</h2>
+    <p>Terapia manual</p>
+    <p class="precio">$24</p>
+    <a class="btn whatsapp" href="https://wa.me/555666777?text=Hola quiero agendar una sesión">WhatsApp</a>
+    <a class="btn reservar" href="#">Reservar</a>
+  </div>
+
+  <div class="perfil">
+    <img src="kine8.jpg" alt="Lucía Fernández">
+    <h2>Lucía Fernández</h2>
+    <p>Rehabilitación neurológica</p>
+    <p class="precio">$30</p>
+    <a class="btn whatsapp" href="https://wa.me/888999000?text=Hola quiero agendar una sesión">WhatsApp</a>
     <a class="btn reservar" href="#">Reservar</a>
   </div>
 
@@ -219,7 +218,6 @@ input {
 
 <script>
 const buscador = document.getElementById("buscador");
-
 buscador.addEventListener("keyup", function() {
   let filtro = buscador.value.toLowerCase();
   let perfiles = document.querySelectorAll(".perfil");
