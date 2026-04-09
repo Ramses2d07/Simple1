@@ -167,25 +167,30 @@ textarea{
   border-radius:10px;
   font-size:13px;
 }
+
+/* FOOTER */
+.footer{
+  text-align:center;
+  padding:20px;
+  margin-top:20px;
+  font-size:12px;
+  color:#bbb;
+  border-top:1px solid rgba(255,255,255,0.08);
+  background: rgba(20,20,20,0.4);
+}
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
 <div class="header">
-
   <div class="icon" onclick="toggleAccount()">👤</div>
-
   <div class="search">
     <input placeholder="Buscar...">
   </div>
-
   <div class="icon" onclick="toggleMenu()">☰</div>
-
 </div>
 
-<!-- MENÚ IZQUIERDO (MY ACCOUNT) -->
 <div class="accountMenu" id="accountMenu">
   <p>Mi perfil</p>
   <p>Mis reservas</p>
@@ -193,7 +198,6 @@ textarea{
   <p>Configuración</p>
 </div>
 
-<!-- MENÚ DERECHO -->
 <div class="menu" id="menu">
   <p>🏠 Home</p>
   <p>📂 Catálogo</p>
@@ -201,12 +205,10 @@ textarea{
   <p>📍 Ubicación</p>
 </div>
 
-<!-- LOGO -->
 <div class="logoContainer">
   <img src="file_0000000095c071fd937e0a46af9303bb.svg">
 </div>
 
-<!-- PERFILES -->
 <div class="perfiles">
 
   <div class="perfil" onclick="openProfile('Juan Pérez','Caracas','♂','$20','k1.jpg')">
@@ -283,11 +285,8 @@ textarea{
 
 </div>
 
-<!-- MODAL PERFIL -->
 <div class="modal" id="modal">
-
   <div class="modal-content">
-
     <span class="close" onclick="closeProfile()">✖</span>
 
     <h2 id="name"></h2>
@@ -304,9 +303,11 @@ textarea{
     <textarea id="commentText"></textarea>
     <button onclick="addComment()">Enviar</button>
     <div id="comments"></div>
-
   </div>
+</div>
 
+<div class="footer">
+  © 2026 Catálogo App. Todos los derechos reservados.
 </div>
 
 <script>
@@ -315,12 +316,12 @@ let currentUser="";
 
 function toggleMenu(){
   let m=document.getElementById("menu");
-  m.style.display = (m.style.display==="block")?"none":"block";
+  m.style.display=(m.style.display==="block")?"none":"block";
 }
 
 function toggleAccount(){
   let a=document.getElementById("accountMenu");
-  a.style.display = (a.style.display==="block")?"none":"block";
+  a.style.display=(a.style.display==="block")?"none":"block";
 }
 
 function openProfile(name,city,sex,price,img){
