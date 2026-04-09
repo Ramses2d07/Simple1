@@ -3,16 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Marketplace Pro Integrado</title>
+<title>Marketplace Pro</title>
 
 <style>
 body{
   margin:0;
   font-family:Arial;
   color:#fff;
-  background:
-    radial-gradient(circle at top, rgba(255,255,255,0.06), transparent 60%),
-    linear-gradient(135deg,#0b0b0b,#050505);
+  background:linear-gradient(135deg,#0b0b0b,#050505);
 }
 
 /* HEADER */
@@ -26,10 +24,9 @@ body{
   background:rgba(20,20,20,0.6);
   backdrop-filter:blur(20px);
   z-index:2000;
-  border-bottom:1px solid rgba(255,255,255,0.08);
 }
 
-.icon{font-size:22px;cursor:pointer;width:40px;text-align:center;}
+.icon{font-size:22px;width:40px;text-align:center;cursor:pointer;}
 
 .search{flex:1;margin:0 10px;}
 .search input{
@@ -53,10 +50,8 @@ body{
   border:1px solid rgba(255,255,255,0.1);
   z-index:9999;
 }
-
 .menu{right:10px;}
 .accountMenu{left:10px;}
-
 .menu p,.accountMenu p{cursor:pointer;margin:10px 0;}
 
 /* LOGO */
@@ -92,7 +87,6 @@ body{
   box-shadow:0 0 10px #00ff88;
   animation:pulse 1.5s infinite;
 }
-
 @keyframes pulse{
   0%{transform:scale(1);opacity:1;}
   50%{transform:scale(1.4);opacity:0.6;}
@@ -104,6 +98,28 @@ body{
   color:#ffd700;
   font-size:14px;
   margin-top:5px;
+}
+
+/* MINI GALERÍA EN TARJETA */
+.miniGallery{
+  display:flex;
+  gap:4px;
+  margin-top:8px;
+  justify-content:center;
+}
+
+.miniGallery img{
+  width:40px;
+  height:40px;
+  object-fit:cover;
+  border-radius:8px;
+  opacity:0.85;
+  transition:0.3s;
+}
+
+.miniGallery img:hover{
+  transform:scale(1.2);
+  opacity:1;
 }
 
 /* BUTTONS */
@@ -118,7 +134,6 @@ body{
   font-weight:bold;
   cursor:pointer;
 }
-
 .whatsapp{background:linear-gradient(135deg,#1dbf73,#128c7e);}
 .reservar{background:linear-gradient(135deg,#7a2cff,#4a1bb3);}
 .fav{background:rgba(255,255,255,0.08);}
@@ -137,24 +152,13 @@ body{
   padding:15px;
 }
 
-.box{
-  background:rgba(255,255,255,0.04);
-  border-radius:20px;
-  padding:15px;
-}
+.box{background:rgba(255,255,255,0.04);padding:15px;border-radius:20px;}
 
-/* PHONE */
-.phone{
-  font-size:26px;
-  color:#25f4a5;
-  font-weight:bold;
-}
+.phone{font-size:26px;color:#25f4a5;font-weight:bold;}
 
-/* MEDIA */
 .media{display:flex;flex-wrap:wrap;gap:10px;}
 .media img,.media video{width:120px;border-radius:12px;}
 
-/* COMMENTS */
 textarea{
   width:100%;
   height:70px;
@@ -171,7 +175,6 @@ textarea{
   border-radius:10px;
 }
 
-/* FOOTER */
 .footer{
   text-align:center;
   padding:20px;
@@ -186,23 +189,19 @@ textarea{
 <!-- HEADER -->
 <div class="header">
   <div class="icon" onclick="toggleAccount()">👤</div>
-  <div class="search"><input placeholder="Buscar servicios..."></div>
+  <div class="search"><input placeholder="Buscar..."></div>
   <div class="icon" onclick="toggleMenu()">☰</div>
 </div>
 
 <!-- MENÚ -->
 <div class="menu">
-  <p>🏠 Home</p>
-  <p>🛍️ Catálogo</p>
-  <p>⭐ Suscribirse</p>
+  <p onclick="showAll()">🏠 Home</p>
   <p onclick="showFavorites()">❤️ Favoritos</p>
 </div>
 
 <div class="accountMenu">
   <p>Mi cuenta</p>
-  <p>Favoritos</p>
   <p>Reservas</p>
-  <p>Configuración</p>
 </div>
 
 <!-- LOGO -->
@@ -219,17 +218,13 @@ textarea{
 
     <h2 id="name"></h2>
     <p id="info"></p>
-
     <div class="phone" id="phone"></div>
-
-    <h3>🧾 Presentación</h3>
-    <p id="desc"></p>
 
     <h3>📸 Galería</h3>
     <input type="file" multiple accept="image/*,video/*" onchange="upload(event)">
     <div class="media" id="media"></div>
 
-    <h3>💬 Reseñas</h3>
+    <h3>💬 Comentarios</h3>
     <textarea id="txt"></textarea>
     <button class="btn reservar" onclick="comment()">Enviar</button>
     <div id="comments"></div>
@@ -238,8 +233,6 @@ textarea{
 
   </div>
 </div>
-
-<div class="footer">© 2026 Marketplace Pro</div>
 
 <script>
 
@@ -254,30 +247,16 @@ function toggleAccount(){
   m.style.display=(m.style.display==="block")?"none":"block";
 }
 
-/* FAVORITOS */
-function getFavs(){return JSON.parse(localStorage.getItem("favs")||"[]");}
-function saveFavs(favs){localStorage.setItem("favs",JSON.stringify(favs));}
-
-function toggleFav(i){
-  let favs=getFavs();
-  if(favs.includes(i)) favs=favs.filter(x=>x!==i);
-  else favs.push(i);
-  saveFavs(favs);
-  renderGrid();
-}
-
-function isFav(i){return getFavs().includes(i);}
-
 /* USERS */
 const users=[
-["Juan Pérez","Caracas","♂","k1.jpg","+58 412 111 1111","Premium",5],
-["María López","Maracay","♀","k2.jpg","+58 412 222 2222","Pro",4],
-["Carlos Martínez","Valencia","♂","k3.jpg","+58 412 333 3333","VIP",5],
-["Ana Torres","Barquisimeto","♀","k4.jpg","+58 412 444 4444","Elite",4],
-["Luis Gómez","Caracas","♂","k5.jpg","+58 412 555 5555","Fast",3],
-["Sofía Díaz","Valencia","♀","k6.jpg","+58 412 666 6666","Top",5],
-["Pedro Ramírez","Maracaibo","♂","k7.jpg","+58 412 777 7777","Pro",4],
-["Lucía Fernández","Maracay","♀","k8.jpg","+58 412 888 8888","Max",5]
+["Juan Pérez","Caracas","+58 1","k1.jpg"],
+["María López","Maracay","+58 2","k2.jpg"],
+["Carlos Martínez","Valencia","+58 3","k3.jpg"],
+["Ana Torres","Barquisimeto","+58 4","k4.jpg"],
+["Luis Gómez","Caracas","+58 5","k5.jpg"],
+["Sofía Díaz","Valencia","+58 6","k6.jpg"],
+["Pedro Ramírez","Maracaibo","+58 7","k7.jpg"],
+["Lucía Fernández","Maracay","+58 8","k8.jpg"]
 ];
 
 let current=0;
@@ -285,24 +264,36 @@ let grid=document.getElementById("grid");
 
 function renderGrid(){
 grid.innerHTML="";
+
 users.forEach((u,i)=>{
+
 grid.innerHTML+=`
 <div class="card" onclick="openP(${i})">
 
 <h3>${u[0]} <span class="online"></span></h3>
 
-<div>${u[1]} | ${u[2]}</div>
-<div class="stars">${"⭐".repeat(u[6])}</div>
+<div>${u[1]}</div>
+<div class="stars">⭐⭐⭐⭐☆</div>
+
+<div class="miniGallery" id="mini_${i}"></div>
 
 <button class="btn whatsapp">WhatsApp</button>
 <button class="btn reservar">Reservar</button>
 
-<button class="btn fav" onclick="toggleFav(${i});event.stopPropagation();">
-${isFav(i)?"❤️ Guardado":"🤍 Favorito"}
-</button>
-
 </div>`;
+
+setTimeout(()=>loadMini(i),100);
+
 });
+}
+
+function loadMini(i){
+let box=document.getElementById("mini_"+i);
+let arr=JSON.parse(localStorage.getItem("m_"+i)||"[]");
+
+let imgs=arr.filter(x=>x.type.includes("image")).slice(0,3);
+
+box.innerHTML=imgs.map(img=>`<img src="${img.data}">`).join("");
 }
 
 renderGrid();
@@ -313,27 +304,32 @@ current=i;
 document.getElementById("profile").style.display="block";
 
 document.getElementById("name").innerText=users[i][0];
-document.getElementById("info").innerText=users[i][1]+" | "+users[i][2];
-document.getElementById("phone").innerText="📞 "+users[i][4];
-document.getElementById("desc").innerText=users[i][5];
+document.getElementById("info").innerText=users[i][1];
+document.getElementById("phone").innerText=users[i][2];
 
 loadMedia();
 loadComments();
 }
 
-function closeP(){document.getElementById("profile").style.display="none";}
+function closeP(){
+document.getElementById("profile").style.display="none";
+}
 
 /* MEDIA */
 function upload(e){
 let files=e.target.files;
+
 for(let f of files){
 let r=new FileReader();
+
 r.onload=function(ev){
 let arr=JSON.parse(localStorage.getItem("m_"+current)||"[]");
 arr.push({data:ev.target.result,type:f.type});
 localStorage.setItem("m_"+current,JSON.stringify(arr));
 loadMedia();
+renderGrid();
 };
+
 r.readAsDataURL(f);
 }
 }
@@ -342,6 +338,7 @@ function loadMedia(){
 let box=document.getElementById("media");
 box.innerHTML="";
 let arr=JSON.parse(localStorage.getItem("m_"+current)||"[]");
+
 arr.forEach(m=>{
 box.innerHTML+=m.type.includes("image")
 ? `<img src="${m.data}">`
@@ -368,19 +365,13 @@ box.innerHTML=(JSON.parse(localStorage.getItem("c_"+current)||"[]"))
 .map(c=>`<div class="comment">${c}</div>`).join("");
 }
 
-/* FAVORITOS VIEW */
+/* FAVORITES SIMPLIFIED */
 function showFavorites(){
-let favs=getFavs();
-grid.innerHTML="";
-favs.forEach(i=>{
-let u=users[i];
-grid.innerHTML+=`
-<div class="card" onclick="openP(${i})">
-<h3>${u[0]} ❤️ <span class="online"></span></h3>
-<div>${u[1]}</div>
-<div class="stars">${"⭐".repeat(u[6])}</div>
-</div>`;
-});
+grid.innerHTML="❤️ Favoritos (pendiente conexión completa)";
+}
+
+function showAll(){
+renderGrid();
 }
 
 </script>
