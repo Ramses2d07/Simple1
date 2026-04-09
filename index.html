@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>simplesexxxvzla | Reserva tu Kinesiólogo</title>
+<title>simplesexxxvzla</title>
 
 <style>
 body { 
@@ -13,21 +13,15 @@ body {
   color: #fff;
 }
 
-/* NAVBAR vacío */
-.nav {
-  background: #111;
-  padding: 10px;
-}
-
 /* HERO */
 .hero {
   text-align: center;
-  padding: 120px 20px 40px 20px;
+  padding: 140px 20px 40px 20px;
 }
 
-/* LOGO GRANDE */
+/* LOGO MÁS GRANDE (x2+) */
 .logo {
-  max-width: 500px;
+  max-width: 650px;
   width: 100%;
   height: auto;
   display: block;
@@ -60,11 +54,6 @@ input {
   border-radius: 12px; 
   padding: 15px; 
   text-align: center; 
-  transition: 0.3s;
-}
-
-.perfil:hover {
-  transform: scale(1.05);
 }
 
 .perfil img { 
@@ -76,7 +65,6 @@ input {
 
 .perfil h2 { 
   color: #8a2be2;
-  margin: 10px 0;
 }
 
 .precio {
@@ -93,19 +81,14 @@ input {
   text-decoration: none;
   color: white;
   font-weight: bold;
-  transition: 0.3s;
 }
 
 .whatsapp {
-  background: linear-gradient(145deg, #25D366, #128C7E);
+  background: #25D366;
 }
 
 .reservar {
-  background: linear-gradient(145deg, #ff2ea6, #7a2cff);
-}
-
-.btn:hover {
-  transform: scale(1.05);
+  background: #8a2be2;
 }
 
 /* FOOTER */
@@ -113,100 +96,33 @@ input {
   text-align: center;
   padding: 20px;
   background: #111;
-  margin-top: 20px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- NAVBAR vacío -->
-<div class="nav"></div>
-
-<!-- HERO -->
+<!-- SOLO UN LOGO -->
 <div class="hero">
-  <img src="file_0000000095c071fd937e0a46af9303bb.svg" class="logo" alt="Logo">
-  <input type="text" id="buscador" placeholder="Buscar por nombre o especialidad...">
+  <img src="file_0000000095c071fd937e0a46af9303bb.svg" class="logo">
+
+  <input type="text" id="buscador" placeholder="Buscar...">
 </div>
 
-<!-- PERFILES -->
+<!-- 8 PERFILES -->
 <div class="perfiles" id="lista">
 
-  <div class="perfil">
-    <img src="kine1.jpg">
-    <h2>Juan Pérez</h2>
-    <p>Rehabilitación física</p>
-    <p class="precio">$20</p>
-    <a class="btn whatsapp" href="#">WhatsApp</a>
-    <a class="btn reservar" href="#">Reservar</a>
-  </div>
-
-  <div class="perfil">
-    <img src="kine2.jpg">
-    <h2>María López</h2>
-    <p>Terapia deportiva</p>
-    <p class="precio">$25</p>
-    <a class="btn whatsapp" href="#">WhatsApp</a>
-    <a class="btn reservar" href="#">Reservar</a>
-  </div>
-
-  <div class="perfil">
-    <img src="kine3.jpg">
-    <h2>Carlos Martínez</h2>
-    <p>Fisioterapia neurológica</p>
-    <p class="precio">$30</p>
-    <a class="btn whatsapp" href="#">WhatsApp</a>
-    <a class="btn reservar" href="#">Reservar</a>
-  </div>
-
-  <div class="perfil">
-    <img src="kine4.jpg">
-    <h2>Ana Rodríguez</h2>
-    <p>Masajes terapéuticos</p>
-    <p class="precio">$35</p>
-    <a class="btn whatsapp" href="#">WhatsApp</a>
-    <a class="btn reservar" href="#">Reservar</a>
-  </div>
-
-  <div class="perfil">
-    <img src="kine5.jpg">
-    <h2>Luis Fernández</h2>
-    <p>Rehabilitación deportiva</p>
-    <p class="precio">$28</p>
-    <a class="btn whatsapp" href="#">WhatsApp</a>
-    <a class="btn reservar" href="#">Reservar</a>
-  </div>
-
-  <div class="perfil">
-    <img src="kine6.jpg">
-    <h2>Sofía Torres</h2>
-    <p>Terapia relajante</p>
-    <p class="precio">$22</p>
-    <a class="btn whatsapp" href="#">WhatsApp</a>
-    <a class="btn reservar" href="#">Reservar</a>
-  </div>
-
-  <div class="perfil">
-    <img src="kine7.jpg">
-    <h2>Pedro Gómez</h2>
-    <p>Fisioterapia postoperatoria</p>
-    <p class="precio">$40</p>
-    <a class="btn whatsapp" href="#">WhatsApp</a>
-    <a class="btn reservar" href="#">Reservar</a>
-  </div>
-
-  <div class="perfil">
-    <img src="kine8.jpg">
-    <h2>Laura Díaz</h2>
-    <p>Masajes descontracturantes</p>
-    <p class="precio">$27</p>
-    <a class="btn whatsapp" href="#">WhatsApp</a>
-    <a class="btn reservar" href="#">Reservar</a>
-  </div>
+  <div class="perfil"><img src="kine1.jpg"><h2>Juan Pérez</h2><p>Rehabilitación</p><p class="precio">$20</p></div>
+  <div class="perfil"><img src="kine2.jpg"><h2>María López</h2><p>Deportiva</p><p class="precio">$25</p></div>
+  <div class="perfil"><img src="kine3.jpg"><h2>Carlos Martínez</h2><p>Neurológica</p><p class="precio">$30</p></div>
+  <div class="perfil"><img src="kine4.jpg"><h2>Ana Rodríguez</h2><p>Masajes</p><p class="precio">$35</p></div>
+  <div class="perfil"><img src="kine5.jpg"><h2>Luis Fernández</h2><p>Deportiva</p><p class="precio">$28</p></div>
+  <div class="perfil"><img src="kine6.jpg"><h2>Sofía Torres</h2><p>Relajante</p><p class="precio">$22</p></div>
+  <div class="perfil"><img src="kine7.jpg"><h2>Pedro Gómez</h2><p>Postoperatoria</p><p class="precio">$40</p></div>
+  <div class="perfil"><img src="kine8.jpg"><h2>Laura Díaz</h2><p>Descontracturante</p><p class="precio">$27</p></div>
 
 </div>
 
-<!-- FOOTER -->
 <div class="footer">
   © 2026 simplesexxxvzla
 </div>
@@ -226,4 +142,4 @@ buscador.addEventListener("keyup", function() {
 </script>
 
 </body>
-</html>
+</html> 
