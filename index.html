@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>simplesexxxvzla | Haz contacto ahora </title>
+<title>simplesexxxvzla | Reserva tu Kinesiólogo</title>
 <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
 <style>
 body { 
@@ -25,46 +25,54 @@ body {
 /* HERO */
 .hero {
   text-align: center;
-  padding: 80px 20px 40px 20px;
+  padding: 100px 20px 50px 20px;
   position: relative;
 }
 
-/* TÍTULO GRAFFITI CON SPLASH IRREGULAR */
+/* TÍTULO GRAFFITI */
 .title-container {
   position: relative;
   display: inline-block;
-  padding: 40px 20px; /* espacio para splash alrededor */
   z-index: 2;
 }
 
 .title-container h1 {
   font-family: 'Bangers', cursive;
   font-size: 60px;
-  color: #fff;
   margin: 0;
-  position: relative;
-  z-index: 2;
+  color: #fff;
   background: linear-gradient(180deg, #ff2ea6, #7a2cff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   -webkit-text-stroke: 2px black;
+  position: relative;
+  z-index: 2;
 }
 
-/* SPLASH TIPO SALPICADURA MORADO */
-.hero::before {
-  content: "";
+/* SPLASH TIPO PINTURA DETRÁS DEL TÍTULO */
+.splash {
   position: absolute;
-  top: 0;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%) rotate(-5deg);
-  width: 550px;
-  height: 220px;
-  background: #8a2be2; /* splash morado */
-  clip-path: polygon(
-    20% 0%, 80% 0%, 90% 10%, 100% 40%, 90% 70%, 70% 100%, 50% 90%, 30% 100%, 10% 80%, 0% 50%, 10% 20%
-  );
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 250px;
   z-index: 1;
 }
+
+.splash div {
+  position: absolute;
+  background: #8a2be2;
+  border-radius: 50%;
+  opacity: 0.9;
+}
+
+/* Varias “gotas” de pintura */
+.splash .drop1 { width: 120px; height: 120px; top: 10%; left: 10%; transform: rotate(-15deg);}
+.splash .drop2 { width: 80px; height: 80px; top: 50%; left: 20%; transform: rotate(20deg);}
+.splash .drop3 { width: 150px; height: 150px; top: 20%; left: 50%; transform: rotate(-25deg);}
+.splash .drop4 { width: 100px; height: 100px; top: 60%; left: 60%; transform: rotate(10deg);}
+.splash .drop5 { width: 130px; height: 130px; top: 30%; left: 75%; transform: rotate(-10deg);}
 
 /* BUSCADOR */
 input {
@@ -150,6 +158,13 @@ input {
 <div class="nav">simplesexxxvzla</div>
 
 <div class="hero">
+  <div class="splash">
+    <div class="drop1"></div>
+    <div class="drop2"></div>
+    <div class="drop3"></div>
+    <div class="drop4"></div>
+    <div class="drop5"></div>
+  </div>
   <div class="title-container">
     <h1>simplesexxxvzla</h1>
   </div>
