@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simplesexxvzla | haz contacto ahora</title>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+<style>
+body { 
+  font-family: Arial, sans-serif; 
+  margin: 0; 
+  background-color: #000;
+  color: #fff;
+}
+
+/* NAVBAR */
+.nav {
+  background: #111;
+  padding: 15px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+/* HERO */
+.hero {
+  text-align: center;
+  padding: 30px 20px;
+}
+
+/* TÍTULO GRAFFITI */
+.title-container {
+  position: relative;
+  display: inline-block;
+}
+
+.title-container::before {
+  content: "";
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-15deg);
+  width: 400px;
+  height: 180px;
+  background: 
+    radial-gradient(circle at 20% 30%, #18d1d1 40%, transparent 41%),
+    radial-gradient(circle at 70% 40%, #18d1d1 35%, transparent 36%),
+    radial-gradient(circle at 50% 70%, #18d1d1 30%, transparent 31%),
+    radial-gradient(circle at 80% 70%, #18d1d1 25%, transparent 26%),
+    radial-gradient(circle at 30% 60%, #18d1d1 28%, transparent 29%);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+h1 {
+  position: relative;
+  font-size: 50px;
+  font-family: 'Bangers', cursive;
+  z-index: 2;
+  background: linear-gradient(180deg, #ff2ea6, #7a2cff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 2px black;
+}
+
+/* BUSCADOR */
+input {
+  margin-top: 20px;
+  padding: 12px;
+  width: 90%;
+  max-width: 400px;
+  border-radius: 8px;
+  border: none;
+  background: #222;
+  color: #fff;
+}
+
+/* GRID */
+.perfiles { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+  gap: 20px; 
+  padding: 20px;
+}
+
+/* CARD */
+.perfil { 
+  background: #111;
+  border-radius: 12px; 
+  padding: 15px; 
+  text-align: center; 
+  transition: 0.3s;
+}
+
+.perfil:hover {
+  transform: scale(1.05);
+}
+
+.perfil img { 
+  width: 100px; 
+  height: 100px; 
+  border-radius: 50%; 
+  object-fit: cover;
+}
+
+.perfil h2 { 
+  color: #8a2be2; /* morado */
+  margin: 10px 0;
+}
+
+.precio {
+  color: #00ff88;
+  font-weight: bold;
+}
+
+/* BOTONES */
+.btn {
+  display: block;
+  margin: 8px 0;
+  padding: 10px;
+  border-radius: 6px;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+}
+
+.whatsapp {
+  background: #25D366;
+}
+
+.reservar {
+  background: #ff2ea6;
+}
+
+/* FOOTER */
+.footer {
+  text-align: center;
+  padding: 20px;
+  background: #111;
+  margin-top: 20px;
+}
+</style>
+</head>
+<body>
+<div class="nav">KinePro</div>
+
+<div class="hero">
+  <div class="title-container">
+    <h1>Reserva tu Kinesiólogo</h1>
+  </div>
+  <input type="text" id="buscador" placeholder="Buscar por nombre o especialidad...">
+</div>
+
+<div class="perfiles" id="lista">
+  <div class="perfil">
+    <img src="kine1.jpg" alt="Juan Pérez">
+    <h2>Juan Pérez</h2>
+    <p>Rehabilitación física</p>
+    <p class="precio">$20</p>
+    <a class="btn whatsapp" href="https://wa.me/123456789?text=Hola quiero agendar una sesión">WhatsApp</a>
+    <a class="btn reservar" href="#">Reservar</a>
+  </div>
+
+  <div class="perfil">
+    <img src="kine2.jpg" alt="María López">
+    <h2>María López</h2>
+    <p>Terapia deportiva</p>
+    <p class="precio">$25</p>
+    <a class="btn whatsapp" href="https://wa.me/987654321?text=Hola quiero agendar una sesión">WhatsApp</a>
+    <a class="btn reservar" href="#">Reservar</a>
+  </div>
+
+  <div class="perfil">
+    <img src="kine3.jpg" alt="Carlos Martínez">
+    <h2>Carlos Martínez</h2>
+    <p>Fisioterapia neurológica</p>
+    <p class="precio">$30</p>
+    <a class="btn whatsapp" href="https://wa.me/111222333?text=Hola quiero agendar una sesión">WhatsApp</a>
+    <a class="btn reservar" href="#">Reservar</a>
+  </div>
+</div>
+
+<div class="footer">
+  © 2026 Simplesexxxvzla - Todos los derechos reservados
+</div>
+
+<script>
+const buscador = document.getElementById("buscador");
+buscador.addEventListener("keyup", function() {
+  let filtro = buscador.value.toLowerCase();
+  let perfiles = document.querySelectorAll(".perfil");
+
+  perfiles.forEach(p => {
+    let texto = p.innerText.toLowerCase();
+    p.style.display = texto.includes(filtro) ? "block" : "none";
+  });
+});
+</script>
+</body>
+</html>
