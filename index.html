@@ -3,10 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Marketplace Ultra Pro</title>
+<title>Marketplace Ultra Pro Fixed</title>
 
 <style>
-/* 🌑 BACKGROUND PREMIUM */
 body{
   margin:0;
   font-family:Arial;
@@ -42,7 +41,7 @@ body{
   color:#fff;
 }
 
-/* MENÚS GLASS */
+/* MENÚS */
 .menu,.accountMenu{
   display:none;
   position:absolute;
@@ -50,10 +49,9 @@ body{
   width:200px;
   padding:10px;
   border-radius:14px;
-  background:rgba(20,20,20,0.6);
-  backdrop-filter:blur(20px);
-  border:1px solid rgba(255,255,255,0.08);
-  z-index:3000;
+  background:rgba(20,20,20,0.9);
+  border:1px solid rgba(255,255,255,0.1);
+  z-index:9999;
 }
 
 .menu{right:10px;}
@@ -81,7 +79,7 @@ body{
   padding:15px;
 }
 
-/* 🧾 CARD ULTRA PRO */
+/* CARD */
 .card{
   background:rgba(255,255,255,0.04);
   border:1px solid rgba(255,255,255,0.08);
@@ -89,33 +87,13 @@ body{
   padding:12px;
   text-align:center;
   cursor:pointer;
-  transition:0.4s;
-  box-shadow:0 10px 30px rgba(0,0,0,0.5);
+  transition:0.3s;
   position:relative;
-  overflow:hidden;
 }
 
 .card:hover{
   transform:translateY(-6px) scale(1.02);
-  box-shadow:0 18px 45px rgba(0,0,0,0.7);
   border:1px solid rgba(255,255,255,0.15);
-}
-
-/* SHINE */
-.card::before{
-  content:"";
-  position:absolute;
-  top:-100%;
-  left:-50%;
-  width:200%;
-  height:200%;
-  background:linear-gradient(120deg,transparent,rgba(255,255,255,0.08),transparent);
-  transform:rotate(25deg);
-  transition:0.5s;
-}
-
-.card:hover::before{
-  top:100%;
 }
 
 .card img{
@@ -124,7 +102,32 @@ body{
   border-radius:50%;
 }
 
-/* 🔘 BOTONES ULTRA PRO */
+/* ONLINE */
+.online{
+  display:inline-block;
+  width:10px;
+  height:10px;
+  background:#00ff88;
+  border-radius:50%;
+  margin-left:6px;
+  box-shadow:0 0 10px #00ff88;
+  animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+  0%{transform:scale(1);opacity:1;}
+  50%{transform:scale(1.4);opacity:0.6;}
+  100%{transform:scale(1);opacity:1;}
+}
+
+/* STARS */
+.stars{
+  color:#ffd700;
+  font-size:14px;
+  margin-top:5px;
+}
+
+/* BUTTONS */
 .btn{
   display:block;
   margin:6px auto;
@@ -133,42 +136,16 @@ body{
   border-radius:12px;
   font-weight:bold;
   color:#fff;
-  position:relative;
-  overflow:hidden;
-  transition:0.3s;
-  box-shadow:0 8px 20px rgba(0,0,0,0.4);
+  border:none;
+  cursor:pointer;
 }
 
-.btn:hover{
-  transform:translateY(-3px);
-  box-shadow:0 12px 28px rgba(0,0,0,0.6);
-}
-
-/* WHATSAPP */
 .whatsapp{
   background:linear-gradient(135deg,#1dbf73,#128c7e);
 }
 
-/* RESERVAR */
 .reservar{
   background:linear-gradient(135deg,#7a2cff,#4a1bb3);
-}
-
-/* SHINE BUTTON */
-.btn::after{
-  content:"";
-  position:absolute;
-  top:-50%;
-  left:-60%;
-  width:40%;
-  height:200%;
-  background:rgba(255,255,255,0.25);
-  transform:rotate(25deg);
-  transition:0.5s;
-}
-
-.btn:hover::after{
-  left:120%;
 }
 
 /* PROFILE */
@@ -179,30 +156,26 @@ body{
   left:0;
   width:100%;
   height:100%;
-  background:linear-gradient(180deg,#0a0a0a,#050505);
+  background:#0a0a0a;
   overflow:auto;
   z-index:5000;
   padding:15px;
 }
 
-/* BOX */
 .box{
   background:rgba(255,255,255,0.04);
-  border:1px solid rgba(255,255,255,0.08);
   border-radius:20px;
   padding:15px;
+  border:1px solid rgba(255,255,255,0.08);
 }
 
-/* PHONE */
 .phone{
   font-size:26px;
   font-weight:bold;
   color:#25f4a5;
-  text-shadow:0 0 10px rgba(37,244,165,0.3);
   margin:10px 0;
 }
 
-/* MEDIA */
 .media{
   display:flex;
   flex-wrap:wrap;
@@ -212,12 +185,6 @@ body{
 .media img,.media video{
   width:120px;
   border-radius:12px;
-  transition:0.3s;
-  box-shadow:0 10px 20px rgba(0,0,0,0.5);
-}
-
-.media img:hover,.media video:hover{
-  transform:scale(1.05);
 }
 
 /* COMMENTS */
@@ -253,9 +220,25 @@ textarea{
 
 <!-- HEADER -->
 <div class="header">
-  <div class="icon">👤</div>
+  <div class="icon" onclick="toggleAccount()">👤</div>
   <div class="search"><input placeholder="Buscar servicios..."></div>
-  <div class="icon">☰</div>
+  <div class="icon" onclick="toggleMenu()">☰</div>
+</div>
+
+<!-- MENÚ -->
+<div class="menu">
+  <p>🏠 Home</p>
+  <p>🛍️ Catálogo</p>
+  <p>⭐ Suscribirse</p>
+  <p>📍 Ubicación</p>
+</div>
+
+<!-- PERFIL MENU -->
+<div class="accountMenu">
+  <p>Mi cuenta</p>
+  <p>Favoritos</p>
+  <p>Reservas</p>
+  <p>Configuración</p>
 </div>
 
 <!-- LOGO -->
@@ -268,7 +251,6 @@ textarea{
 
 <!-- PROFILE -->
 <div class="profile" id="profile">
-
   <div class="box">
 
     <h2 id="name"></h2>
@@ -285,13 +267,12 @@ textarea{
 
     <h3>💬 Reseñas</h3>
     <textarea id="txt"></textarea>
-    <button onclick="comment()">Enviar</button>
+    <button class="btn reservaar" onclick="comment()">Enviar</button>
     <div id="comments"></div>
 
-    <button onclick="closeP()">Cerrar</button>
+    <button class="btn whatsapp" onclick="closeP()">Cerrar</button>
 
   </div>
-
 </div>
 
 <!-- FOOTER -->
@@ -301,30 +282,40 @@ textarea{
 
 <script>
 
+function toggleMenu(){
+  let m=document.querySelector(".menu");
+  m.style.display=(m.style.display==="block")?"none":"block";
+}
+
+function toggleAccount(){
+  let m=document.querySelector(".accountMenu");
+  m.style.display=(m.style.display==="block")?"none":"block";
+}
+
 const users=[
-["Juan Pérez","Caracas","♂","k1.jpg","+58 412 111 1111","Servicio profesional premium"],
-["María López","Maracay","♀","k2.jpg","+58 412 222 2222","Atención personalizada de alta calidad"],
-["Carlos Martínez","Valencia","♂","k3.jpg","+58 412 333 3333","Especialista en servicios confiables"],
-["Ana Torres","Barquisimeto","♀","k4.jpg","+58 412 444 4444","Experiencia y trato profesional"],
-["Luis Gómez","Caracas","♂","k5.jpg","+58 412 555 5555","Servicios rápidos y eficientes"],
-["Sofía Díaz","Valencia","♀","k6.jpg","+58 412 666 6666","Calidad y confianza garantizada"],
-["Pedro Ramírez","Maracaibo","♂","k7.jpg","+58 412 777 7777","Amplia experiencia en el sector"],
-["Lucía Fernández","Maracay","♀","k8.jpg","+58 412 888 8888","Atención premium personalizada"]
+["Juan Pérez","Caracas","♂","k1.jpg","+58 412 111 1111","Servicio premium",5],
+["María López","Maracay","♀","k2.jpg","+58 412 222 2222","Atención profesional",4],
+["Carlos Martínez","Valencia","♂","k3.jpg","+58 412 333 3333","Experiencia confiable",5],
+["Ana Torres","Barquisimeto","♀","k4.jpg","+58 412 444 4444","Calidad garantizada",4],
+["Luis Gómez","Caracas","♂","k5.jpg","+58 412 555 5555","Servicio rápido",3],
+["Sofía Díaz","Valencia","♀","k6.jpg","+58 412 666 6666","Alta calidad",5],
+["Pedro Ramírez","Maracaibo","♂","k7.jpg","+58 412 777 7777","Profesional",4],
+["Lucía Fernández","Maracay","♀","k8.jpg","+58 412 888 8888","Premium",5]
 ];
 
 let current=0;
-
 let grid=document.getElementById("grid");
 
 users.forEach((u,i)=>{
 grid.innerHTML+=`
 <div class="card" onclick="openP(${i})">
 <img src="${u[3]}">
-<h3>${u[0]}</h3>
+<h3>${u[0]} <span class="online"></span></h3>
 <div>${u[1]} | ${u[2]}</div>
+<div class="stars">${"⭐".repeat(u[6])}</div>
 
-<a class="btn whatsapp">WhatsApp</a>
-<a class="btn reservar">Reservar</a>
+<button class="btn whatsapp">WhatsApp</button>
+<button class="btn reservar">Reservar</button>
 </div>`;
 });
 
@@ -345,7 +336,6 @@ function closeP(){
 document.getElementById("profile").style.display="none";
 }
 
-/* MEDIA */
 function upload(e){
 let files=e.target.files;
 for(let f of files){
@@ -375,7 +365,6 @@ box.innerHTML+=`<video src="${m.data}" controls></video>`;
 });
 }
 
-/* COMMENTS */
 function comment(){
 let t=document.getElementById("txt").value;
 if(!t)return;
