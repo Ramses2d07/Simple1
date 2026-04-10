@@ -13,6 +13,7 @@ body{
   background:linear-gradient(135deg,#1a1a1a,#0f0f0f);
 }
 
+/* HEADER */
 .header{
   display:flex;
   align-items:center;
@@ -38,6 +39,7 @@ body{
   color:#fff;
 }
 
+/* MENÚ */
 .menu,.accountMenu{
   display:none;
   position:absolute;
@@ -58,6 +60,7 @@ body{
   cursor:pointer;
 }
 
+/* LOGO */
 .logo{
   text-align:center;
   padding:18px;
@@ -71,6 +74,7 @@ body{
   filter:drop-shadow(0 20px 30px rgba(0,0,0,0.8));
 }
 
+/* GRID */
 .grid{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -78,6 +82,7 @@ body{
   padding:15px;
 }
 
+/* CARD */
 .card{
   background:rgba(255,255,255,0.06);
   border:1px solid rgba(255,255,255,0.12);
@@ -86,6 +91,7 @@ body{
   text-align:center;
 }
 
+/* BOTONES */
 .btn{
   display:block;
   margin:6px auto;
@@ -103,6 +109,7 @@ body{
 .whatsapp{background:linear-gradient(135deg,#1dbf73,#128c7e);}
 .reservar{background:linear-gradient(135deg,#4b2cff,#2d1a66);}
 
+/* PROFILE */
 .profile{
   display:none;
   position:fixed;
@@ -130,6 +137,7 @@ body{
   display:block;
 }
 
+/* GALERÍA */
 .media{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -176,7 +184,7 @@ textarea{
   margin-left:6px;
 }
 
-/* UBICACIÓN */
+/* LOCATION */
 .location{
   display:none;
   position:fixed;
@@ -197,7 +205,7 @@ textarea{
   cursor:pointer;
 }
 
-/* FAVORITOS VIEW */
+/* FAVORITOS */
 .favView{
   display:none;
   position:fixed;
@@ -231,16 +239,17 @@ textarea{
   <p onclick="closeMenus()">Mi cuenta</p>
 </div>
 
+<!-- LOGO -->
 <div class="logo">
   <img src="file_0000000095c071fd937e0a46af9303bb.svg">
 </div>
 
+<!-- GRID -->
 <div class="grid" id="grid"></div>
 
 <!-- PROFILE -->
 <div class="profile" id="profile">
   <div class="box">
-
     <h2 id="name"></h2>
     <img id="profileImg">
     <p id="info"></p>
@@ -253,18 +262,13 @@ textarea{
     <input type="file" multiple onchange="upload(event)">
     <div class="media" id="media"></div>
 
-    <h3>Comentarios</h3>
-    <textarea id="txt"></textarea>
-    <button class="btn reservar" onclick="comment()">Enviar</button>
-    <div id="comments"></div>
-
     <button class="btn whatsapp" onclick="closeP()">Cerrar</button>
   </div>
 </div>
 
 <!-- UBICACIÓN -->
 <div class="location" id="location">
-  <h2 style="text-align:center">📍 Ubicación</h2>
+  <h2>📍 Ubicación</h2>
   <div class="city" onclick="selectCity('Caracas')">Caracas</div>
   <div class="city" onclick="selectCity('Valencia')">Valencia</div>
   <div class="city" onclick="selectCity('Maracay')">Maracay</div>
@@ -272,7 +276,7 @@ textarea{
   <button class="btn whatsapp" onclick="closeLocation()">Cerrar</button>
 </div>
 
-<!-- FAVORITOS VIEW -->
+<!-- FAVORITOS -->
 <div class="favView" id="favView">
   <h2>⭐ Favoritos</h2>
   <div id="favList"></div>
@@ -281,10 +285,21 @@ textarea{
 
 <!-- FOOTER -->
 <div class="footer">
-© 2026 Marketplace Ultra Pro. Todos los derechos reservados. Reserva de derechos protegida.
+© 2026 Marketplace Ultra Pro. Todos los derechos reservados.
 </div>
 
 <script>
+
+/* MENÚ */
+function toggleMenu(){
+let m=document.getElementById("menu");
+m.style.display=m.style.display==="block"?"none":"block";
+}
+
+function toggleAccount(){
+let m=document.getElementById("accountMenu");
+m.style.display=m.style.display==="block"?"none":"block";
+}
 
 function closeMenus(){
 document.getElementById("menu").style.display="none";
@@ -296,7 +311,7 @@ let selectedCity=null;
 
 function selectCity(city){
 selectedCity=city;
-alert("Ciudad seleccionada: "+city);
+localStorage.setItem("city",city);
 closeLocation();
 render();
 }
@@ -319,11 +334,14 @@ function closeFavs(){
 document.getElementById("favView").style.display="none";
 }
 
-function renderFavs(){
-let favs=JSON.parse(localStorage.getItem("favs")||"[]");
-document.getElementById("favList").innerHTML=favs.length?
-favs.map(i=>`<div class="city">${users[i][0]}</div>`).join("")
-:"<p>No hay favoritos</p>";
+function getFavs(){
+return JSON.parse(localStorage.getItem("favs")||"[]");
+}
+
+function toggleFav(i){
+let f=getFavs();
+f.includes(i)?f=f.filter(x=>x!==i):f.push(i);
+localStorage.setItem("favs",JSON.stringify(f));
 }
 
 /* USERS */
@@ -343,21 +361,23 @@ let grid=document.getElementById("grid");
 
 function render(){
 grid.innerHTML="";
+let city=localStorage.getItem("city");
+
 users.forEach((u,i)=>{
-if(selectedCity && u[1]!==selectedCity) return;
+if(city && u[1]!==city) return;
 
 grid.innerHTML+=`
 <div class="card" onclick="openP(${i})">
-<img src="${u[3]}">
+<img src="${u[3]}" style="width:80px;height:80px;border-radius:50%">
 <h3>${u[0]} <span class="online"></span></h3>
 <div>${u[1]}</div>
 
 <button class="btn btn-like" onclick="event.stopPropagation();like(${i})">
-❤️ ${getLikes()[i]||0}
+❤️
 </button>
 
 <button class="btn btn-fav" onclick="event.stopPropagation();toggleFav(${i})">
-⭐ Favorito
+⭐
 </button>
 
 <button class="btn whatsapp">WhatsApp</button>
@@ -365,23 +385,6 @@ grid.innerHTML+=`
 
 </div>`;
 });
-}
-
-function getLikes(){
-return JSON.parse(localStorage.getItem("likes")||"{}");
-}
-
-function like(i){
-let l=getLikes();
-l[i]=(l[i]||0)+1;
-localStorage.setItem("likes",JSON.stringify(l));
-render();
-}
-
-function toggleFav(i){
-let f=JSON.parse(localStorage.getItem("favs")||"[]");
-f.includes(i)?f=f.filter(x=>x!==i):f.push(i);
-localStorage.setItem("favs",JSON.stringify(f));
 }
 
 /* PROFILE */
@@ -393,40 +396,13 @@ document.getElementById("info").innerText=users[i][1];
 document.getElementById("phone").innerText=users[i][4];
 document.getElementById("desc").innerText=users[i][5];
 document.getElementById("profileImg").src=users[i][3];
-loadMedia();
 }
 
 function closeP(){
 document.getElementById("profile").style.display="none";
 }
 
-/* GALERÍA */
-function upload(e){
-let files=e.target.files;
-let key="m_"+current;
-let arr=JSON.parse(localStorage.getItem(key)||"[]");
-
-for(let f of files){
-if(arr.length>=12) break;
-let r=new FileReader();
-r.onload=function(ev){
-arr.push(ev.target.result);
-localStorage.setItem(key,JSON.stringify(arr));
-loadMedia();
-};
-r.readAsDataURL(f);
-}
-}
-
-function loadMedia(){
-let box=document.getElementById("media");
-box.innerHTML="";
-let arr=JSON.parse(localStorage.getItem("m_"+current)||"[]");
-arr.slice(0,12).forEach(m=>{
-box.innerHTML+=`<img src="${m}">`;
-});
-}
-
+/* INIT */
 render();
 
 </script>
