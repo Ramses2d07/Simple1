@@ -115,7 +115,6 @@ body{
   height:45px;
   border-radius:8px;
   object-fit:cover;
-  background:rgba(255,255,255,0.08);
   cursor:pointer;
 }
 
@@ -157,38 +156,10 @@ body{
 
 .phone{font-size:26px;color:#25f4a5;}
 
-/* VIEWER */
-.viewer{
+/* LOCATION */
+#locations{
   display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.95);
-  z-index:99999;
-  justify-content:center;
-  align-items:center;
-}
-
-.viewer img{
-  max-width:90%;
-  max-height:90%;
-  border-radius:12px;
-}
-
-/* COMMENTS */
-textarea{
-  width:100%;
-  height:70px;
-  border-radius:10px;
-  padding:10px;
-  background:rgba(255,255,255,0.08);
-  color:#fff;
-}
-
-.comment{
-  background:rgba(255,255,255,0.12);
-  margin-top:6px;
-  padding:8px;
-  border-radius:10px;
+  padding:15px;
 }
 
 /* FOOTER */
@@ -219,6 +190,7 @@ textarea{
 <div class="menu">
   <p onclick="showCatalog()">🏠 Catálogo</p>
   <p onclick="showFavorites()">❤️ Favoritos</p>
+  <p onclick="showLocations()">📍 Ubicación</p>
 </div>
 
 <div class="accountMenu">
@@ -229,15 +201,24 @@ textarea{
 <!-- GRID -->
 <div class="grid" id="grid"></div>
 
+<!-- UBICACIÓN -->
+<div id="locations">
+  <h2>📍 Selecciona tu ciudad</h2>
+
+  <div class="card" onclick="selectCity('Caracas')">🏙️ Caracas</div>
+  <div class="card" onclick="selectCity('Maracay')">🌆 Maracay</div>
+  <div class="card" onclick="selectCity('Valencia')">🌇 Valencia</div>
+  <div class="card" onclick="selectCity('Maracaibo')">🌃 Maracaibo</div>
+
+  <button class="btn wp" onclick="backToCatalog()">⬅ Volver al catálogo</button>
+</div>
+
 <!-- PROFILE -->
 <div class="profile" id="profile">
   <div class="box">
     <h2 id="name"></h2>
     <p id="info"></p>
     <div class="phone" id="phone"></div>
-
-    <h3>📸 Subir fotos</h3>
-    <input type="file" multiple accept="image/*" onchange="uploadMini(event)">
 
     <h3>💬 Comentarios</h3>
     <textarea id="txt"></textarea>
@@ -248,11 +229,6 @@ textarea{
   </div>
 </div>
 
-<!-- VIEWER -->
-<div class="viewer" id="viewer" onclick="closeViewer()">
-  <img id="viewerImg">
-</div>
-
 <div class="footer">
 © 2026 Marketplace Pro. Todos los derechos reservados.
 </div>
@@ -260,6 +236,7 @@ textarea{
 <script>
 
 let view="catalog";
+let selectedCity=null;
 let current=0;
 
 /* MENÚ */
@@ -271,6 +248,23 @@ function toggleMenu(){
 function toggleAccount(){
   let m=document.querySelector(".accountMenu");
   m.style.display=(m.style.display==="block")?"none":"block";
+}
+
+/* UBICACIÓN */
+function showLocations(){
+  document.getElementById("grid").style.display="none";
+  document.getElementById("locations").style.display="block";
+}
+
+function backToCatalog(){
+  document.getElementById("locations").style.display="none";
+  document.getElementById("grid").style.display="grid";
+  showCatalog();
+}
+
+function selectCity(city){
+  selectedCity=city;
+  backToCatalog();
 }
 
 /* FAVORITOS */
@@ -292,10 +286,7 @@ function like(i){
   localStorage.setItem("likes",JSON.stringify(l));
   renderGrid();
 }
-function getLikeCount(i){
-  let l=getLikes();
-  return l[i]||0;
-}
+function getLikeCount(i){return getLikes()[i]||0;}
 
 /* USERS */
 const users=[
@@ -309,38 +300,6 @@ const users=[
 ["Lucía Fernández","Maracay","+58 888",5]
 ];
 
-/* MINI GALERÍA REAL */
-function getMini(i){
-  return JSON.parse(localStorage.getItem("mini_"+i)||"[]");
-}
-
-function uploadMini(e){
-let files=e.target.files;
-
-for(let f of files){
-let r=new FileReader();
-
-r.onload=function(ev){
-let arr=getMini(current);
-arr.push(ev.target.result);
-localStorage.setItem("mini_"+current,JSON.stringify(arr));
-renderGrid();
-};
-
-r.readAsDataURL(f);
-}
-}
-
-/* VIEWER */
-function openViewer(src){
-document.getElementById("viewer").style.display="flex";
-document.getElementById("viewerImg").src=src;
-}
-
-function closeViewer(){
-document.getElementById("viewer").style.display="none";
-}
-
 /* RENDER */
 function renderGrid(){
 let grid=document.getElementById("grid");
@@ -349,12 +308,9 @@ grid.innerHTML="";
 users.forEach((u,i)=>{
 
 if(view==="favorites" && !isFav(i)) return;
+if(selectedCity && u[1]!==selectedCity) return;
 
 let stars="⭐".repeat(u[3])+"☆".repeat(5-u[3]);
-
-let mini=getMini(i).slice(0,3)
-.map(img=>`<img src="${img}" onclick="openViewer('${img}')">`)
-.join("");
 
 grid.innerHTML+=`
 <div class="card" onclick="openP(${i})">
@@ -363,8 +319,6 @@ grid.innerHTML+=`
 <div>${u[1]}</div>
 
 <div class="stars">${stars}</div>
-
-<div class="miniGallery">${mini}</div>
 
 <button class="btn wp">WhatsApp</button>
 <button class="btn res">Reservar</button>
@@ -411,8 +365,8 @@ loadComments();
 }
 
 function loadComments(){
-let box=document.getElementById("comments");
-box.innerHTML=(JSON.parse(localStorage.getItem("c_"+current)||"[]"))
+document.getElementById("comments").innerHTML=
+(JSON.parse(localStorage.getItem("c_"+current)||"[]"))
 .map(c=>`<div class="comment">${c}</div>`).join("");
 }
 
