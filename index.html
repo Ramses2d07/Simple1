@@ -39,7 +39,7 @@ body{
   color:#fff;
 }
 
-/* MENÚ FUNCIONAL */
+/* MENÚ */
 .menu,.accountMenu{
   display:none;
   position:absolute;
@@ -60,7 +60,7 @@ body{
   cursor:pointer;
 }
 
-/* LOGO FIX 520 */
+/* LOGO */
 .logo{
   text-align:center;
   padding:18px;
@@ -104,16 +104,13 @@ body{
   cursor:pointer;
 }
 
-/* LIKE / FAVORITO */
 .btn-like{background:#2a2a2a;}
 .btn-fav{background:#3a3a3a;}
 
-/* WHATSAPP VERDE */
 .whatsapp{
   background:linear-gradient(135deg,#1dbf73,#128c7e);
 }
 
-/* RESERVA MORADO */
 .reservar{
   background:linear-gradient(135deg,#4b2cff,#2d1a66);
 }
@@ -195,8 +192,8 @@ textarea{
   margin-left:6px;
 }
 
-/* 🔴 UBICACIÓN PAGE */
-.locationPage{
+/* ===== NUEVO: UBICACIÓN ===== */
+.location{
   display:none;
   position:fixed;
   top:0;
@@ -207,14 +204,14 @@ textarea{
   z-index:6000;
   padding:20px;
 }
+
 .locationBox{
   text-align:center;
+  margin-top:60px;
 }
-.locationBox h2{
-  margin-bottom:20px;
-}
-.locationCity{
-  padding:15px;
+
+.city{
+  padding:12px;
   margin:10px;
   border-radius:12px;
   background:rgba(255,255,255,0.06);
@@ -234,8 +231,8 @@ textarea{
 <!-- MENÚ -->
 <div class="menu" id="menu">
   <p onclick="render()">Catálogo</p>
-  <p>Favoritos</p>
   <p onclick="openLocation()">📍 Ubicación</p>
+  <p>Favoritos</p>
 </div>
 
 <div class="accountMenu" id="accountMenu">
@@ -273,15 +270,15 @@ textarea{
   </div>
 </div>
 
-<!-- 📍 UBICACIÓN -->
-<div class="locationPage" id="locationPage">
+<!-- ===== UBICACIÓN ===== -->
+<div class="location" id="location">
   <div class="locationBox">
-    <h2>📍 Selecciona tu ciudad</h2>
+    <h2>📍 Selecciona ubicación</h2>
 
-    <div class="locationCity">Caracas</div>
-    <div class="locationCity">Valencia</div>
-    <div class="locationCity">Maracay</div>
-    <div class="locationCity">Maracaibo</div>
+    <div class="city">Caracas</div>
+    <div class="city">Valencia</div>
+    <div class="city">Maracay</div>
+    <div class="city">Maracaibo</div>
 
     <button class="btn whatsapp" onclick="closeLocation()">Cerrar</button>
   </div>
@@ -289,28 +286,29 @@ textarea{
 
 <!-- FOOTER -->
 <div class="footer">
-© 2026 Marketplace Ultra Pro. Todos los derechos reservados. Reserva de derechos protegida.
+© 2026 Marketplace Ultra Pro. Todos los derechos reservados.
 </div>
 
 <script>
 
+/* MENÚ */
 function toggleMenu(){
 let m=document.getElementById("menu");
-m.style.display = m.style.display==="block"?"none":"block";
+m.style.display=m.style.display==="block"?"none":"block";
 }
 
 function toggleAccount(){
 let m=document.getElementById("accountMenu");
-m.style.display = m.style.display==="block"?"none":"block";
+m.style.display=m.style.display==="block"?"none":"block";
 }
 
 /* UBICACIÓN */
 function openLocation(){
-document.getElementById("locationPage").style.display="block";
+document.getElementById("location").style.display="block";
 }
 
 function closeLocation(){
-document.getElementById("locationPage").style.display="none";
+document.getElementById("location").style.display="none";
 }
 
 /* USERS */
@@ -336,10 +334,39 @@ grid.innerHTML+=`
 <img src="${u[3]}" style="width:80px;height:80px;border-radius:50%">
 <h3>${u[0]} <span class="online"></span></h3>
 <div>${u[1]}</div>
+
+<button class="btn btn-like" onclick="event.stopPropagation();like(${i})">
+❤️ ${getLikes()[i]||0}
+</button>
+
+<button class="btn btn-fav" onclick="event.stopPropagation();toggleFav(${i})">
+⭐ Favorito
+</button>
+
+<button class="btn whatsapp">WhatsApp</button>
+<button class="btn reservar">Reservar</button>
 </div>`;
 });
 }
 
+function getLikes(){
+return JSON.parse(localStorage.getItem("likes")||"{}");
+}
+
+function like(i){
+let l=getLikes();
+l[i]=(l[i]||0)+1;
+localStorage.setItem("likes",JSON.stringify(l));
+render();
+}
+
+function toggleFav(i){
+let f=JSON.parse(localStorage.getItem("favs")||"[]");
+f.includes(i)?f=f.filter(x=>x!==i):f.push(i);
+localStorage.setItem("favs",JSON.stringify(f));
+}
+
+/* PROFILE */
 function openP(i){
 current=i;
 document.getElementById("profile").style.display="block";
@@ -352,6 +379,34 @@ document.getElementById("profileImg").src=users[i][3];
 
 function closeP(){
 document.getElementById("profile").style.display="none";
+}
+
+/* GALERÍA */
+function upload(e){
+let files=e.target.files;
+let key="m_"+current;
+let arr=JSON.parse(localStorage.getItem(key)||"[]");
+
+for(let f of files){
+if(arr.length>=12) break;
+
+let r=new FileReader();
+r.onload=function(ev){
+arr.push(ev.target.result);
+localStorage.setItem(key,JSON.stringify(arr));
+loadMedia();
+};
+r.readAsDataURL(f);
+}
+}
+
+function loadMedia(){
+let box=document.getElementById("media");
+box.innerHTML="";
+let arr=JSON.parse(localStorage.getItem("m_"+current)||"[]");
+arr.slice(0,12).forEach(m=>{
+box.innerHTML+=`<img src="${m}">`;
+});
 }
 
 render();
