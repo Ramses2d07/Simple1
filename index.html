@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Marketplace Pro Premium</title>
+<title>Marketplace Pro</title>
 
 <style>
 body{
@@ -40,17 +40,6 @@ body{
   color:#fff;
 }
 
-/* LOGO */
-.logo{
-  text-align:center;
-  padding:12px;
-}
-
-.logo img{
-  width:520px;
-  max-width:95%;
-}
-
 /* MENÚ */
 .menu,.accountMenu{
   display:none;
@@ -63,10 +52,13 @@ body{
   border:1px solid rgba(255,255,255,0.1);
   z-index:9999;
 }
-
 .menu{right:10px;}
 .accountMenu{left:10px;}
 .menu p,.accountMenu p{cursor:pointer;margin:10px 0;}
+
+/* LOGO */
+.logo{text-align:center;padding:15px;}
+.logo img{width:520px;max-width:95%;}
 
 /* GRID */
 .grid{
@@ -79,23 +71,25 @@ body{
 /* CARD */
 .card{
   background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
   border-radius:20px;
   padding:12px;
-  border:1px solid rgba(255,255,255,0.08);
+  text-align:center;
   cursor:pointer;
 }
 
 /* ONLINE */
 .online{
-  width:10px;height:10px;
-  border-radius:50%;
   display:inline-block;
+  width:10px;
+  height:10px;
   background:#00ff88;
+  border-radius:50%;
   margin-left:6px;
   box-shadow:0 0 10px #00ff88;
 }
 
-/* ESTRELLAS */
+/* STARS */
 .stars{
   color:#ffd700;
   font-size:14px;
@@ -118,19 +112,17 @@ body{
   cursor:pointer;
 }
 
-/* BOTONES */
+/* BUTTONS */
 .btn{
   display:block;
   margin:6px auto;
   padding:10px;
   width:90%;
   border-radius:12px;
-  border:1px solid rgba(255,255,255,0.12);
-  font-weight:bold;
+  border:none;
   color:#fff;
+  font-weight:bold;
   cursor:pointer;
-  background:rgba(255,255,255,0.06);
-  backdrop-filter:blur(10px);
 }
 
 .wp{background:linear-gradient(135deg,#1dbf73,#128c7e);}
@@ -156,10 +148,44 @@ body{
 
 .phone{font-size:26px;color:#25f4a5;}
 
+/* VIEWER */
+.viewer{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.95);
+  z-index:99999;
+  justify-content:center;
+  align-items:center;
+}
+
+.viewer img{
+  max-width:90%;
+  max-height:90%;
+  border-radius:12px;
+}
+
 /* LOCATION */
 #locations{
   display:none;
   padding:15px;
+}
+
+/* COMMENTS */
+textarea{
+  width:100%;
+  height:70px;
+  border-radius:10px;
+  padding:10px;
+  background:rgba(255,255,255,0.08);
+  color:#fff;
+}
+
+.comment{
+  background:rgba(255,255,255,0.12);
+  margin-top:6px;
+  padding:8px;
+  border-radius:10px;
 }
 
 /* FOOTER */
@@ -203,14 +229,14 @@ body{
 
 <!-- UBICACIÓN -->
 <div id="locations">
-  <h2>📍 Selecciona tu ciudad</h2>
+  <h2>📍 Ciudades</h2>
 
-  <div class="card" onclick="selectCity('Caracas')">🏙️ Caracas</div>
-  <div class="card" onclick="selectCity('Maracay')">🌆 Maracay</div>
-  <div class="card" onclick="selectCity('Valencia')">🌇 Valencia</div>
-  <div class="card" onclick="selectCity('Maracaibo')">🌃 Maracaibo</div>
+  <div class="card" onclick="selectCity('Caracas')">Caracas</div>
+  <div class="card" onclick="selectCity('Maracay')">Maracay</div>
+  <div class="card" onclick="selectCity('Valencia')">Valencia</div>
+  <div class="card" onclick="selectCity('Maracaibo')">Maracaibo</div>
 
-  <button class="btn wp" onclick="backToCatalog()">⬅ Volver al catálogo</button>
+  <button class="btn wp" onclick="backToCatalog()">⬅ Volver</button>
 </div>
 
 <!-- PROFILE -->
@@ -219,6 +245,9 @@ body{
     <h2 id="name"></h2>
     <p id="info"></p>
     <div class="phone" id="phone"></div>
+
+    <h3>📸 Galería</h3>
+    <div class="miniGallery" id="profileGallery"></div>
 
     <h3>💬 Comentarios</h3>
     <textarea id="txt"></textarea>
@@ -229,15 +258,20 @@ body{
   </div>
 </div>
 
+<!-- VIEWER -->
+<div class="viewer" id="viewer" onclick="closeViewer()">
+  <img id="viewerImg">
+</div>
+
 <div class="footer">
 © 2026 Marketplace Pro. Todos los derechos reservados.
 </div>
 
 <script>
 
-let view="catalog";
-let selectedCity=null;
 let current=0;
+let selectedCity=null;
+let view="catalog";
 
 /* MENÚ */
 function toggleMenu(){
@@ -259,7 +293,7 @@ function showLocations(){
 function backToCatalog(){
   document.getElementById("locations").style.display="none";
   document.getElementById("grid").style.display="grid";
-  showCatalog();
+  renderGrid();
 }
 
 function selectCity(city){
@@ -267,26 +301,62 @@ function selectCity(city){
   backToCatalog();
 }
 
-/* FAVORITOS */
-function getFavs(){return JSON.parse(localStorage.getItem("favs")||"[]");}
-function saveFavs(f){localStorage.setItem("favs",JSON.stringify(f));}
-function isFav(i){return getFavs().includes(i);}
-function toggleFav(i){
-  let f=getFavs();
-  f.includes(i)?f=f.filter(x=>x!==i):f.push(i);
-  saveFavs(f);
-  renderGrid();
+/* MINI GALERÍA */
+function getMini(i){
+  return JSON.parse(localStorage.getItem("mini_"+i)||"[]");
 }
 
-/* LIKES */
-function getLikes(){return JSON.parse(localStorage.getItem("likes")||"{}");}
-function like(i){
-  let l=getLikes();
-  l[i]=(l[i]||0)+1;
-  localStorage.setItem("likes",JSON.stringify(l));
-  renderGrid();
+function loadProfileGallery(){
+  let box=document.getElementById("profileGallery");
+  let arr=getMini(current);
+
+  box.innerHTML=arr.length
+    ? arr.map(img=>`<img src="${img}" onclick="openViewer('${img}')">`).join("")
+    : "<p style='opacity:0.6'>Sin imágenes</p>";
 }
-function getLikeCount(i){return getLikes()[i]||0;}
+
+/* VIEWER */
+function openViewer(src){
+  document.getElementById("viewer").style.display="flex";
+  document.getElementById("viewerImg").src=src;
+}
+function closeViewer(){
+  document.getElementById("viewer").style.display="none";
+}
+
+/* PROFILE */
+function openP(i){
+  current=i;
+  document.getElementById("profile").style.display="block";
+  document.getElementById("name").innerText=users[i][0];
+  document.getElementById("info").innerText=users[i][1];
+  document.getElementById("phone").innerText=users[i][2];
+  loadProfileGallery();
+  loadComments();
+}
+
+function closeP(){
+  document.getElementById("profile").style.display="none";
+}
+
+/* COMMENTS */
+function comment(){
+  let t=document.getElementById("txt").value;
+  if(!t)return;
+
+  let arr=JSON.parse(localStorage.getItem("c_"+current)||"[]");
+  arr.push(t);
+  localStorage.setItem("c_"+current,JSON.stringify(arr));
+
+  document.getElementById("txt").value="";
+  loadComments();
+}
+
+function loadComments(){
+  document.getElementById("comments").innerHTML=
+  (JSON.parse(localStorage.getItem("c_"+current)||"[]"))
+  .map(c=>`<div class="comment">${c}</div>`).join("");
+}
 
 /* USERS */
 const users=[
@@ -307,7 +377,6 @@ grid.innerHTML="";
 
 users.forEach((u,i)=>{
 
-if(view==="favorites" && !isFav(i)) return;
 if(selectedCity && u[1]!==selectedCity) return;
 
 let stars="⭐".repeat(u[3])+"☆".repeat(5-u[3]);
@@ -323,51 +392,8 @@ grid.innerHTML+=`
 <button class="btn wp">WhatsApp</button>
 <button class="btn res">Reservar</button>
 
-<button class="btn fav" onclick="toggleFav(${i});event.stopPropagation();">
-${isFav(i)?"❤️ Guardado":"🤍 Favorito"}
-</button>
-
-<div style="color:#ff4d6d;cursor:pointer;"
-onclick="like(${i});event.stopPropagation();">
-❤️ Likes: ${getLikeCount(i)}
-</div>
-
 </div>`;
 });
-}
-
-function showCatalog(){view="catalog";renderGrid();}
-function showFavorites(){view="favorites";renderGrid();}
-
-/* PROFILE */
-function openP(i){
-current=i;
-document.getElementById("profile").style.display="block";
-document.getElementById("name").innerText=users[i][0];
-document.getElementById("info").innerText=users[i][1];
-document.getElementById("phone").innerText=users[i][2];
-loadComments();
-}
-
-function closeP(){
-document.getElementById("profile").style.display="none";
-}
-
-/* COMMENTS */
-function comment(){
-let t=document.getElementById("txt").value;
-if(!t)return;
-let arr=JSON.parse(localStorage.getItem("c_"+current)||"[]");
-arr.push(t);
-localStorage.setItem("c_"+current,JSON.stringify(arr));
-document.getElementById("txt").value="";
-loadComments();
-}
-
-function loadComments(){
-document.getElementById("comments").innerHTML=
-(JSON.parse(localStorage.getItem("c_"+current)||"[]"))
-.map(c=>`<div class="comment">${c}</div>`).join("");
 }
 
 renderGrid();
