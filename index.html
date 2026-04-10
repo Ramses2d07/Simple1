@@ -66,8 +66,8 @@ body{
 }
 
 .logo img{
-  width:90%;
-  max-width:800px;
+  width:520px;
+  max-width:100%;
   filter:drop-shadow(0 20px 30px rgba(0,0,0,0.8));
 }
 
@@ -87,37 +87,6 @@ body{
   padding:12px;
   text-align:center;
   cursor:pointer;
-  transition:0.3s;
-  position:relative;
-  backdrop-filter:blur(12px);
-}
-
-.card:hover{
-  transform:translateY(-6px) scale(1.02);
-  border:1px solid rgba(255,255,255,0.18);
-}
-
-.card img{
-  width:80px;
-  height:80px;
-  border-radius:50%;
-}
-
-/* ONLINE */
-.online{
-  display:inline-block;
-  width:10px;
-  height:10px;
-  background:#00ff88;
-  border-radius:50%;
-  margin-left:6px;
-}
-
-/* STARS */
-.stars{
-  color:#ffd700;
-  font-size:14px;
-  margin-top:5px;
 }
 
 /* BOTONES */
@@ -134,20 +103,17 @@ body{
   background:rgba(255,255,255,0.06);
 }
 
-.btn-like{
-  background:linear-gradient(135deg,#2a2a2a,#3a3a3a);
-}
+/* LIKE / FAVORITO */
+.btn-like{background:linear-gradient(135deg,#2a2a2a,#3a3a3a);}
+.btn-fav{background:linear-gradient(135deg,#303030,#404040);}
 
-.btn-fav{
-  background:linear-gradient(135deg,#303030,#404040);
-}
-
+/* ACCIONES */
 .whatsapp{
-  background:linear-gradient(135deg,#2b2b2b,#3a3a3a);
+  background:linear-gradient(135deg,#2f2f2f,#3a3a3a);
 }
 
 .reservar{
-  background:linear-gradient(135deg,#3a3a3a,#4a4a4a);
+  background:linear-gradient(135deg,#4b2cff,#2d1a66);
 }
 
 /* PROFILE */
@@ -171,33 +137,27 @@ body{
   border:1px solid rgba(255,255,255,0.08);
 }
 
-/* 🔥 FOTO GRANDE PERFIL */
+/* FOTO GRANDE */
 #profileImg{
   width:100%;
   max-width:260px;
   border-radius:20px;
   margin:10px auto;
   display:block;
-  border:1px solid rgba(255,255,255,0.12);
-  box-shadow:0 10px 25px rgba(0,0,0,0.5);
 }
 
-.phone{
-  font-size:26px;
-  font-weight:bold;
-  color:#bdbdbd;
-  margin:10px 0;
-}
-
+/* GALERÍA */
 .media{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
 }
 
-.media img,.media video{
-  width:120px;
-  border-radius:12px;
+.media img{
+  width:100%;
+  height:90px;
+  object-fit:cover;
+  border-radius:10px;
 }
 
 /* COMMENTS */
@@ -238,16 +198,12 @@ textarea{
 </div>
 
 <div class="menu">
-  <p onclick="render()">Catálogo</p>
-  <p onclick="showFavorites()">Favoritos</p>
-  <p onclick="filterCity('Caracas')">Caracas</p>
-  <p onclick="filterCity('Maracay')">Maracay</p>
-  <p onclick="filterCity('Valencia')">Valencia</p>
+  <p>Catálogo</p>
+  <p>Favoritos</p>
 </div>
 
 <div class="accountMenu">
   <p>Mi cuenta</p>
-  <p>Favoritos</p>
 </div>
 
 <div class="logo">
@@ -256,22 +212,22 @@ textarea{
 
 <div class="grid" id="grid"></div>
 
+<!-- PROFILE -->
 <div class="profile" id="profile">
   <div class="box">
 
     <h2 id="name"></h2>
 
-    <!-- 🔥 FOTO GRANDE -->
     <img id="profileImg">
 
     <p id="info"></p>
-    <div class="phone" id="phone"></div>
+    <div id="phone"></div>
 
     <h3>Presentación</h3>
     <p id="desc"></p>
 
-    <h3>Galería</h3>
-    <input type="file" multiple accept="image/*,video/*" onchange="upload(event)">
+    <h3>Galería (máx 12)</h3>
+    <input type="file" multiple onchange="upload(event)">
     <div class="media" id="media"></div>
 
     <h3>Reseñas</h3>
@@ -280,24 +236,15 @@ textarea{
     <div id="comments"></div>
 
     <button class="btn whatsapp" onclick="closeP()">Cerrar</button>
+
   </div>
 </div>
 
 <div class="footer">
-© 2026 Marketplace Ultra Pro. Todos los derechos reservados.
+© 2026 Marketplace Ultra Pro
 </div>
 
 <script>
-
-function toggleMenu(){
-let m=document.querySelector(".menu");
-m.style.display=(m.style.display==="block")?"none":"block";
-}
-
-function toggleAccount(){
-let m=document.querySelector(".accountMenu");
-m.style.display=(m.style.display==="block")?"none":"block";
-}
 
 const users=[
 ["Juan Pérez","Caracas","♂","k1.jpg","+58 111","Servicio",5],
@@ -311,22 +258,17 @@ const users=[
 ];
 
 let current=0;
-let selectedCity=null;
 let grid=document.getElementById("grid");
 
+/* RENDER */
 function render(){
 grid.innerHTML="";
-
 users.forEach((u,i)=>{
-
-if(selectedCity && u[1]!==selectedCity) return;
-
 grid.innerHTML+=`
 <div class="card" onclick="openP(${i})">
-<img src="${u[3]}">
+<img src="${u[3]}" style="width:80px;height:80px;border-radius:50%">
 <h3>${u[0]}</h3>
 <div>${u[1]}</div>
-<div class="stars">${"⭐".repeat(u[6])}</div>
 
 <button class="btn btn-like" onclick="event.stopPropagation();like(${i})">
 ❤️ ${getLikes()[i]||0}
@@ -342,6 +284,7 @@ grid.innerHTML+=`
 });
 }
 
+/* LIKES */
 function getLikes(){
 return JSON.parse(localStorage.getItem("likes")||"{}");
 }
@@ -353,42 +296,77 @@ localStorage.setItem("likes",JSON.stringify(l));
 render();
 }
 
-function getFavs(){
-return JSON.parse(localStorage.getItem("favs")||"[]");
-}
-
+/* FAVORITOS */
 function toggleFav(i){
-let f=getFavs();
+let f=JSON.parse(localStorage.getItem("favs")||"[]");
 f.includes(i)?f=f.filter(x=>x!==i):f.push(i);
 localStorage.setItem("favs",JSON.stringify(f));
 }
 
-function filterCity(c){
-selectedCity=c;
-render();
-}
-
+/* PERFIL */
 function openP(i){
 current=i;
 document.getElementById("profile").style.display="block";
-
 document.getElementById("name").innerText=users[i][0];
 document.getElementById("info").innerText=users[i][1];
 document.getElementById("phone").innerText=users[i][4];
 document.getElementById("desc").innerText=users[i][5];
-
-document.getElementById("profileImg").src = users[i][3];
-
+document.getElementById("profileImg").src=users[i][3];
 loadMedia();
+}
+
+/* GALERÍA */
+function upload(e){
+let files=e.target.files;
+let key="m_"+current;
+let arr=JSON.parse(localStorage.getItem(key)||"[]");
+
+for(let f of files){
+if(arr.length>=12) break;
+
+let r=new FileReader();
+r.onload=function(ev){
+arr.push(ev.target.result);
+localStorage.setItem(key,JSON.stringify(arr));
+loadMedia();
+};
+r.readAsDataURL(f);
+}
+}
+
+function loadMedia(){
+let box=document.getElementById("media");
+box.innerHTML="";
+let arr=JSON.parse(localStorage.getItem("m_"+current)||"[]");
+
+arr.slice(0,12).forEach(m=>{
+box.innerHTML+=`<img src="${m}">`;
+});
+}
+
+/* COMMENTS */
+function comment(){
+let t=document.getElementById("txt").value;
+if(!t)return;
+
+let key="c_"+current;
+let arr=JSON.parse(localStorage.getItem(key)||"[]");
+arr.push(t);
+localStorage.setItem(key,JSON.stringify(arr));
+
+document.getElementById("txt").value="";
 loadComments();
+}
+
+function loadComments(){
+let box=document.getElementById("comments");
+let arr=JSON.parse(localStorage.getItem("c_"+current)||"[]");
+box.innerHTML=arr.map(c=>`<div class="comment">${c}</div>`).join("");
 }
 
 function closeP(){
 document.getElementById("profile").style.display="none";
 }
-
-function upload(e){}
-function comment(){}
 
 render();
 
