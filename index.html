@@ -196,6 +196,19 @@ textarea{
   background:rgba(255,255,255,0.06);
   cursor:pointer;
 }
+
+/* FAVORITOS VIEW */
+.favView{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:#0f0f0f;
+  z-index:7000;
+  padding:20px;
+}
 </style>
 </head>
 
@@ -211,7 +224,7 @@ textarea{
 <div class="menu" id="menu">
   <p onclick="render();closeMenus()">Catálogo</p>
   <p onclick="openLocation();closeMenus()">📍 Ubicación</p>
-  <p onclick="closeMenus()">Favoritos</p>
+  <p onclick="openFavs();closeMenus()">⭐ Favoritos</p>
 </div>
 
 <div class="accountMenu" id="accountMenu">
@@ -252,11 +265,18 @@ textarea{
 <!-- UBICACIÓN -->
 <div class="location" id="location">
   <h2 style="text-align:center">📍 Ubicación</h2>
-  <div class="city">Caracas</div>
-  <div class="city">Valencia</div>
-  <div class="city">Maracay</div>
-  <div class="city">Maracaibo</div>
+  <div class="city" onclick="selectCity('Caracas')">Caracas</div>
+  <div class="city" onclick="selectCity('Valencia')">Valencia</div>
+  <div class="city" onclick="selectCity('Maracay')">Maracay</div>
+  <div class="city" onclick="selectCity('Maracaibo')">Maracaibo</div>
   <button class="btn whatsapp" onclick="closeLocation()">Cerrar</button>
+</div>
+
+<!-- FAVORITOS VIEW -->
+<div class="favView" id="favView">
+  <h2>⭐ Favoritos</h2>
+  <div id="favList"></div>
+  <button class="btn whatsapp" onclick="closeFavs()">Cerrar</button>
 </div>
 
 <!-- FOOTER -->
@@ -266,30 +286,44 @@ textarea{
 
 <script>
 
-/* PATCH NUEVO */
 function closeMenus(){
-  document.getElementById("menu").style.display="none";
-  document.getElementById("accountMenu").style.display="none";
-}
-
-/* MENÚ */
-function toggleMenu(){
-let m=document.getElementById("menu");
-m.style.display=m.style.display==="block"?"none":"block";
-}
-
-function toggleAccount(){
-let m=document.getElementById("accountMenu");
-m.style.display=m.style.display==="block"?"none":"block";
+document.getElementById("menu").style.display="none";
+document.getElementById("accountMenu").style.display="none";
 }
 
 /* UBICACIÓN */
+let selectedCity=null;
+
+function selectCity(city){
+selectedCity=city;
+alert("Ciudad seleccionada: "+city);
+closeLocation();
+render();
+}
+
 function openLocation(){
 document.getElementById("location").style.display="block";
 }
 
 function closeLocation(){
 document.getElementById("location").style.display="none";
+}
+
+/* FAVORITOS */
+function openFavs(){
+document.getElementById("favView").style.display="block";
+renderFavs();
+}
+
+function closeFavs(){
+document.getElementById("favView").style.display="none";
+}
+
+function renderFavs(){
+let favs=JSON.parse(localStorage.getItem("favs")||"[]");
+document.getElementById("favList").innerHTML=favs.length?
+favs.map(i=>`<div class="city">${users[i][0]}</div>`).join("")
+:"<p>No hay favoritos</p>";
 }
 
 /* USERS */
@@ -310,15 +344,47 @@ let grid=document.getElementById("grid");
 function render(){
 grid.innerHTML="";
 users.forEach((u,i)=>{
+if(selectedCity && u[1]!==selectedCity) return;
+
 grid.innerHTML+=`
 <div class="card" onclick="openP(${i})">
-<img src="${u[3]}" style="width:80px;height:80px;border-radius:50%">
+<img src="${u[3]}">
 <h3>${u[0]} <span class="online"></span></h3>
 <div>${u[1]}</div>
+
+<button class="btn btn-like" onclick="event.stopPropagation();like(${i})">
+❤️ ${getLikes()[i]||0}
+</button>
+
+<button class="btn btn-fav" onclick="event.stopPropagation();toggleFav(${i})">
+⭐ Favorito
+</button>
+
+<button class="btn whatsapp">WhatsApp</button>
+<button class="btn reservar">Reservar</button>
+
 </div>`;
 });
 }
 
+function getLikes(){
+return JSON.parse(localStorage.getItem("likes")||"{}");
+}
+
+function like(i){
+let l=getLikes();
+l[i]=(l[i]||0)+1;
+localStorage.setItem("likes",JSON.stringify(l));
+render();
+}
+
+function toggleFav(i){
+let f=JSON.parse(localStorage.getItem("favs")||"[]");
+f.includes(i)?f=f.filter(x=>x!==i):f.push(i);
+localStorage.setItem("favs",JSON.stringify(f));
+}
+
+/* PROFILE */
 function openP(i){
 current=i;
 document.getElementById("profile").style.display="block";
@@ -327,12 +393,14 @@ document.getElementById("info").innerText=users[i][1];
 document.getElementById("phone").innerText=users[i][4];
 document.getElementById("desc").innerText=users[i][5];
 document.getElementById("profileImg").src=users[i][3];
+loadMedia();
 }
 
 function closeP(){
 document.getElementById("profile").style.display="none";
 }
 
+/* GALERÍA */
 function upload(e){
 let files=e.target.files;
 let key="m_"+current;
