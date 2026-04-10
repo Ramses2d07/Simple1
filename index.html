@@ -111,7 +111,6 @@ body{
   background:#00ff88;
   border-radius:50%;
   margin-left:6px;
-  box-shadow:0 0 10px #00ff88;
 }
 
 /* STARS */
@@ -121,7 +120,7 @@ body{
   margin-top:5px;
 }
 
-/* BUTTONS */
+/* BOTONES */
 .btn{
   display:block;
   margin:6px auto;
@@ -129,19 +128,26 @@ body{
   width:90%;
   border-radius:12px;
   font-weight:bold;
-  color:#fff;
-  border:none;
+  color:#e6e6e6;
+  border:1px solid rgba(255,255,255,0.12);
   cursor:pointer;
+  background:rgba(255,255,255,0.06);
+}
+
+.btn-like{
+  background:linear-gradient(135deg,#2a2a2a,#3a3a3a);
+}
+
+.btn-fav{
+  background:linear-gradient(135deg,#303030,#404040);
 }
 
 .whatsapp{
   background:linear-gradient(135deg,#2b2b2b,#3a3a3a);
-  border:1px solid rgba(255,255,255,0.15);
 }
 
 .reservar{
   background:linear-gradient(135deg,#3a3a3a,#4a4a4a);
-  border:1px solid rgba(255,255,255,0.15);
 }
 
 /* PROFILE */
@@ -163,6 +169,17 @@ body{
   border-radius:20px;
   padding:15px;
   border:1px solid rgba(255,255,255,0.08);
+}
+
+/* 🔥 FOTO GRANDE PERFIL */
+#profileImg{
+  width:100%;
+  max-width:260px;
+  border-radius:20px;
+  margin:10px auto;
+  display:block;
+  border:1px solid rgba(255,255,255,0.12);
+  box-shadow:0 10px 25px rgba(0,0,0,0.5);
 }
 
 .phone{
@@ -221,18 +238,16 @@ textarea{
 </div>
 
 <div class="menu">
-  <p onclick="render()">🛍️ Catálogo</p>
-  <p onclick="showFavorites()">⭐ Favoritos</p>
-  <p onclick="filterCity('Caracas')">📍 Caracas</p>
-  <p onclick="filterCity('Maracay')">📍 Maracay</p>
-  <p onclick="filterCity('Valencia')">📍 Valencia</p>
+  <p onclick="render()">Catálogo</p>
+  <p onclick="showFavorites()">Favoritos</p>
+  <p onclick="filterCity('Caracas')">Caracas</p>
+  <p onclick="filterCity('Maracay')">Maracay</p>
+  <p onclick="filterCity('Valencia')">Valencia</p>
 </div>
 
 <div class="accountMenu">
   <p>Mi cuenta</p>
   <p>Favoritos</p>
-  <p>Reservas</p>
-  <p>Configuración</p>
 </div>
 
 <div class="logo">
@@ -243,18 +258,23 @@ textarea{
 
 <div class="profile" id="profile">
   <div class="box">
+
     <h2 id="name"></h2>
+
+    <!-- 🔥 FOTO GRANDE -->
+    <img id="profileImg">
+
     <p id="info"></p>
     <div class="phone" id="phone"></div>
 
-    <h3>🧾 Presentación</h3>
+    <h3>Presentación</h3>
     <p id="desc"></p>
 
-    <h3>📸 Galería</h3>
+    <h3>Galería</h3>
     <input type="file" multiple accept="image/*,video/*" onchange="upload(event)">
     <div class="media" id="media"></div>
 
-    <h3>💬 Reseñas</h3>
+    <h3>Reseñas</h3>
     <textarea id="txt"></textarea>
     <button class="btn reservar" onclick="comment()">Enviar</button>
     <div id="comments"></div>
@@ -270,35 +290,30 @@ textarea{
 <script>
 
 function toggleMenu(){
-  let m=document.querySelector(".menu");
-  m.style.display=(m.style.display==="block")?"none":"block";
+let m=document.querySelector(".menu");
+m.style.display=(m.style.display==="block")?"none":"block";
 }
 
 function toggleAccount(){
-  let m=document.querySelector(".accountMenu");
-  m.style.display=(m.style.display==="block")?"none":"block";
+let m=document.querySelector(".accountMenu");
+m.style.display=(m.style.display==="block")?"none":"block";
 }
 
-/* =========================
-   👥 12 USUARIOS
-========================= */
 const users=[
-["Juan Pérez","Caracas","♂","k1.jpg","+58 412 111 1111","Servicio premium",5],
-["María López","Maracay","♀","k2.jpg","+58 412 222 2222","Atención profesional",4],
-["Carlos Martínez","Valencia","♂","k3.jpg","+58 412 333 3333","Experiencia confiable",5],
-["Ana Torres","Barquisimeto","♀","k4.jpg","+58 412 444 4444","Calidad garantizada",4],
-
-["Luis Gómez","Caracas","♂","k5.jpg","+58 412 555 5555","Servicio rápido",5],
-["Sofía Díaz","Maracaibo","♀","k6.jpg","+58 412 666 6666","Atención premium",5],
-["Pedro Ramírez","Valencia","♂","k7.jpg","+58 412 777 7777","Profesional",4],
-["Lucía Fernández","Maracay","♀","k8.jpg","+58 412 888 8888","Alta calidad",5]
+["Juan Pérez","Caracas","♂","k1.jpg","+58 111","Servicio",5],
+["María López","Maracay","♀","k2.jpg","+58 222","Servicio",4],
+["Carlos Martínez","Valencia","♂","k3.jpg","+58 333","Servicio",5],
+["Ana Torres","Barquisimeto","♀","k4.jpg","+58 444","Servicio",4],
+["Luis Gómez","Caracas","♂","k5.jpg","+58 555","Servicio",5],
+["Sofía Díaz","Maracaibo","♀","k6.jpg","+58 666","Servicio",5],
+["Pedro Ramírez","Valencia","♂","k7.jpg","+58 777","Servicio",4],
+["Lucía Fernández","Maracay","♀","k8.jpg","+58 888","Servicio",5]
 ];
 
 let current=0;
 let selectedCity=null;
 let grid=document.getElementById("grid");
 
-/* RENDER */
 function render(){
 grid.innerHTML="";
 
@@ -309,15 +324,15 @@ if(selectedCity && u[1]!==selectedCity) return;
 grid.innerHTML+=`
 <div class="card" onclick="openP(${i})">
 <img src="${u[3]}">
-<h3>${u[0]} <span class="online"></span></h3>
-<div>${u[1]} | ${u[2]}</div>
+<h3>${u[0]}</h3>
+<div>${u[1]}</div>
 <div class="stars">${"⭐".repeat(u[6])}</div>
 
-<button class="btn" onclick="event.stopPropagation();like(${i})">
+<button class="btn btn-like" onclick="event.stopPropagation();like(${i})">
 ❤️ ${getLikes()[i]||0}
 </button>
 
-<button class="btn" onclick="event.stopPropagation();toggleFav(${i})">
+<button class="btn btn-fav" onclick="event.stopPropagation();toggleFav(${i})">
 ⭐ Favorito
 </button>
 
@@ -327,7 +342,6 @@ grid.innerHTML+=`
 });
 }
 
-/* LIKES */
 function getLikes(){
 return JSON.parse(localStorage.getItem("likes")||"{}");
 }
@@ -339,7 +353,6 @@ localStorage.setItem("likes",JSON.stringify(l));
 render();
 }
 
-/* FAVORITOS */
 function getFavs(){
 return JSON.parse(localStorage.getItem("favs")||"[]");
 }
@@ -350,20 +363,22 @@ f.includes(i)?f=f.filter(x=>x!==i):f.push(i);
 localStorage.setItem("favs",JSON.stringify(f));
 }
 
-/* FILTRO */
 function filterCity(c){
 selectedCity=c;
 render();
 }
 
-/* PERFIL */
 function openP(i){
 current=i;
 document.getElementById("profile").style.display="block";
+
 document.getElementById("name").innerText=users[i][0];
-document.getElementById("info").innerText=users[i][1]+" | "+users[i][2];
-document.getElementById("phone").innerText="📞 "+users[i][4];
+document.getElementById("info").innerText=users[i][1];
+document.getElementById("phone").innerText=users[i][4];
 document.getElementById("desc").innerText=users[i][5];
+
+document.getElementById("profileImg").src = users[i][3];
+
 loadMedia();
 loadComments();
 }
@@ -372,55 +387,8 @@ function closeP(){
 document.getElementById("profile").style.display="none";
 }
 
-/* GALERÍA */
-function upload(e){
-let files=e.target.files;
-for(let f of files){
-let r=new FileReader();
-r.onload=function(ev){
-let key="m_"+current;
-let arr=JSON.parse(localStorage.getItem(key)||"[]");
-arr.push({data:ev.target.result,type:f.type});
-localStorage.setItem(key,JSON.stringify(arr));
-loadMedia();
-};
-r.readAsDataURL(f);
-}
-}
-
-function loadMedia(){
-let box=document.getElementById("media");
-box.innerHTML="";
-let arr=JSON.parse(localStorage.getItem("m_"+current)||"[]");
-
-arr.forEach(m=>{
-if(m.type.includes("image")){
-box.innerHTML+=`<img src="${m.data}">`;
-}else{
-box.innerHTML+=`<video src="${m.data}" controls></video>`;
-}
-});
-}
-
-/* COMENTARIOS */
-function comment(){
-let t=document.getElementById("txt").value;
-if(!t)return;
-
-let key="c_"+current;
-let arr=JSON.parse(localStorage.getItem(key)||"[]");
-arr.push(t);
-localStorage.setItem(key,JSON.stringify(arr));
-
-document.getElementById("txt").value="";
-loadComments();
-}
-
-function loadComments(){
-let box=document.getElementById("comments");
-let arr=JSON.parse(localStorage.getItem("c_"+current)||"[]");
-box.innerHTML=arr.map(c=>`<div class="comment">${c}</div>`).join("");
-}
+function upload(e){}
+function comment(){}
 
 render();
 
