@@ -3,135 +3,128 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Marketplace Pro</title>
+<title>Marketplace</title>
 
 <style>
 body{
-  margin:0;
-  font-family:Arial;
-  color:#fff;
-  background:
-  radial-gradient(circle at top, rgba(255,255,255,0.08), transparent 60%),
-  linear-gradient(135deg,#151515,#1f1f1f);
+margin:0;
+font-family:Arial;
+color:#fff;
+background:linear-gradient(135deg,#181818,#222);
 }
 
+/* HEADER */
 .header{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:12px;
-  position:sticky;
-  top:0;
-  background:rgba(20,20,20,0.4);
-  backdrop-filter:blur(20px);
-  border-bottom:1px solid rgba(255,255,255,0.08);
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:10px;
+background:rgba(0,0,0,0.6);
+backdrop-filter:blur(10px);
 }
 
-.logo img{height:45px;}
+.logo{
+font-size:22px;
+font-weight:bold;
+}
 
-.icon{font-size:22px;cursor:pointer;}
-
-.search{flex:1;margin:0 10px;}
-.search input{
-  width:100%;
-  padding:10px;
-  border-radius:12px;
-  border:none;
-  background:rgba(255,255,255,0.08);
-  color:#fff;
+.menuBtn{
+cursor:pointer;
+font-size:22px;
 }
 
 .menu{
-  display:none;
-  position:absolute;
-  right:10px;
-  top:60px;
-  background:#222;
-  padding:10px;
-  border-radius:10px;
+display:none;
+position:absolute;
+right:10px;
+top:50px;
+background:#222;
+padding:10px;
+border-radius:10px;
 }
-.menu p{cursor:pointer;margin:8px 0;}
 
+.menu p{cursor:pointer;margin:5px 0;}
+
+/* GRID */
 .grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:15px;
-  padding:15px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+padding:10px;
 }
 
 .card{
-  background:rgba(255,255,255,0.06);
-  border:1px solid rgba(255,255,255,0.12);
-  border-radius:18px;
-  padding:12px;
-  backdrop-filter:blur(10px);
+background:rgba(255,255,255,0.05);
+padding:10px;
+border-radius:15px;
+cursor:pointer;
 }
 
 .online{
-  width:10px;height:10px;
-  background:#00ff88;
-  border-radius:50%;
-  display:inline-block;
+width:10px;height:10px;
+background:#0f0;
+border-radius:50%;
+display:inline-block;
 }
 
-.stars{color:#ffd700;}
-
+/* GALLERY */
 .miniGallery{
-  display:flex;
-  gap:5px;
-  flex-wrap:wrap;
+display:flex;
+gap:5px;
+flex-wrap:wrap;
 }
 
 .miniGallery img{
-  width:50px;height:50px;
-  border-radius:8px;
-  object-fit:cover;
-  cursor:pointer;
+width:45px;
+height:45px;
+object-fit:cover;
+border-radius:8px;
 }
 
+/* PROFILE */
 .profile{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:#0a0a0a;
-  padding:15px;
-  overflow:auto;
+display:none;
+position:fixed;
+inset:0;
+background:#000;
+padding:10px;
+overflow:auto;
 }
 
+/* VIEWER */
 .viewer{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.95);
-  justify-content:center;
-  align-items:center;
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.9);
+justify-content:center;
+align-items:center;
 }
 
-.viewer img{max-width:90%;}
+.viewer img{
+max-width:90%;
+}
 
+/* BUTTON */
 .btn{
-  padding:8px;
-  margin-top:5px;
-  border:none;
-  border-radius:10px;
-  width:100%;
-  cursor:pointer;
-  color:#fff;
+width:100%;
+padding:8px;
+margin-top:5px;
+border:none;
+border-radius:10px;
 }
 
+/* LOCATION */
 #locations{
-  display:none;
-  padding:15px;
+display:none;
+padding:10px;
 }
 
-/* FOOTER PROFESIONAL */
 .footer{
-  text-align:center;
-  padding:20px;
-  font-size:12px;
-  color:#aaa;
-  line-height:1.6;
-  border-top:1px solid rgba(255,255,255,0.08);
+text-align:center;
+font-size:12px;
+color:#aaa;
+padding:20px;
 }
 </style>
 </head>
@@ -139,52 +132,45 @@ body{
 <body>
 
 <div class="header">
-  <div class="logo"><img src="logo.png"></div>
-  <div class="search"><input placeholder="Buscar..."></div>
-  <div class="icon" onclick="toggleMenu()">☰</div>
+<div class="logo">Marketplace</div>
+<div class="menuBtn" onclick="toggleMenu()">☰</div>
 </div>
 
 <div class="menu" id="menu">
-  <p onclick="showCatalog()">Catálogo</p>
-  <p onclick="showFavorites()">Favoritos</p>
-  <p onclick="showLocations()">Ubicación</p>
+<p onclick="showCatalog()">Catálogo</p>
+<p onclick="showFavorites()">Favoritos</p>
+<p onclick="showLocations()">Ubicación</p>
 </div>
 
 <div class="grid" id="grid"></div>
 
 <div id="locations">
-  <h2>Selecciona ciudad</h2>
-  <div class="card" onclick="selectCity('Caracas')">Caracas</div>
-  <div class="card" onclick="selectCity('Maracay')">Maracay</div>
-  <div class="card" onclick="selectCity('Valencia')">Valencia</div>
-  <button class="btn" onclick="backToCatalog()">Volver</button>
+<h3>Ciudades</h3>
+<div class="card" onclick="selectCity('Caracas')">Caracas</div>
+<div class="card" onclick="selectCity('Maracay')">Maracay</div>
+<button class="btn" onclick="backCatalog()">Volver</button>
 </div>
 
 <div class="profile" id="profile">
-  <h2 id="name"></h2>
-  <div id="phone"></div>
+<h2 id="name"></h2>
+<p id="phone"></p>
 
-  <h3>📸 Galería</h3>
-  <input type="file" multiple onchange="upload(event)">
-  <div class="miniGallery" id="profileGallery"></div>
+<input type="file" multiple onchange="upload(event)">
+<div id="profileGallery" class="miniGallery"></div>
 
-  <h3>💬 Comentarios</h3>
-  <textarea id="txt"></textarea>
-  <button class="btn" onclick="comment()">Enviar</button>
-  <div id="comments"></div>
+<textarea id="txt"></textarea>
+<button class="btn" onclick="comment()">Enviar</button>
+<div id="comments"></div>
 
-  <button class="btn" onclick="closeP()">Cerrar</button>
+<button class="btn" onclick="closeP()">Cerrar</button>
 </div>
 
 <div class="viewer" id="viewer" onclick="closeViewer()">
-  <img id="viewerImg">
+<img id="viewerImg">
 </div>
 
-<!-- ✅ RESERVA DE DERECHOS COMPLETA -->
 <div class="footer">
-© 2026 Marketplace Pro. Todos los derechos reservados.<br>
-Queda prohibida la reproducción total o parcial de este sistema sin autorización expresa del propietario.<br>
-El uso no autorizado del contenido, diseño o funcionalidades podrá ser sancionado conforme a la legislación aplicable.
+© 2026 Marketplace. Todos los derechos reservados.
 </div>
 
 <script>
@@ -195,48 +181,49 @@ let selectedCity=null;
 
 const users=[
 ["Juan","Caracas","111",5,["img1.jpg"]],
-["Maria","Maracay","222",4,["img2.jpg"]],
-["Carlos","Valencia","333",5,["img3.jpg"]]
+["Maria","Maracay","222",4,["img2.jpg"]]
 ];
 
+/* MENU */
 function toggleMenu(){
 let m=document.getElementById("menu");
-m.style.display=(m.style.display==="block")?"none":"block";
+m.style.display=m.style.display==="block"?"none":"block";
 }
 
-function renderGrid(){
-let grid=document.getElementById("grid");
-grid.innerHTML="";
+/* RENDER */
+function render(){
+let g=document.getElementById("grid");
+g.innerHTML="";
 
 users.forEach((u,i)=>{
 
-if(selectedCity && u[1]!==selectedCity) return;
+if(selectedCity && u[1]!=selectedCity) return;
 if(view==="favorites" && !getFavs().includes(i)) return;
 
-grid.innerHTML+=`
+g.innerHTML+=`
 <div class="card" onclick="openP(${i})">
 
 <h3>${u[0]} <span class="online"></span></h3>
 <div>${u[1]}</div>
-<div class="stars">${"⭐".repeat(u[3])}</div>
 
 <div class="miniGallery">
-${(u[4]||[]).map(img=>`<img src="${img}" onclick="event.stopPropagation();openViewer('${img}')">`).join("")}
+${u[4].map(img=>`<img src="${img}" onclick="event.stopPropagation();openViewer('${img}')">`).join("")}
 </div>
 
 <button onclick="event.stopPropagation();like(${i})">❤️ ${getLikes(i)}</button>
-<button onclick="event.stopPropagation();toggleFav(${i})">⭐ Favorito</button>
+<button onclick="event.stopPropagation();toggleFav(${i})">⭐</button>
 
 </div>`;
 });
 }
 
+/* PROFILE */
 function openP(i){
 current=i;
 document.getElementById("profile").style.display="block";
 document.getElementById("name").innerText=users[i][0];
 document.getElementById("phone").innerText=users[i][2];
-loadProfileGallery();
+loadGallery();
 loadComments();
 }
 
@@ -244,6 +231,7 @@ function closeP(){
 document.getElementById("profile").style.display="none";
 }
 
+/* FAVORITOS */
 function getFavs(){
 return JSON.parse(localStorage.getItem("favs")||"[]");
 }
@@ -252,14 +240,15 @@ function toggleFav(i){
 let f=getFavs();
 f.includes(i)?f=f.filter(x=>x!==i):f.push(i);
 localStorage.setItem("favs",JSON.stringify(f));
-renderGrid();
+render();
 }
 
 function showFavorites(){
 view="favorites";
-renderGrid();
+render();
 }
 
+/* LIKES */
 function getLikes(i){
 let l=JSON.parse(localStorage.getItem("likes")||"{}");
 return l[i]||0;
@@ -269,9 +258,10 @@ function like(i){
 let l=JSON.parse(localStorage.getItem("likes")||"{}");
 l[i]=(l[i]||0)+1;
 localStorage.setItem("likes",JSON.stringify(l));
-renderGrid();
+render();
 }
 
+/* LOCATION */
 function showLocations(){
 document.getElementById("grid").style.display="none";
 document.getElementById("locations").style.display="block";
@@ -279,20 +269,21 @@ document.getElementById("locations").style.display="block";
 
 function selectCity(c){
 selectedCity=c;
-backToCatalog();
+backCatalog();
 }
 
-function backToCatalog(){
+function backCatalog(){
 document.getElementById("locations").style.display="none";
 document.getElementById("grid").style.display="grid";
-renderGrid();
+render();
 }
 
 function showCatalog(){
 view="catalog";
-renderGrid();
+render();
 }
 
+/* GALLERY */
 function upload(e){
 for(let f of e.target.files){
 let r=new FileReader();
@@ -300,21 +291,20 @@ r.onload=function(ev){
 let arr=JSON.parse(localStorage.getItem("mini_"+current)||"[]");
 arr.push(ev.target.result);
 localStorage.setItem("mini_"+current,JSON.stringify(arr));
-loadProfileGallery();
+loadGallery();
 };
 r.readAsDataURL(f);
 }
 }
 
-function loadProfileGallery(){
+function loadGallery(){
 let box=document.getElementById("profileGallery");
 let arr=JSON.parse(localStorage.getItem("mini_"+current)||"[]");
 
-box.innerHTML=arr.length
-? arr.map(img=>`<img src="${img}" onclick="openViewer('${img}')">`).join("")
-: "Sin imágenes";
+box.innerHTML=arr.length?arr.map(i=>`<img src="${i}" onclick="openViewer('${i}')">`).join(""):"";
 }
 
+/* VIEWER */
 function openViewer(src){
 document.getElementById("viewer").style.display="flex";
 document.getElementById("viewerImg").src=src;
@@ -324,6 +314,7 @@ function closeViewer(){
 document.getElementById("viewer").style.display="none";
 }
 
+/* COMMENTS */
 function comment(){
 let t=document.getElementById("txt").value;
 if(!t)return;
@@ -337,11 +328,10 @@ loadComments();
 
 function loadComments(){
 document.getElementById("comments").innerHTML=
-(JSON.parse(localStorage.getItem("c_"+current)||"[]"))
-.map(c=>`<div>${c}</div>`).join("");
+(JSON.parse(localStorage.getItem("c_"+current)||"[]")).map(c=>`<div>${c}</div>`).join("");
 }
 
-renderGrid();
+render();
 
 </script>
 
