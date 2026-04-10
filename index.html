@@ -13,7 +13,6 @@ body{
   background:linear-gradient(135deg,#1a1a1a,#0f0f0f);
 }
 
-/* HEADER */
 .header{
   display:flex;
   align-items:center;
@@ -39,7 +38,6 @@ body{
   color:#fff;
 }
 
-/* MENÚ */
 .menu,.accountMenu{
   display:none;
   position:absolute;
@@ -60,7 +58,6 @@ body{
   cursor:pointer;
 }
 
-/* LOGO */
 .logo{
   text-align:center;
   padding:18px;
@@ -74,7 +71,6 @@ body{
   filter:drop-shadow(0 20px 30px rgba(0,0,0,0.8));
 }
 
-/* GRID */
 .grid{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -82,7 +78,6 @@ body{
   padding:15px;
 }
 
-/* CARD */
 .card{
   background:rgba(255,255,255,0.06);
   border:1px solid rgba(255,255,255,0.12);
@@ -91,7 +86,6 @@ body{
   text-align:center;
 }
 
-/* BOTONES */
 .btn{
   display:block;
   margin:6px auto;
@@ -106,16 +100,9 @@ body{
 
 .btn-like{background:#2a2a2a;}
 .btn-fav{background:#3a3a3a;}
+.whatsapp{background:linear-gradient(135deg,#1dbf73,#128c7e);}
+.reservar{background:linear-gradient(135deg,#4b2cff,#2d1a66);}
 
-.whatsapp{
-  background:linear-gradient(135deg,#1dbf73,#128c7e);
-}
-
-.reservar{
-  background:linear-gradient(135deg,#4b2cff,#2d1a66);
-}
-
-/* PROFILE */
 .profile{
   display:none;
   position:fixed;
@@ -135,7 +122,6 @@ body{
   padding:15px;
 }
 
-/* FOTO PERFIL */
 #profileImg{
   width:100%;
   max-width:260px;
@@ -144,7 +130,6 @@ body{
   display:block;
 }
 
-/* GALERÍA */
 .media{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -182,7 +167,6 @@ textarea{
   color:#aaa;
 }
 
-/* ONLINE */
 .online{
   display:inline-block;
   width:10px;
@@ -192,7 +176,7 @@ textarea{
   margin-left:6px;
 }
 
-/* ===== NUEVO: UBICACIÓN ===== */
+/* UBICACIÓN */
 .location{
   display:none;
   position:fixed;
@@ -203,11 +187,6 @@ textarea{
   background:#0f0f0f;
   z-index:6000;
   padding:20px;
-}
-
-.locationBox{
-  text-align:center;
-  margin-top:60px;
 }
 
 .city{
@@ -230,13 +209,13 @@ textarea{
 
 <!-- MENÚ -->
 <div class="menu" id="menu">
-  <p onclick="render()">Catálogo</p>
-  <p onclick="openLocation()">📍 Ubicación</p>
-  <p>Favoritos</p>
+  <p onclick="render();closeMenus()">Catálogo</p>
+  <p onclick="openLocation();closeMenus()">📍 Ubicación</p>
+  <p onclick="closeMenus()">Favoritos</p>
 </div>
 
 <div class="accountMenu" id="accountMenu">
-  <p>Mi cuenta</p>
+  <p onclick="closeMenus()">Mi cuenta</p>
 </div>
 
 <div class="logo">
@@ -270,26 +249,28 @@ textarea{
   </div>
 </div>
 
-<!-- ===== UBICACIÓN ===== -->
+<!-- UBICACIÓN -->
 <div class="location" id="location">
-  <div class="locationBox">
-    <h2>📍 Selecciona ubicación</h2>
-
-    <div class="city">Caracas</div>
-    <div class="city">Valencia</div>
-    <div class="city">Maracay</div>
-    <div class="city">Maracaibo</div>
-
-    <button class="btn whatsapp" onclick="closeLocation()">Cerrar</button>
-  </div>
+  <h2 style="text-align:center">📍 Ubicación</h2>
+  <div class="city">Caracas</div>
+  <div class="city">Valencia</div>
+  <div class="city">Maracay</div>
+  <div class="city">Maracaibo</div>
+  <button class="btn whatsapp" onclick="closeLocation()">Cerrar</button>
 </div>
 
 <!-- FOOTER -->
 <div class="footer">
-© 2026 Marketplace Ultra Pro. Todos los derechos reservados.
+© 2026 Marketplace Ultra Pro. Todos los derechos reservados. Reserva de derechos protegida.
 </div>
 
 <script>
+
+/* PATCH NUEVO */
+function closeMenus(){
+  document.getElementById("menu").style.display="none";
+  document.getElementById("accountMenu").style.display="none";
+}
 
 /* MENÚ */
 function toggleMenu(){
@@ -334,39 +315,10 @@ grid.innerHTML+=`
 <img src="${u[3]}" style="width:80px;height:80px;border-radius:50%">
 <h3>${u[0]} <span class="online"></span></h3>
 <div>${u[1]}</div>
-
-<button class="btn btn-like" onclick="event.stopPropagation();like(${i})">
-❤️ ${getLikes()[i]||0}
-</button>
-
-<button class="btn btn-fav" onclick="event.stopPropagation();toggleFav(${i})">
-⭐ Favorito
-</button>
-
-<button class="btn whatsapp">WhatsApp</button>
-<button class="btn reservar">Reservar</button>
 </div>`;
 });
 }
 
-function getLikes(){
-return JSON.parse(localStorage.getItem("likes")||"{}");
-}
-
-function like(i){
-let l=getLikes();
-l[i]=(l[i]||0)+1;
-localStorage.setItem("likes",JSON.stringify(l));
-render();
-}
-
-function toggleFav(i){
-let f=JSON.parse(localStorage.getItem("favs")||"[]");
-f.includes(i)?f=f.filter(x=>x!==i):f.push(i);
-localStorage.setItem("favs",JSON.stringify(f));
-}
-
-/* PROFILE */
 function openP(i){
 current=i;
 document.getElementById("profile").style.display="block";
@@ -381,7 +333,6 @@ function closeP(){
 document.getElementById("profile").style.display="none";
 }
 
-/* GALERÍA */
 function upload(e){
 let files=e.target.files;
 let key="m_"+current;
@@ -389,7 +340,6 @@ let arr=JSON.parse(localStorage.getItem(key)||"[]");
 
 for(let f of files){
 if(arr.length>=12) break;
-
 let r=new FileReader();
 r.onload=function(ev){
 arr.push(ev.target.result);
