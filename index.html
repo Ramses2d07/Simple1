@@ -9,10 +9,10 @@
 body{
   margin:0;
   font-family:Arial;
-  color:#fff;
+  color:#e6e6e6;
   background:
-    radial-gradient(circle at top, rgba(255,255,255,0.06), transparent 60%),
-    linear-gradient(135deg,#0b0b0b,#050505);
+    radial-gradient(circle at top, rgba(255,255,255,0.08), transparent 60%),
+    linear-gradient(135deg,#1a1a1a,#0f0f0f);
 }
 
 /* HEADER */
@@ -81,19 +81,20 @@ body{
 
 /* CARD */
 .card{
-  background:rgba(255,255,255,0.04);
-  border:1px solid rgba(255,255,255,0.08);
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.12);
   border-radius:22px;
   padding:12px;
   text-align:center;
   cursor:pointer;
   transition:0.3s;
   position:relative;
+  backdrop-filter:blur(12px);
 }
 
 .card:hover{
   transform:translateY(-6px) scale(1.02);
-  border:1px solid rgba(255,255,255,0.15);
+  border:1px solid rgba(255,255,255,0.18);
 }
 
 .card img{
@@ -111,13 +112,6 @@ body{
   border-radius:50%;
   margin-left:6px;
   box-shadow:0 0 10px #00ff88;
-  animation:pulse 1.5s infinite;
-}
-
-@keyframes pulse{
-  0%{transform:scale(1);opacity:1;}
-  50%{transform:scale(1.4);opacity:0.6;}
-  100%{transform:scale(1);opacity:1;}
 }
 
 /* STARS */
@@ -141,11 +135,13 @@ body{
 }
 
 .whatsapp{
-  background:linear-gradient(135deg,#1dbf73,#128c7e);
+  background:linear-gradient(135deg,#2b2b2b,#3a3a3a);
+  border:1px solid rgba(255,255,255,0.15);
 }
 
 .reservar{
-  background:linear-gradient(135deg,#7a2cff,#4a1bb3);
+  background:linear-gradient(135deg,#3a3a3a,#4a4a4a);
+  border:1px solid rgba(255,255,255,0.15);
 }
 
 /* PROFILE */
@@ -156,7 +152,7 @@ body{
   left:0;
   width:100%;
   height:100%;
-  background:#0a0a0a;
+  background:#0f0f0f;
   overflow:auto;
   z-index:5000;
   padding:15px;
@@ -172,7 +168,7 @@ body{
 .phone{
   font-size:26px;
   font-weight:bold;
-  color:#25f4a5;
+  color:#bdbdbd;
   margin:10px 0;
 }
 
@@ -199,7 +195,7 @@ textarea{
 }
 
 .comment{
-  background:rgba(255,255,255,0.12);
+  background:rgba(255,255,255,0.10);
   margin-top:6px;
   padding:8px;
   border-radius:10px;
@@ -229,6 +225,7 @@ textarea{
   <p onclick="showFavorites()">⭐ Favoritos</p>
   <p onclick="filterCity('Caracas')">📍 Caracas</p>
   <p onclick="filterCity('Maracay')">📍 Maracay</p>
+  <p onclick="filterCity('Valencia')">📍 Valencia</p>
 </div>
 
 <div class="accountMenu">
@@ -282,16 +279,24 @@ function toggleAccount(){
   m.style.display=(m.style.display==="block")?"none":"block";
 }
 
+/* =========================
+   👥 12 USUARIOS
+========================= */
 const users=[
 ["Juan Pérez","Caracas","♂","k1.jpg","+58 412 111 1111","Servicio premium",5],
 ["María López","Maracay","♀","k2.jpg","+58 412 222 2222","Atención profesional",4],
 ["Carlos Martínez","Valencia","♂","k3.jpg","+58 412 333 3333","Experiencia confiable",5],
-["Ana Torres","Barquisimeto","♀","k4.jpg","+58 412 444 4444","Calidad garantizada",4]
+["Ana Torres","Barquisimeto","♀","k4.jpg","+58 412 444 4444","Calidad garantizada",4],
+
+["Luis Gómez","Caracas","♂","k5.jpg","+58 412 555 5555","Servicio rápido",5],
+["Sofía Díaz","Maracaibo","♀","k6.jpg","+58 412 666 6666","Atención premium",5],
+["Pedro Ramírez","Valencia","♂","k7.jpg","+58 412 777 7777","Profesional",4],
+["Lucía Fernández","Maracay","♀","k8.jpg","+58 412 888 8888","Alta calidad",5]
 ];
 
 let current=0;
-let grid=document.getElementById("grid");
 let selectedCity=null;
+let grid=document.getElementById("grid");
 
 /* RENDER */
 function render(){
@@ -326,6 +331,7 @@ grid.innerHTML+=`
 function getLikes(){
 return JSON.parse(localStorage.getItem("likes")||"{}");
 }
+
 function like(i){
 let l=getLikes();
 l[i]=(l[i]||0)+1;
@@ -337,22 +343,11 @@ render();
 function getFavs(){
 return JSON.parse(localStorage.getItem("favs")||"[]");
 }
+
 function toggleFav(i){
 let f=getFavs();
 f.includes(i)?f=f.filter(x=>x!==i):f.push(i);
 localStorage.setItem("favs",JSON.stringify(f));
-}
-function showFavorites(){
-grid.innerHTML="";
-getFavs().forEach(i=>{
-let u=users[i];
-grid.innerHTML+=`
-<div class="card" onclick="openP(${i})">
-<img src="${u[3]}">
-<h3>${u[0]}</h3>
-<div>${u[1]}</div>
-</div>`;
-});
 }
 
 /* FILTRO */
