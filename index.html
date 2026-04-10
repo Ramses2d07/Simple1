@@ -108,7 +108,7 @@ body{
 .btn-like{background:#2a2a2a;}
 .btn-fav{background:#3a3a3a;}
 
-/* WHATSAPP VERDE (RESTAURADO) */
+/* WHATSAPP VERDE */
 .whatsapp{
   background:linear-gradient(135deg,#1dbf73,#128c7e);
 }
@@ -194,6 +194,32 @@ textarea{
   border-radius:50%;
   margin-left:6px;
 }
+
+/* 🔴 UBICACIÓN PAGE */
+.locationPage{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:#0f0f0f;
+  z-index:6000;
+  padding:20px;
+}
+.locationBox{
+  text-align:center;
+}
+.locationBox h2{
+  margin-bottom:20px;
+}
+.locationCity{
+  padding:15px;
+  margin:10px;
+  border-radius:12px;
+  background:rgba(255,255,255,0.06);
+  cursor:pointer;
+}
 </style>
 </head>
 
@@ -205,10 +231,11 @@ textarea{
   <div class="icon" onclick="toggleMenu()">☰</div>
 </div>
 
-<!-- MENÚ FUNCIONAL -->
+<!-- MENÚ -->
 <div class="menu" id="menu">
   <p onclick="render()">Catálogo</p>
   <p>Favoritos</p>
+  <p onclick="openLocation()">📍 Ubicación</p>
 </div>
 
 <div class="accountMenu" id="accountMenu">
@@ -233,7 +260,7 @@ textarea{
     <h3>Presentación</h3>
     <p id="desc"></p>
 
-    <h3>Galería (máx 12)</h3>
+    <h3>Galería</h3>
     <input type="file" multiple onchange="upload(event)">
     <div class="media" id="media"></div>
 
@@ -246,28 +273,27 @@ textarea{
   </div>
 </div>
 
+<!-- 📍 UBICACIÓN -->
+<div class="locationPage" id="locationPage">
+  <div class="locationBox">
+    <h2>📍 Selecciona tu ciudad</h2>
+
+    <div class="locationCity">Caracas</div>
+    <div class="locationCity">Valencia</div>
+    <div class="locationCity">Maracay</div>
+    <div class="locationCity">Maracaibo</div>
+
+    <button class="btn whatsapp" onclick="closeLocation()">Cerrar</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+© 2026 Marketplace Ultra Pro. Todos los derechos reservados. Reserva de derechos protegida.
+</div>
+
 <script>
 
-/* 12 USUARIOS RESTAURADOS */
-const users=[
-["Juan Pérez","Caracas","♂","k1.jpg","+58 111","Servicio",5],
-["María López","Maracay","♀","k2.jpg","+58 222","Servicio",4],
-["Carlos Martínez","Valencia","♂","k3.jpg","+58 333","Servicio",5],
-["Ana Torres","Barquisimeto","♀","k4.jpg","+58 444","Servicio",4],
-["Luis Gómez","Caracas","♂","k5.jpg","+58 555","Servicio",5],
-["Sofía Díaz","Maracaibo","♀","k6.jpg","+58 666","Servicio",5],
-["Pedro Ramírez","Valencia","♂","k7.jpg","+58 777","Servicio",4],
-["Lucía Fernández","Maracay","♀","k8.jpg","+58 888","Servicio",5],
-["Diego Rojas","Caracas","♂","k9.jpg","+58 999","Servicio",4],
-["Paula Silva","Valencia","♀","k10.jpg","+58 101","Servicio",5],
-["Andrés Mora","Maracaibo","♂","k11.jpg","+58 102","Servicio",4],
-["Valeria Rivas","Maracay","♀","k12.jpg","+58 103","Servicio",5]
-];
-
-let current=0;
-let grid=document.getElementById("grid");
-
-/* MENU FIX */
 function toggleMenu(){
 let m=document.getElementById("menu");
 m.style.display = m.style.display==="block"?"none":"block";
@@ -278,7 +304,30 @@ let m=document.getElementById("accountMenu");
 m.style.display = m.style.display==="block"?"none":"block";
 }
 
-/* RENDER */
+/* UBICACIÓN */
+function openLocation(){
+document.getElementById("locationPage").style.display="block";
+}
+
+function closeLocation(){
+document.getElementById("locationPage").style.display="none";
+}
+
+/* USERS */
+const users=[
+["Juan Pérez","Caracas","♂","k1.jpg","+58 111","Servicio",5],
+["María López","Maracay","♀","k2.jpg","+58 222","Servicio",4],
+["Carlos Martínez","Valencia","♂","k3.jpg","+58 333","Servicio",5],
+["Ana Torres","Barquisimeto","♀","k4.jpg","+58 444","Servicio",4],
+["Luis Gómez","Caracas","♂","k5.jpg","+58 555","Servicio",5],
+["Sofía Díaz","Maracaibo","♀","k6.jpg","+58 666","Servicio",5],
+["Pedro Ramírez","Valencia","♂","k7.jpg","+58 777","Servicio",4],
+["Lucía Fernández","Maracay","♀","k8.jpg","+58 888","Servicio",5]
+];
+
+let current=0;
+let grid=document.getElementById("grid");
+
 function render(){
 grid.innerHTML="";
 users.forEach((u,i)=>{
@@ -287,39 +336,10 @@ grid.innerHTML+=`
 <img src="${u[3]}" style="width:80px;height:80px;border-radius:50%">
 <h3>${u[0]} <span class="online"></span></h3>
 <div>${u[1]}</div>
-
-<button class="btn btn-like" onclick="event.stopPropagation();like(${i})">
-❤️ ${getLikes()[i]||0}
-</button>
-
-<button class="btn btn-fav" onclick="event.stopPropagation();toggleFav(${i})">
-⭐ Favorito
-</button>
-
-<button class="btn whatsapp">WhatsApp</button>
-<button class="btn reservar">Reservar</button>
 </div>`;
 });
 }
 
-function getLikes(){
-return JSON.parse(localStorage.getItem("likes")||"{}");
-}
-
-function like(i){
-let l=getLikes();
-l[i]=(l[i]||0)+1;
-localStorage.setItem("likes",JSON.stringify(l));
-render();
-}
-
-function toggleFav(i){
-let f=JSON.parse(localStorage.getItem("favs")||"[]");
-f.includes(i)?f=f.filter(x=>x!==i):f.push(i);
-localStorage.setItem("favs",JSON.stringify(f));
-}
-
-/* PROFILE */
 function openP(i){
 current=i;
 document.getElementById("profile").style.display="block";
@@ -332,34 +352,6 @@ document.getElementById("profileImg").src=users[i][3];
 
 function closeP(){
 document.getElementById("profile").style.display="none";
-}
-
-/* GALERÍA */
-function upload(e){
-let files=e.target.files;
-let key="m_"+current;
-let arr=JSON.parse(localStorage.getItem(key)||"[]");
-
-for(let f of files){
-if(arr.length>=12) break;
-
-let r=new FileReader();
-r.onload=function(ev){
-arr.push(ev.target.result);
-localStorage.setItem(key,JSON.stringify(arr));
-loadMedia();
-};
-r.readAsDataURL(f);
-}
-}
-
-function loadMedia(){
-let box=document.getElementById("media");
-box.innerHTML="";
-let arr=JSON.parse(localStorage.getItem("m_"+current)||"[]");
-arr.slice(0,12).forEach(m=>{
-box.innerHTML+=`<img src="${m}">`;
-});
 }
 
 render();
