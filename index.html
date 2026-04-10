@@ -12,23 +12,24 @@ body{
   color:#fff;
   background:
   radial-gradient(circle at top, rgba(255,255,255,0.08), transparent 60%),
-  linear-gradient(135deg,#1a1a1a,#2a2a2a);
+  linear-gradient(135deg,#151515,#1f1f1f);
 }
 
-/* HEADER */
 .header{
   display:flex;
-  justify-content:space-between;
   align-items:center;
+  justify-content:space-between;
   padding:12px;
   position:sticky;
   top:0;
-  background:rgba(20,20,20,0.6);
+  background:rgba(20,20,20,0.4);
   backdrop-filter:blur(20px);
-  z-index:2000;
+  border-bottom:1px solid rgba(255,255,255,0.08);
 }
 
-.icon{font-size:22px;width:40px;text-align:center;cursor:pointer;}
+.logo img{height:45px;}
+
+.icon{font-size:22px;cursor:pointer;}
 
 .search{flex:1;margin:0 10px;}
 .search input{
@@ -40,27 +41,17 @@ body{
   color:#fff;
 }
 
-/* MENÚ */
-.menu,.accountMenu{
+.menu{
   display:none;
   position:absolute;
+  right:10px;
   top:60px;
-  width:200px;
+  background:#222;
   padding:10px;
-  border-radius:14px;
-  background:rgba(20,20,20,0.9);
-  border:1px solid rgba(255,255,255,0.1);
-  z-index:9999;
+  border-radius:10px;
 }
-.menu{right:10px;}
-.accountMenu{left:10px;}
-.menu p,.accountMenu p{cursor:pointer;margin:10px 0;}
+.menu p{cursor:pointer;margin:8px 0;}
 
-/* LOGO */
-.logo{text-align:center;padding:15px;}
-.logo img{width:520px;max-width:95%;}
-
-/* GRID */
 .grid{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -68,68 +59,36 @@ body{
   padding:15px;
 }
 
-/* CARD */
 .card{
-  background:rgba(255,255,255,0.04);
-  border:1px solid rgba(255,255,255,0.08);
-  border-radius:20px;
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:18px;
   padding:12px;
-  text-align:center;
-  cursor:pointer;
+  backdrop-filter:blur(10px);
 }
 
-/* ONLINE */
 .online{
-  display:inline-block;
-  width:10px;
-  height:10px;
+  width:10px;height:10px;
   background:#00ff88;
   border-radius:50%;
-  margin-left:6px;
-  box-shadow:0 0 10px #00ff88;
+  display:inline-block;
 }
 
-/* STARS */
-.stars{
-  color:#ffd700;
-  font-size:14px;
-  margin-top:5px;
-}
+.stars{color:#ffd700;}
 
-/* MINI GALERÍA */
 .miniGallery{
   display:flex;
-  gap:4px;
-  margin-top:8px;
-  justify-content:center;
+  gap:5px;
+  flex-wrap:wrap;
 }
 
 .miniGallery img{
-  width:45px;
-  height:45px;
+  width:50px;height:50px;
   border-radius:8px;
   object-fit:cover;
   cursor:pointer;
 }
 
-/* BUTTONS */
-.btn{
-  display:block;
-  margin:6px auto;
-  padding:10px;
-  width:90%;
-  border-radius:12px;
-  border:none;
-  color:#fff;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-.wp{background:linear-gradient(135deg,#1dbf73,#128c7e);}
-.res{background:linear-gradient(135deg,#7a2cff,#4a1bb3);}
-.fav{background:rgba(255,255,255,0.08);}
-
-/* PROFILE */
 .profile{
   display:none;
   position:fixed;
@@ -137,240 +96,114 @@ body{
   background:#0a0a0a;
   padding:15px;
   overflow:auto;
-  z-index:5000;
 }
 
-.box{
-  background:rgba(255,255,255,0.04);
-  padding:15px;
-  border-radius:20px;
-}
-
-.phone{font-size:26px;color:#25f4a5;}
-
-/* VIEWER */
 .viewer{
   display:none;
   position:fixed;
   inset:0;
   background:rgba(0,0,0,0.95);
-  z-index:99999;
   justify-content:center;
   align-items:center;
 }
 
-.viewer img{
-  max-width:90%;
-  max-height:90%;
-  border-radius:12px;
+.viewer img{max-width:90%;}
+
+.btn{
+  padding:8px;
+  margin-top:5px;
+  border:none;
+  border-radius:10px;
+  width:100%;
+  cursor:pointer;
+  color:#fff;
 }
 
-/* LOCATION */
 #locations{
   display:none;
   padding:15px;
 }
 
-/* COMMENTS */
-textarea{
-  width:100%;
-  height:70px;
-  border-radius:10px;
-  padding:10px;
-  background:rgba(255,255,255,0.08);
-  color:#fff;
-}
-
-.comment{
-  background:rgba(255,255,255,0.12);
-  margin-top:6px;
-  padding:8px;
-  border-radius:10px;
-}
-
-/* FOOTER */
+/* FOOTER PROFESIONAL */
 .footer{
   text-align:center;
   padding:20px;
   font-size:12px;
   color:#aaa;
+  line-height:1.6;
+  border-top:1px solid rgba(255,255,255,0.08);
 }
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
 <div class="header">
-  <div class="icon" onclick="toggleAccount()">👤</div>
+  <div class="logo"><img src="logo.png"></div>
   <div class="search"><input placeholder="Buscar..."></div>
   <div class="icon" onclick="toggleMenu()">☰</div>
 </div>
 
-<!-- LOGO -->
-<div class="logo">
-  <img src="file_0000000095c071fd937e0a46af9303bb.svg">
+<div class="menu" id="menu">
+  <p onclick="showCatalog()">Catálogo</p>
+  <p onclick="showFavorites()">Favoritos</p>
+  <p onclick="showLocations()">Ubicación</p>
 </div>
 
-<!-- MENÚ -->
-<div class="menu">
-  <p onclick="showCatalog()">🏠 Catálogo</p>
-  <p onclick="showFavorites()">❤️ Favoritos</p>
-  <p onclick="showLocations()">📍 Ubicación</p>
-</div>
-
-<div class="accountMenu">
-  <p>Mi cuenta</p>
-  <p>Reservas</p>
-</div>
-
-<!-- GRID -->
 <div class="grid" id="grid"></div>
 
-<!-- UBICACIÓN -->
 <div id="locations">
-  <h2>📍 Ciudades</h2>
-
+  <h2>Selecciona ciudad</h2>
   <div class="card" onclick="selectCity('Caracas')">Caracas</div>
   <div class="card" onclick="selectCity('Maracay')">Maracay</div>
   <div class="card" onclick="selectCity('Valencia')">Valencia</div>
-  <div class="card" onclick="selectCity('Maracaibo')">Maracaibo</div>
-
-  <button class="btn wp" onclick="backToCatalog()">⬅ Volver</button>
+  <button class="btn" onclick="backToCatalog()">Volver</button>
 </div>
 
-<!-- PROFILE -->
 <div class="profile" id="profile">
-  <div class="box">
-    <h2 id="name"></h2>
-    <p id="info"></p>
-    <div class="phone" id="phone"></div>
+  <h2 id="name"></h2>
+  <div id="phone"></div>
 
-    <h3>📸 Galería</h3>
-    <div class="miniGallery" id="profileGallery"></div>
+  <h3>📸 Galería</h3>
+  <input type="file" multiple onchange="upload(event)">
+  <div class="miniGallery" id="profileGallery"></div>
 
-    <h3>💬 Comentarios</h3>
-    <textarea id="txt"></textarea>
-    <button class="btn res" onclick="comment()">Enviar</button>
-    <div id="comments"></div>
+  <h3>💬 Comentarios</h3>
+  <textarea id="txt"></textarea>
+  <button class="btn" onclick="comment()">Enviar</button>
+  <div id="comments"></div>
 
-    <button class="btn wp" onclick="closeP()">Cerrar</button>
-  </div>
+  <button class="btn" onclick="closeP()">Cerrar</button>
 </div>
 
-<!-- VIEWER -->
 <div class="viewer" id="viewer" onclick="closeViewer()">
   <img id="viewerImg">
 </div>
 
+<!-- ✅ RESERVA DE DERECHOS COMPLETA -->
 <div class="footer">
-© 2026 Marketplace Pro. Todos los derechos reservados.
+© 2026 Marketplace Pro. Todos los derechos reservados.<br>
+Queda prohibida la reproducción total o parcial de este sistema sin autorización expresa del propietario.<br>
+El uso no autorizado del contenido, diseño o funcionalidades podrá ser sancionado conforme a la legislación aplicable.
 </div>
 
 <script>
 
 let current=0;
-let selectedCity=null;
 let view="catalog";
+let selectedCity=null;
 
-/* MENÚ */
-function toggleMenu(){
-  let m=document.querySelector(".menu");
-  m.style.display=(m.style.display==="block")?"none":"block";
-}
-
-function toggleAccount(){
-  let m=document.querySelector(".accountMenu");
-  m.style.display=(m.style.display==="block")?"none":"block";
-}
-
-/* UBICACIÓN */
-function showLocations(){
-  document.getElementById("grid").style.display="none";
-  document.getElementById("locations").style.display="block";
-}
-
-function backToCatalog(){
-  document.getElementById("locations").style.display="none";
-  document.getElementById("grid").style.display="grid";
-  renderGrid();
-}
-
-function selectCity(city){
-  selectedCity=city;
-  backToCatalog();
-}
-
-/* MINI GALERÍA */
-function getMini(i){
-  return JSON.parse(localStorage.getItem("mini_"+i)||"[]");
-}
-
-function loadProfileGallery(){
-  let box=document.getElementById("profileGallery");
-  let arr=getMini(current);
-
-  box.innerHTML=arr.length
-    ? arr.map(img=>`<img src="${img}" onclick="openViewer('${img}')">`).join("")
-    : "<p style='opacity:0.6'>Sin imágenes</p>";
-}
-
-/* VIEWER */
-function openViewer(src){
-  document.getElementById("viewer").style.display="flex";
-  document.getElementById("viewerImg").src=src;
-}
-function closeViewer(){
-  document.getElementById("viewer").style.display="none";
-}
-
-/* PROFILE */
-function openP(i){
-  current=i;
-  document.getElementById("profile").style.display="block";
-  document.getElementById("name").innerText=users[i][0];
-  document.getElementById("info").innerText=users[i][1];
-  document.getElementById("phone").innerText=users[i][2];
-  loadProfileGallery();
-  loadComments();
-}
-
-function closeP(){
-  document.getElementById("profile").style.display="none";
-}
-
-/* COMMENTS */
-function comment(){
-  let t=document.getElementById("txt").value;
-  if(!t)return;
-
-  let arr=JSON.parse(localStorage.getItem("c_"+current)||"[]");
-  arr.push(t);
-  localStorage.setItem("c_"+current,JSON.stringify(arr));
-
-  document.getElementById("txt").value="";
-  loadComments();
-}
-
-function loadComments(){
-  document.getElementById("comments").innerHTML=
-  (JSON.parse(localStorage.getItem("c_"+current)||"[]"))
-  .map(c=>`<div class="comment">${c}</div>`).join("");
-}
-
-/* USERS */
 const users=[
-["Juan Pérez","Caracas","+58 111",5],
-["María López","Maracay","+58 222",4],
-["Carlos Martínez","Valencia","+58 333",5],
-["Ana Torres","Barquisimeto","+58 444",3],
-["Luis Gómez","Caracas","+58 555",4],
-["Sofía Díaz","Valencia","+58 666",5],
-["Pedro Ramírez","Maracaibo","+58 777",4],
-["Lucía Fernández","Maracay","+58 888",5]
+["Juan","Caracas","111",5,["img1.jpg"]],
+["Maria","Maracay","222",4,["img2.jpg"]],
+["Carlos","Valencia","333",5,["img3.jpg"]]
 ];
 
-/* RENDER */
+function toggleMenu(){
+let m=document.getElementById("menu");
+m.style.display=(m.style.display==="block")?"none":"block";
+}
+
 function renderGrid(){
 let grid=document.getElementById("grid");
 grid.innerHTML="";
@@ -378,22 +211,134 @@ grid.innerHTML="";
 users.forEach((u,i)=>{
 
 if(selectedCity && u[1]!==selectedCity) return;
-
-let stars="⭐".repeat(u[3])+"☆".repeat(5-u[3]);
+if(view==="favorites" && !getFavs().includes(i)) return;
 
 grid.innerHTML+=`
 <div class="card" onclick="openP(${i})">
 
 <h3>${u[0]} <span class="online"></span></h3>
 <div>${u[1]}</div>
+<div class="stars">${"⭐".repeat(u[3])}</div>
 
-<div class="stars">${stars}</div>
+<div class="miniGallery">
+${(u[4]||[]).map(img=>`<img src="${img}" onclick="event.stopPropagation();openViewer('${img}')">`).join("")}
+</div>
 
-<button class="btn wp">WhatsApp</button>
-<button class="btn res">Reservar</button>
+<button onclick="event.stopPropagation();like(${i})">❤️ ${getLikes(i)}</button>
+<button onclick="event.stopPropagation();toggleFav(${i})">⭐ Favorito</button>
 
 </div>`;
 });
+}
+
+function openP(i){
+current=i;
+document.getElementById("profile").style.display="block";
+document.getElementById("name").innerText=users[i][0];
+document.getElementById("phone").innerText=users[i][2];
+loadProfileGallery();
+loadComments();
+}
+
+function closeP(){
+document.getElementById("profile").style.display="none";
+}
+
+function getFavs(){
+return JSON.parse(localStorage.getItem("favs")||"[]");
+}
+
+function toggleFav(i){
+let f=getFavs();
+f.includes(i)?f=f.filter(x=>x!==i):f.push(i);
+localStorage.setItem("favs",JSON.stringify(f));
+renderGrid();
+}
+
+function showFavorites(){
+view="favorites";
+renderGrid();
+}
+
+function getLikes(i){
+let l=JSON.parse(localStorage.getItem("likes")||"{}");
+return l[i]||0;
+}
+
+function like(i){
+let l=JSON.parse(localStorage.getItem("likes")||"{}");
+l[i]=(l[i]||0)+1;
+localStorage.setItem("likes",JSON.stringify(l));
+renderGrid();
+}
+
+function showLocations(){
+document.getElementById("grid").style.display="none";
+document.getElementById("locations").style.display="block";
+}
+
+function selectCity(c){
+selectedCity=c;
+backToCatalog();
+}
+
+function backToCatalog(){
+document.getElementById("locations").style.display="none";
+document.getElementById("grid").style.display="grid";
+renderGrid();
+}
+
+function showCatalog(){
+view="catalog";
+renderGrid();
+}
+
+function upload(e){
+for(let f of e.target.files){
+let r=new FileReader();
+r.onload=function(ev){
+let arr=JSON.parse(localStorage.getItem("mini_"+current)||"[]");
+arr.push(ev.target.result);
+localStorage.setItem("mini_"+current,JSON.stringify(arr));
+loadProfileGallery();
+};
+r.readAsDataURL(f);
+}
+}
+
+function loadProfileGallery(){
+let box=document.getElementById("profileGallery");
+let arr=JSON.parse(localStorage.getItem("mini_"+current)||"[]");
+
+box.innerHTML=arr.length
+? arr.map(img=>`<img src="${img}" onclick="openViewer('${img}')">`).join("")
+: "Sin imágenes";
+}
+
+function openViewer(src){
+document.getElementById("viewer").style.display="flex";
+document.getElementById("viewerImg").src=src;
+}
+
+function closeViewer(){
+document.getElementById("viewer").style.display="none";
+}
+
+function comment(){
+let t=document.getElementById("txt").value;
+if(!t)return;
+
+let arr=JSON.parse(localStorage.getItem("c_"+current)||"[]");
+arr.push(t);
+localStorage.setItem("c_"+current,JSON.stringify(arr));
+document.getElementById("txt").value="";
+loadComments();
+}
+
+function loadComments(){
+document.getElementById("comments").innerHTML=
+(JSON.parse(localStorage.getItem("c_"+current)||"[]"))
+.map(c=>`<div>${c}</div>`).join("");
 }
 
 renderGrid();
